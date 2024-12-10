@@ -1,0 +1,38 @@
+name: Maven Build
+
+on:
+  push:
+    branches:
+      - '**'  # Runs on push to all branches
+  pull_request:
+    branches:
+      - '**'  # Runs on pull request to all branches
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [23] # Uses the Java version specified in the POM file
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # You can also use 'zulu' or 'oracle' if preferred
+          java-version: ${{ matrix.java-version }}
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
+
+      - name: Install dependencies and run tests
+        run: mvn clean install -B
