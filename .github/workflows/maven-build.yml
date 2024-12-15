@@ -12,9 +12,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      db:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: vibe_guide
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready -U postgres" --health-interval=10s --health-timeout=5s --health-retries=5
     strategy:
       matrix:
-        java-version: [23] # Uses the Java version specified in the POM file
+        java-version: [23]
 
     steps:
       - name: Checkout code
@@ -23,7 +33,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # You can also use 'zulu' or 'oracle' if preferred
+          distribution: 'temurin'
           java-version: ${{ matrix.java-version }}
 
       - name: Cache Maven dependencies
@@ -34,5 +44,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2-
 
-      - name: Install dependencies and run tests
-        run: mvn clean install -B
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          echo "Waiting for PostgreSQL to be ready..."
+          for i in {1..10}; do
+            nc -zv localhost 5432 && echo "PostgreSQL is ready!" && break
+            echo "Waiting for PostgreSQL..."
+            sleep 10
+          done
+
+      - name: Run tests
+        run: mvn clean install
