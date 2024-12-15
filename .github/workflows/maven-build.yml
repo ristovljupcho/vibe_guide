@@ -17,7 +17,7 @@ jobs:
         image: postgres:latest
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: 15881577.p
           POSTGRES_DB: vibe_guide
         ports:
           - 5432:5432
