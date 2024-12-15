@@ -9,6 +9,4 @@ public class VibeGuideApplication {
     public static void main(String[] args) {
         SpringApplication.run(VibeGuideApplication.class, args);
     }
-
-
 }
