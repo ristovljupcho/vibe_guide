@@ -4,4 +4,90 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="create-traits-table" author="negrioska">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="traits"/>
+            </not>
+        </preConditions>
+        <createTable tableName="traits">
+            <column name="idTraits" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="alcoholicBeverage" type="BOOL"/>
+            <column name="cocktails" type="BOOL"/>
+            <column name="beer" type="BOOL"/>
+            <column name="coffee" type="BOOL"/>
+            <column name="wine" type="BOOL"/>
+            <column name="servesBreakfast" type="BOOL"/>
+            <column name="servesLunch" type="BOOL"/>
+            <column name="servesDinner" type="BOOL"/>
+            <column name="servesDessert" type="BOOL"/>
+            <column name="petFriendly" type="BOOL"/>
+            <column name="liveMusic" type="BOOL"/>
+            <column name="outdoorSeating" type="BOOL"/>
+            <column name="vegetarianFood" type="BOOL"/>
+            <column name="paidParking" type="BOOL"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-localProfile-table" author="negrioska">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="localProfile"/>
+            </not>
+        </preConditions>
+        <createTable tableName="localProfile">
+            <column name="idLocal" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255) NOT NULL"/>
+            <column name="description" type="TEXT NOT NULL"/>
+            <column name="mapsUri" type="VARCHAR(255) NOT NULL"/>
+            <column name="phoneNumber" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(255) NOT NULL"/>
+            <column name="rating" type="DECIMAL(3, 1) NOT NULL"/>
+            <column name="menuLink" type="VARCHAR(255)"/>
+            <column name="dressCode" type="VARCHAR(100)"/>
+            <column name="atmosphere" type="VARCHAR(100) NOT NULL"/>
+            <column name="musicType" type="VARCHAR(100)"/>
+            <column name="idTraits" type="UUID NOT NULL"/>
+        </createTable>
+        
+        <addForeignKeyConstraint baseTableName="localProfile" 
+                                 baseColumnNames="idTraits" 
+                                 constraintName="fk_local_traits" 
+                                 referencedTableName="traits"
+                                 referencedColumnNames="idTraits"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
+    <changeSet id="create-daily-offers" author="negrioska">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="idOffer"/>
+            </not>
+        </preConditions>
+        <createTable tableName="dailyOffers">
+            <column name="idDailyOffer" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="dateCreated" type="DATETIME NOT NULL"/>
+            <column name="fromDate" type="DATETIME NOT NULL"/>
+            <column name="toDate" type="DATETIME NOT NULL"/>
+            <column name="description" type="VARCHAR(500) NOT NULL"/>
+            <column name="image" type="BYTEA"/>
+            <column name="idLocal" type="UUID NOT NULL"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="dailyOffers"
+                                 baseColumnNames="idLocal"
+                                 constraintName="fk_local_daily_offers"
+                                 referencedTableName="localProfile"
+                                 referencedColumnNames="idLocal"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
 </databaseChangeLog>
