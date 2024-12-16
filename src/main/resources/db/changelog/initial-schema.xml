@@ -91,4 +91,87 @@
                                  onDelete="CASCADE"/>
     </changeSet>
 
+    <changeSet id="create-user-table" author="negrioska">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user"/>
+            </not>
+        </preConditions>
+        <createTable tableName="user">
+            <column name="idUser" type="UUID">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="VARCHAR(100) NOT NULL"/>
+            <column name="name" type="VARCHAR(100) NOT NULL"/>
+            <column name="email" type="VARCHAR(100) NOT NULL"/>
+            <column name="role" type="VARCHAR(100) NOT NULL"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-review-table" author="negrioska">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="review"/>
+            </not>
+        </preConditions>
+        <createTable tableName="review">
+            <column name="idReview" type="UUID">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="dateCreated" type="DATETIME NOT NULL"/>
+            <column name="dateModified" type="DATETIME"/>
+            <column name="rating" type="INT NOT NULL"/>
+            <column name="description" type="VARCHAR(255) NOT NULL"/>
+            <column name="idUser" type="UUID NOT NULL"/>
+            <column name="idLocal" type="UUID NOT NULL"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="review"
+                                 baseColumnNames="idUser"
+                                 constraintName="fk_review_user"
+                                 referencedTableName="user"
+                                 referencedColumnNames="idUser"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="review"
+                                 baseColumnNames="idLocal"
+                                 constraintName="fk_review_local"
+                                 referencedTableName="localProfile"
+                                 referencedColumnNames="idLocal"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+    <changeSet id="create-localAdmin-table" author="negrioska">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="localAdmin"/>
+            </not>
+        </preConditions>
+        <createTable tableName="localAdmin">
+            <column name="idLocalAdmin" type="UUID">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="idUser" type="UUID NOT NULL"/>
+            <column name="idLocal" type="UUID NOT NULL"/>
+            <column name="dateCreated" type="TIMESTAMP NOT NULL"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="localAdmin"
+                                 baseColumnNames="idUser"
+                                 constraintName="fk_localAdmin_user"
+                                 referencedTableName="user"
+                                 referencedColumnNames="idUser"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="localAdmin"
+                                 baseColumnNames="idLocal"
+                                 constraintName="fk_localAdmin_localProfile"
+                                 referencedTableName="localProfile"
+                                 referencedColumnNames="idLocal"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+
 </databaseChangeLog>
