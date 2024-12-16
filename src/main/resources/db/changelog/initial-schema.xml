@@ -63,10 +63,11 @@
                                  onDelete="RESTRICT"
                                  onUpdate="RESTRICT"/>
     </changeSet>
-    <changeSet id="create-daily-offers" author="negrioska">
+
+  <changeSet id="create-daily-offers" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="idOffer"/>
+                <tableExists tableName="dailyOffers"/>
             </not>
         </preConditions>
         <createTable tableName="dailyOffers">
@@ -78,7 +79,7 @@
             <column name="fromDate" type="DATETIME NOT NULL"/>
             <column name="toDate" type="DATETIME NOT NULL"/>
             <column name="description" type="VARCHAR(500) NOT NULL"/>
-            <column name="image" type="BYTEA"/>
+            <column name="image" type="VARBINARY(8000)"/>
             <column name="idLocal" type="UUID NOT NULL"/>
         </createTable>
 
@@ -87,7 +88,7 @@
                                  constraintName="fk_local_daily_offers"
                                  referencedTableName="localProfile"
                                  referencedColumnNames="idLocal"
-                                 onDelete="CASCADE"
-                                 onUpdate="CASCADE"/>
+                                 onDelete="CASCADE"/>
     </changeSet>
+
 </databaseChangeLog>
