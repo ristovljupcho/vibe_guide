@@ -174,4 +174,113 @@
                                  onUpdate="CASCADE"/>
     </changeSet>
 
+    <changeSet id="create-events-table" author="petrovskiGj">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="events"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="events">
+            <column name="idEvent" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255) NOT NULL"> </column>
+            <column name="dateTimeCreated" type="DATETIME NOT NULL"> </column>
+            <column name="description" type="TEXT NOT NULL"> </column>
+            <column name="dateTimeStart" type="DATETIME NOT NULL"> </column>
+            <column name="idLocal" type="UUID NOT NULL"> </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="events"
+                baseColumnNames="idLocal"
+                referencedTableName="localProfile"
+                referencedColumnNames="idLocal"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+                constraintName="fk_events_localprofile"/>
+    </changeSet>
+
+    <changeSet id="create-photoGalleryEvents-table" author="petrovskiGj">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="photoGalleryEvents"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="photoGalleryEvents">
+
+            <column name="idPhoto" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="idEvent" type="UUID NOT NULL"> </column>
+            <column name="photo" type="VARBINARY(8000)"> </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="photoGalleryEvents"
+                baseColumnNames="idEvent"
+                referencedTableName="events"
+                referencedColumnNames="idEvent"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+                constraintName="fk_photogalleryevents_events"/>
+    </changeSet>
+
+    <changeSet id="create-photoGalleryLocal-table" author="petrovskiGj">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="photoGalleryLocal"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="photoGalleryLocal">
+            <column name="idPhoto" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="idLocal" type="UUID NOT NULL"> </column>
+            <column name="photo" type="VARBINARY(8000)"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="photoGalleryLocal"
+                baseColumnNames="idLocal"
+                referencedTableName="localProfile"
+                referencedColumnNames="idLocal"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+                constraintName="fk_photogallerylocal_localprofile"/>
+    </changeSet>
+
+    <changeSet id="create-workinghours-table" author="petrovskiGj">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="workingHours"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="workingHours">
+            <column name="idLocal" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="dayOfTheWeek" type="VARCHAR(50) NOT NULL"> </column>
+            <column name="startTime" type="TIME NOT NULL"> </column>
+            <column name="endTime" type="TIME NOT NULL"> </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="workingHours"
+                baseColumnNames="idLocal"
+                referencedTableName="localProfile"
+                referencedColumnNames="idLocal"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+                constraintName="fk_workinghours_localprofile"/>
+    </changeSet>
+
 </databaseChangeLog>
