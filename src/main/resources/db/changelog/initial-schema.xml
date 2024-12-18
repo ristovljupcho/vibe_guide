@@ -5,89 +5,90 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="create-traits-table" author="negrioska">
+    <changeSet id="create-trait-table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="traits"/>
+                <tableExists tableName="trait"/>
             </not>
         </preConditions>
-        <createTable tableName="traits">
-            <column name="idTraits" type="uuid">
+        <createTable tableName="trait">
+            <column name="trait_id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="alcoholicBeverage" type="BOOL"/>
-            <column name="cocktails" type="BOOL"/>
-            <column name="beer" type="BOOL"/>
-            <column name="coffee" type="BOOL"/>
-            <column name="wine" type="BOOL"/>
-            <column name="servesBreakfast" type="BOOL"/>
-            <column name="servesLunch" type="BOOL"/>
-            <column name="servesDinner" type="BOOL"/>
-            <column name="servesDessert" type="BOOL"/>
-            <column name="petFriendly" type="BOOL"/>
-            <column name="liveMusic" type="BOOL"/>
-            <column name="outdoorSeating" type="BOOL"/>
-            <column name="vegetarianFood" type="BOOL"/>
-            <column name="paidParking" type="BOOL"/>
+            <column name="alcoholic_beverage" type="BOOL NOT NULL"/>
+            <column name="cocktails" type="BOOL NOT NULL"/>
+            <column name="beer" type="BOOL NOT NULL"/>
+            <column name="wine" type="BOOL NOT NULL"/>
+            <column name="coffee" type="BOOL NOT NULL"/>
+            <column name="serves_breakfast" type="BOOL NOT NULL"/>
+            <column name="serves_lunch" type="BOOL NOT NULL"/>
+            <column name="serves_dinner" type="BOOL NOT NULL"/>
+            <column name="serves_dessert" type="BOOL NOT NULL"/>
+            <column name="vegetarian_food" type="BOOL NOT NULL"/>
+            <column name="pet_friendly" type="BOOL NOT NULL"/>
+            <column name="outdoor_seating" type="BOOL NOT NULL"/>
+            <column name="paid_parking" type="BOOL NOT NULL"/>
+            <column name="live_music" type="BOOL NOT NULL"/>
+            <column name="dress_code" type="VARCHAR(100) NOT NULL"/>
+            <column name="atmosphere" type="VARCHAR(100) NOT NULL"/>
+            <column name="music_type" type="VARCHAR(100) NOT NULL"/>
         </createTable>
     </changeSet>
 
-    <changeSet id="create-localProfile-table" author="negrioska">
+    <changeSet id="create-local-profile-table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="localProfile"/>
+                <tableExists tableName="local_profile"/>
             </not>
         </preConditions>
-        <createTable tableName="localProfile">
-            <column name="idLocal" type="uuid">
+        <createTable tableName="local_profile">
+            <column name="local_id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(255) NOT NULL"/>
             <column name="description" type="TEXT NOT NULL"/>
-            <column name="mapsUri" type="VARCHAR(255) NOT NULL"/>
-            <column name="phoneNumber" type="VARCHAR(255)"/>
+            <column name="maps_uri" type="VARCHAR(255) NOT NULL"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
             <column name="address" type="VARCHAR(255) NOT NULL"/>
             <column name="rating" type="DECIMAL(3, 1) NOT NULL"/>
-            <column name="menuLink" type="VARCHAR(255)"/>
-            <column name="dressCode" type="VARCHAR(100)"/>
-            <column name="atmosphere" type="VARCHAR(100) NOT NULL"/>
-            <column name="musicType" type="VARCHAR(100)"/>
-            <column name="idTraits" type="UUID NOT NULL"/>
+            <column name="menu_link" type="VARCHAR(255)"/>
+            <column name="trait_id" type="UUID NOT NULL"/>
         </createTable>
-        
-        <addForeignKeyConstraint baseTableName="localProfile" 
-                                 baseColumnNames="idTraits" 
-                                 constraintName="fk_local_traits" 
-                                 referencedTableName="traits"
-                                 referencedColumnNames="idTraits"
+
+        <addForeignKeyConstraint baseTableName="local_profile"
+                                 baseColumnNames="trait_id"
+                                 constraintName="fk_local_trait"
+                                 referencedTableName="trait"
+                                 referencedColumnNames="trait_id"
                                  onDelete="RESTRICT"
                                  onUpdate="RESTRICT"/>
     </changeSet>
 
-  <changeSet id="create-daily-offers" author="negrioska">
+    <changeSet id="create-daily-offer" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="dailyOffers"/>
+                <tableExists tableName="daily_offer"/>
             </not>
         </preConditions>
-        <createTable tableName="dailyOffers">
-            <column name="idDailyOffer" type="uuid">
+        <createTable tableName="daily_offer">
+            <column name="daily_offer_id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(100)"/>
-            <column name="dateCreated" type="DATETIME NOT NULL"/>
-            <column name="fromDate" type="DATETIME NOT NULL"/>
-            <column name="toDate" type="DATETIME NOT NULL"/>
+            <column name="date_created" type="DATETIME NOT NULL"/>
+            <column name="from_date" type="DATETIME NOT NULL"/>
+            <column name="to_date" type="DATETIME NOT NULL"/>
             <column name="description" type="VARCHAR(500) NOT NULL"/>
             <column name="image" type="VARBINARY(8000)"/>
-            <column name="idLocal" type="UUID NOT NULL"/>
+            <column name="local_id" type="UUID NOT NULL"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="dailyOffers"
-                                 baseColumnNames="idLocal"
-                                 constraintName="fk_local_daily_offers"
-                                 referencedTableName="localProfile"
-                                 referencedColumnNames="idLocal"
+        <addForeignKeyConstraint baseTableName="daily_offer"
+                                 baseColumnNames="local_id"
+                                 constraintName="fk_local_daily_offer"
+                                 referencedTableName="local_profile"
+                                 referencedColumnNames="local_id"
+                                 onUpdate="CASCADE"
                                  onDelete="CASCADE"/>
     </changeSet>
 
@@ -98,7 +99,7 @@
             </not>
         </preConditions>
         <createTable tableName="user">
-            <column name="idUser" type="UUID">
+            <column name="user_id" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
             <column name="username" type="VARCHAR(100) NOT NULL"/>
@@ -115,63 +116,62 @@
             </not>
         </preConditions>
         <createTable tableName="review">
-            <column name="idReview" type="UUID">
+            <column name="review_id" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="dateCreated" type="DATETIME NOT NULL"/>
-            <column name="dateModified" type="DATETIME"/>
+            <column name="date_created" type="DATETIME NOT NULL"/>
+            <column name="date_modified" type="DATETIME"/>
             <column name="rating" type="INT NOT NULL"/>
             <column name="description" type="VARCHAR(255) NOT NULL"/>
-            <column name="idUser" type="UUID NOT NULL"/>
-            <column name="idLocal" type="UUID NOT NULL"/>
+            <column name="user_id" type="UUID NOT NULL"/>
+            <column name="local_id" type="UUID NOT NULL"/>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="review"
-                                 baseColumnNames="idUser"
+                                 baseColumnNames="review_id"
                                  constraintName="fk_review_user"
                                  referencedTableName="user"
-                                 referencedColumnNames="idUser"
+                                 referencedColumnNames="user_id"
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
 
         <addForeignKeyConstraint baseTableName="review"
-                                 baseColumnNames="idLocal"
+                                 baseColumnNames="local_id"
                                  constraintName="fk_review_local"
-                                 referencedTableName="localProfile"
-                                 referencedColumnNames="idLocal"
+                                 referencedTableName="local_profile"
+                                 referencedColumnNames="local_id"
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
     </changeSet>
-    <changeSet id="create-localAdmin-table" author="negrioska">
+    <changeSet id="create-local-admin-table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="localAdmin"/>
+                <tableExists tableName="local_admin"/>
             </not>
         </preConditions>
-        <createTable tableName="localAdmin">
-            <column name="idLocalAdmin" type="UUID">
+        <createTable tableName="local_admin">
+            <column name="admin_id" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="idUser" type="UUID NOT NULL"/>
-            <column name="idLocal" type="UUID NOT NULL"/>
-            <column name="dateCreated" type="TIMESTAMP NOT NULL"/>
+            <column name="user_id" type="UUID NOT NULL"/>
+            <column name="local_id" type="UUID NOT NULL"/>
+            <column name="date_created" type="TIMESTAMP NOT NULL"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="localAdmin"
-                                 baseColumnNames="idUser"
-                                 constraintName="fk_localAdmin_user"
+        <addForeignKeyConstraint baseTableName="local_admin"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_local_admin_user"
                                  referencedTableName="user"
-                                 referencedColumnNames="idUser"
+                                 referencedColumnNames="user_id"
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
 
-        <addForeignKeyConstraint baseTableName="localAdmin"
-                                 baseColumnNames="idLocal"
-                                 constraintName="fk_localAdmin_localProfile"
-                                 referencedTableName="localProfile"
-                                 referencedColumnNames="idLocal"
+        <addForeignKeyConstraint baseTableName="local_profile"
+                                 baseColumnNames="local_id"
+                                 constraintName="fk_local_admin_local_profile"
+                                 referencedTableName="local_profile"
+                                 referencedColumnNames="local_id"
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
     </changeSet>
-
 </databaseChangeLog>
