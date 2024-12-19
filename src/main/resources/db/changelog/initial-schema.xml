@@ -175,113 +175,113 @@
                                  onUpdate="CASCADE"/>
     </changeSet>
 
-    <changeSet id="create-events-table" author="petrovskiGj">
+    <changeSet id="create-event-table" author="petrovskiGj">
 
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="events"/>
+                <tableExists tableName="event"/>
             </not>
         </preConditions>
 
-        <createTable tableName="events">
-            <column name="idEvent" type="uuid">
+        <createTable tableName="event">
+            <column name="event_id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(255) NOT NULL"> </column>
-            <column name="dateTimeCreated" type="DATETIME NOT NULL"> </column>
+            <column name="date_time_created" type="DATETIME NOT NULL"> </column>
             <column name="description" type="TEXT NOT NULL"> </column>
-            <column name="dateTimeStart" type="DATETIME NOT NULL"> </column>
-            <column name="idLocal" type="UUID NOT NULL"> </column>
+            <column name="date_time_start" type="DATETIME NOT NULL"> </column>
+            <column name="local_id" type="UUID NOT NULL"> </column>
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="events"
-                baseColumnNames="idLocal"
-                referencedTableName="localProfile"
-                referencedColumnNames="idLocal"
+                baseTableName="event"
+                baseColumnNames="local_id"
+                referencedTableName="local_profile"
+                referencedColumnNames="local_id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
-                constraintName="fk_events_localprofile"/>
+                constraintName="fk_event_local_profile"/>
     </changeSet>
 
-    <changeSet id="create-photoGalleryEvents-table" author="petrovskiGj">
+    <changeSet id="create-photo-gallery-event-table" author="petrovskiGj">
 
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="photoGalleryEvents"/>
+                <tableExists tableName="photo_gallery_event"/>
             </not>
         </preConditions>
 
-        <createTable tableName="photoGalleryEvents">
+        <createTable tableName="photo_gallery_event">
 
-            <column name="idPhoto" type="uuid">
+            <column name="photo_id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="idEvent" type="UUID NOT NULL"> </column>
+            <column name="event_id" type="UUID NOT NULL"> </column>
             <column name="photo" type="VARBINARY(8000)"> </column>
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="photoGalleryEvents"
-                baseColumnNames="idEvent"
-                referencedTableName="events"
-                referencedColumnNames="idEvent"
+                baseTableName="photo_gallery_event"
+                baseColumnNames="event_id"
+                referencedTableName="event"
+                referencedColumnNames="event_id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
-                constraintName="fk_photogalleryevents_events"/>
+                constraintName="fk_photo_gallery_event"/>
     </changeSet>
 
-    <changeSet id="create-photoGalleryLocal-table" author="petrovskiGj">
+    <changeSet id="create-photo-gallery-Local-table" author="petrovskiGj">
 
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="photoGalleryLocal"/>
+                <tableExists tableName="photo_gallery_local"/>
             </not>
         </preConditions>
 
-        <createTable tableName="photoGalleryLocal">
-            <column name="idPhoto" type="uuid">
+        <createTable tableName="photo_gallery_local">
+            <column name="photo_id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="idLocal" type="UUID NOT NULL"> </column>
+            <column name="local_id" type="UUID NOT NULL"> </column>
             <column name="photo" type="VARBINARY(8000)"/>
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="photoGalleryLocal"
-                baseColumnNames="idLocal"
-                referencedTableName="localProfile"
-                referencedColumnNames="idLocal"
+                baseTableName="photo_gallery_local"
+                baseColumnNames="local_id"
+                referencedTableName="local_profile"
+                referencedColumnNames="local_id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
-                constraintName="fk_photogallerylocal_localprofile"/>
+                constraintName="fk_photo_gallery_local_profile"/>
     </changeSet>
 
-    <changeSet id="create-workinghours-table" author="petrovskiGj">
+    <changeSet id="create-working-hours-table" author="petrovskiGj">
 
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="workingHours"/>
+                <tableExists tableName="working_hours"/>
             </not>
         </preConditions>
 
-        <createTable tableName="workingHours">
-            <column name="idLocal" type="uuid">
+        <createTable tableName="working_hours">
+            <column name="local_id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="dayOfTheWeek" type="VARCHAR(50) NOT NULL"> </column>
-            <column name="startTime" type="TIME NOT NULL"> </column>
-            <column name="endTime" type="TIME NOT NULL"> </column>
+            <column name="day_of_week" type="VARCHAR(50) NOT NULL"> </column>
+            <column name="start_time" type="TIME NOT NULL"> </column>
+            <column name="end_time" type="TIME NOT NULL"> </column>
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="workingHours"
-                baseColumnNames="idLocal"
-                referencedTableName="localProfile"
-                referencedColumnNames="idLocal"
+                baseTableName="working_hours"
+                baseColumnNames="local_id"
+                referencedTableName="local_profile"
+                referencedColumnNames="local_id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
-                constraintName="fk_workinghours_localprofile"/>
+                constraintName="fk_working_hours_local_profile"/>
     </changeSet>
 
 </databaseChangeLog>
