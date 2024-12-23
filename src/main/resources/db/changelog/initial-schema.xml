@@ -188,9 +188,10 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(255) NOT NULL"> </column>
-            <column name="date_time_created" type="DATETIME NOT NULL"> </column>
+            <column name="date_created" type="DATETIME NOT NULL"> </column>
             <column name="description" type="TEXT NOT NULL"> </column>
-            <column name="date_time_start" type="DATETIME NOT NULL"> </column>
+            <column name="from_date" type="DATETIME NOT NULL"> </column>
+            <column name="to_date" type="DATETIME"> </column>
             <column name="local_profile_id" type="UUID NOT NULL"> </column>
         </createTable>
 
