@@ -137,7 +137,7 @@
 
         <addForeignKeyConstraint baseTableName="review"
                                  baseColumnNames="local_profile_id"
-                                 constraintName="fk_review_local"
+                                 constraintName="fk_review_local_profile"
                                  referencedTableName="local_profile"
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"
@@ -254,7 +254,7 @@
                 referencedColumnNames="id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
-                constraintName="fk_photo_gallery_local"/>
+                constraintName="fk_photo_gallery_local_profile"/>
     </changeSet>
 
     <changeSet id="create-working-hours-table" author="petrovskiGj">
@@ -266,13 +266,10 @@
         </preConditions>
 
         <createTable tableName="working_hours">
-            <column name="id" type="uuid">
-                <constraints primaryKey="true"/>
-            </column>
             <column name="day_of_week" type="VARCHAR(50) NOT NULL"> </column>
             <column name="start_time" type="TIME NOT NULL"> </column>
             <column name="end_time" type="TIME NOT NULL"> </column>
-            <column name="local_profile_id" type="uuid"> </column>
+            <column name="local_profile_id" type="uuid NOT NULL"> </column>
         </createTable>
 
         <addForeignKeyConstraint
@@ -283,6 +280,11 @@
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
                 constraintName="fk_working_hours_local_profile"/>
-    </changeSet>
 
+        <addPrimaryKey
+                tableName="working_hours"
+                columnNames="day_of_week, local_profile_id"
+                constraintName="pk_working_hours"/>
+
+    </changeSet>
 </databaseChangeLog>
