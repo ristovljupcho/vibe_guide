@@ -39,7 +39,7 @@ public class LocalProfile {
 
     private double rating = 0.0;
 
-    private String manuLink;
+    private String menuLink;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trait_id")
