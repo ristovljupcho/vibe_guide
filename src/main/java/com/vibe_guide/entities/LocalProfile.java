@@ -1,19 +1,10 @@
 package com.vibe_guide.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -45,6 +36,10 @@ public class LocalProfile {
     @JoinColumn(name = "trait_id")
     @ToString.Exclude
     private Trait trait;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "local_profile_admin", joinColumns = @JoinColumn(name = "local_profile_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> users;
 
     @Override
     public boolean equals(Object o) {
