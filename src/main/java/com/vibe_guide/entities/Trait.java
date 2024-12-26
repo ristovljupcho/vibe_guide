@@ -39,13 +39,13 @@ public class Trait {
 
     private boolean coffee;
 
-    private boolean serverBreakfast;
+    private boolean servesBreakfast;
 
-    private boolean serverLunch;
+    private boolean servesLunch;
 
-    private boolean serverDinner;
+    private boolean servesDinner;
 
-    private boolean serverDessert;
+    private boolean servesDessert;
 
     private boolean vegetarianFood;
 
