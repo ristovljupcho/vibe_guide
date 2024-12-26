@@ -95,10 +95,10 @@
     <changeSet id="create-user-table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="user"/>
+                <tableExists tableName="user_table"/>
             </not>
         </preConditions>
-        <createTable tableName="user">
+        <createTable tableName="user_table">
             <column name="id" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
@@ -130,7 +130,7 @@
         <addForeignKeyConstraint baseTableName="review"
                                  baseColumnNames="user_id"
                                  constraintName="fk_review_user"
-                                 referencedTableName="user"
+                                 referencedTableName="user_table"
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
@@ -161,7 +161,7 @@
         <addForeignKeyConstraint baseTableName="local_profile_admin"
                                  baseColumnNames="user_id"
                                  constraintName="fk_local_profile_admin_user"
-                                 referencedTableName="user"
+                                 referencedTableName="user_table"
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
