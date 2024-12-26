@@ -1,15 +1,13 @@
 package com.vibe_guide.entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +15,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -26,41 +23,26 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class LocalProfile {
+@Table(name = "local_profile_admin")
+public class LocalAdmin {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private String description;
-
-    private String mapsUri;
-
-    private String phoneNumber;
-
-    private String address;
-
-    private double rating = 0.0;
-
-    private String menuLink;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "trait_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "local_profile_id")
     @ToString.Exclude
-    private Trait trait;
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "local_profile_admin",
-            joinColumns = @JoinColumn(name = "local_profile_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
+    private LocalProfile localProfile;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LocalProfile that = (LocalProfile) o;
+        LocalAdmin that = (LocalAdmin) o;
         return Objects.equals(id, that.id);
     }
 
