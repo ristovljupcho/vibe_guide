@@ -15,23 +15,8 @@
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="alcoholic_beverage" type="BOOL NOT NULL"/>
-            <column name="cocktails" type="BOOL NOT NULL"/>
-            <column name="beer" type="BOOL NOT NULL"/>
-            <column name="wine" type="BOOL NOT NULL"/>
-            <column name="coffee" type="BOOL NOT NULL"/>
-            <column name="serves_breakfast" type="BOOL NOT NULL"/>
-            <column name="serves_lunch" type="BOOL NOT NULL"/>
-            <column name="serves_dinner" type="BOOL NOT NULL"/>
-            <column name="serves_dessert" type="BOOL NOT NULL"/>
-            <column name="vegetarian_food" type="BOOL NOT NULL"/>
-            <column name="pet_friendly" type="BOOL NOT NULL"/>
-            <column name="outdoor_seating" type="BOOL NOT NULL"/>
-            <column name="paid_parking" type="BOOL NOT NULL"/>
-            <column name="live_music" type="BOOL NOT NULL"/>
-            <column name="dress_code" type="VARCHAR(100) NOT NULL"/>
-            <column name="atmosphere" type="VARCHAR(100) NOT NULL"/>
-            <column name="music_type" type="VARCHAR(100) NOT NULL"/>
+            <column name="trait_name" type="VARCHAR(50)"/>
+            <column name="trait_type" type="VARCHAR(50)"/>
         </createTable>
     </changeSet>
 
@@ -52,16 +37,41 @@
             <column name="address" type="VARCHAR(255) NOT NULL"/>
             <column name="rating" type="DECIMAL(3, 1) NOT NULL"/>
             <column name="menu_link" type="VARCHAR(255)"/>
-            <column name="trait_id" type="UUID NOT NULL"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="local_profile_trait_table" author="negrioska">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="local_profile_trait"/>
+            </not>
+        </preConditions>
+        <createTable tableName="local_profile_trait">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="local_profile_id" type="uuid"/>
+            <column name="trait_id" type="uuid"/>
+            <column name="like_counter" type="INT"/>
+            <column name="priority" type="BOOL"/>
+            <column name="additional_info" type="VARCHAR(100)"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="local_profile"
+        <addForeignKeyConstraint baseTableName="local_profile_trait"
+                                 baseColumnNames="local_profile_id"
+                                 constraintName="fk_local_profile"
+                                 referencedTableName="local_profile"
+                                 referencedColumnNames="id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="local_profile_trait"
                                  baseColumnNames="trait_id"
-                                 constraintName="fk_local_profile_trait"
+                                 constraintName="fk_trait"
                                  referencedTableName="trait"
                                  referencedColumnNames="id"
-                                 onDelete="RESTRICT"
-                                 onUpdate="RESTRICT"/>
+                                 onUpdate="CASCADE"
+                                 onDelete="RESTRICT"/>
     </changeSet>
 
     <changeSet id="create-daily-offer" author="negrioska">
@@ -143,6 +153,7 @@
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
     </changeSet>
+
     <changeSet id="create-local-admin-table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -176,23 +187,21 @@
     </changeSet>
 
     <changeSet id="create-event-table" author="petrovskiGj">
-
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="event"/>
             </not>
         </preConditions>
-
         <createTable tableName="event">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="VARCHAR(255) NOT NULL"> </column>
-            <column name="date_created" type="DATE NOT NULL"> </column>
-            <column name="description" type="TEXT NOT NULL"> </column>
-            <column name="from_date" type="DATETIME NOT NULL"> </column>
-            <column name="to_date" type="DATETIME"> </column>
-            <column name="local_profile_id" type="UUID NOT NULL"> </column>
+            <column name="name" type="VARCHAR(255) NOT NULL"/>
+            <column name="date_created" type="DATE NOT NULL"/>
+            <column name="description" type="TEXT NOT NULL"/>
+            <column name="from_date" type="DATETIME NOT NULL"/>
+            <column name="to_date" type="DATETIME"/>
+            <column name="local_profile_id" type="UUID NOT NULL"/>
         </createTable>
 
         <addForeignKeyConstraint
@@ -206,20 +215,18 @@
     </changeSet>
 
     <changeSet id="create-photo-gallery-event-table" author="petrovskiGj">
-
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="photo_gallery_event"/>
             </not>
         </preConditions>
-
         <createTable tableName="photo_gallery_event">
 
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="event_id" type="UUID NOT NULL"> </column>
-            <column name="photo" type="VARBINARY(8000)"> </column>
+            <column name="event_id" type="UUID NOT NULL"/>
+            <column name="photo" type="VARBINARY(8000)"/>
         </createTable>
 
         <addForeignKeyConstraint
@@ -232,19 +239,17 @@
                 constraintName="fk_photo_gallery_event"/>
     </changeSet>
 
-    <changeSet id="create-photo-gallery-Local-table" author="petrovskiGj">
-
+    <changeSet id="create-photo-gallery-local-profile-table" author="petrovskiGj">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="photo_gallery_local_profile"/>
             </not>
         </preConditions>
-
         <createTable tableName="photo_gallery_local_profile">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="local_profile_id" type="UUID NOT NULL"> </column>
+            <column name="local_profile_id" type="UUID NOT NULL"/>
             <column name="photo" type="VARBINARY(8000)"/>
         </createTable>
 
@@ -259,18 +264,16 @@
     </changeSet>
 
     <changeSet id="create-working-hours-table" author="petrovskiGj">
-
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="working_hours"/>
             </not>
         </preConditions>
-
         <createTable tableName="working_hours">
-            <column name="day_of_week" type="VARCHAR(50) NOT NULL"> </column>
-            <column name="start_time" type="TIME NOT NULL"> </column>
-            <column name="end_time" type="TIME NOT NULL"> </column>
-            <column name="local_profile_id" type="uuid NOT NULL"> </column>
+            <column name="day_of_week" type="VARCHAR(50) NOT NULL"/>
+            <column name="start_time" type="TIME NOT NULL"/>
+            <column name="end_time" type="TIME NOT NULL"/>
+            <column name="local_profile_id" type="uuid NOT NULL"/>
         </createTable>
 
         <addForeignKeyConstraint
@@ -286,6 +289,5 @@
                 tableName="working_hours"
                 columnNames="day_of_week, local_profile_id"
                 constraintName="pk_working_hours"/>
-
     </changeSet>
 </databaseChangeLog>
