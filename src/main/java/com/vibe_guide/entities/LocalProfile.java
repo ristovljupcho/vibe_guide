@@ -1,7 +1,11 @@
 package com.vibe_guide.entities;
 
+import com.vibe_guide.enums.PriceLevel;
+import com.vibe_guide.enums.PrimaryType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,6 +48,12 @@ public class LocalProfile {
     private double rating = 0.0;
 
     private String menuLink;
+
+    @Enumerated(EnumType.STRING)
+    private PrimaryType primaryType;
+
+    @Enumerated(EnumType.STRING)
+    private PriceLevel priceLevel;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "local_profile_admin",
