@@ -49,6 +49,8 @@ public class LocalProfile {
 
     private String menuLink;
 
+    private Boolean reservable = false;
+
     @Enumerated(EnumType.STRING)
     private PrimaryType primaryType;
 
