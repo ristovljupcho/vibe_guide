@@ -47,14 +47,11 @@
             </not>
         </preConditions>
         <createTable tableName="local_profile_trait">
-            <column name="id" type="uuid">
-                <constraints primaryKey="true"/>
-            </column>
             <column name="local_profile_id" type="uuid"/>
             <column name="trait_id" type="uuid"/>
             <column name="like_counter" type="INT"/>
             <column name="priority" type="BOOL"/>
-            <column name="additional_info" type="VARCHAR(100)"/>
+            <column name="additional_information" type="VARCHAR(100)"/>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="local_profile_trait"
@@ -72,6 +69,11 @@
                                  referencedColumnNames="id"
                                  onUpdate="CASCADE"
                                  onDelete="RESTRICT"/>
+
+        <addPrimaryKey
+                tableName="local_profile_trait"
+                columnNames="local_profile_id, trait_id"
+                constraintName="pk_local_profile_trait"/>
     </changeSet>
 
     <changeSet id="create-daily-offer" author="negrioska">
