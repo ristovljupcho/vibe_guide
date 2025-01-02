@@ -10,7 +10,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkingHoursId implements Serializable {
-    private String dayOfWeek;
+public class LocalProfileTraitId implements Serializable {
+    private UUID trait;
     private UUID localProfile;
 }

@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,16 +45,16 @@ public class LocalProfile {
 
     private String menuLink;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "trait_id")
-    @ToString.Exclude
-    private Trait trait;
-
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "local_profile_admin",
             joinColumns = @JoinColumn(name = "local_profile_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
+
+    @OneToMany(mappedBy = "localProfile",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Set<LocalProfileTrait> localProfileTraits;
 
     @Override
     public boolean equals(Object o) {

@@ -1,21 +1,25 @@
 package com.vibe_guide.entities;
 
-import com.vibe_guide.enums.Atmosphere;
-import com.vibe_guide.enums.DressCode;
-import com.vibe_guide.enums.MusicType;
+import com.vibe_guide.enums.TraitType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -29,42 +33,16 @@ public class Trait {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private boolean alcoholicBeverage;
-
-    private boolean cocktails;
-
-    private boolean beer;
-
-    private boolean wine;
-
-    private boolean coffee;
-
-    private boolean servesBreakfast;
-
-    private boolean servesLunch;
-
-    private boolean servesDinner;
-
-    private boolean servesDessert;
-
-    private boolean vegetarianFood;
-
-    private boolean petFriendly;
-
-    private boolean outdoorSeating;
-
-    private boolean paidParking;
-
-    private boolean liveMusic;
-
     @Enumerated(EnumType.STRING)
-    private DressCode dressCode;
+    private TraitType traitType;
 
-    @Enumerated(EnumType.STRING)
-    private Atmosphere atmosphere;
+    @Column(unique = true)
+    private String traitName;
 
-    @Enumerated(EnumType.STRING)
-    private MusicType musicType;
+    @OneToMany(mappedBy = "trait",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Set<LocalProfileTrait> localProfileTraits = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
