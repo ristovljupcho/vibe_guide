@@ -39,7 +39,6 @@
             <column name="menu_link" type="VARCHAR(255)"/>
             <column name="price_level" type="VARCHAR(50)"/>
             <column name="primary_type" type="VARCHAR(50)"/>
-            <column name="reservable" type="BOOL"/>
         </createTable>
     </changeSet>
 
