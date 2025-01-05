@@ -29,9 +29,9 @@ public class WorkingHours {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "local_profile_id")
+    @JoinColumn(name = "place_id")
     @ToString.Exclude
-    private LocalProfile localProfile;
+    private Place place;
 
     private LocalTime startTime;
 
@@ -42,11 +42,11 @@ public class WorkingHours {
         if (o == null || getClass() != o.getClass()) return false;
         WorkingHours that = (WorkingHours) o;
         return Objects.equals(dayOfWeek, that.dayOfWeek) &&
-                Objects.equals(localProfile, that.localProfile);
+                Objects.equals(place, that.place);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dayOfWeek, localProfile);
+        return Objects.hash(dayOfWeek, place);
     }
 }

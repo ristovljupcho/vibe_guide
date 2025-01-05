@@ -1,6 +1,6 @@
 package com.vibe_guide.entities;
 
-import com.vibe_guide.entities.composite_keys.LocalProfileTraitId;
+import com.vibe_guide.entities.composite_keys.PlaceTraitId;
 import com.vibe_guide.enums.PriorityLevel;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,13 +23,13 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@IdClass(LocalProfileTraitId.class)
-public class LocalProfileTrait {
+@IdClass(PlaceTraitId.class)
+public class PlaceTrait {
     @Id
     @ManyToOne
-    @JoinColumn(name = "local_profile_id")
+    @JoinColumn(name = "place_id")
     @ToString.Exclude
-    private LocalProfile localProfile;
+    private Place place;
 
     @Id
     @ManyToOne
@@ -48,13 +48,13 @@ public class LocalProfileTrait {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LocalProfileTrait that = (LocalProfileTrait) o;
-        return Objects.equals(localProfile, that.localProfile) &&
+        PlaceTrait that = (PlaceTrait) o;
+        return Objects.equals(place, that.place) &&
                 Objects.equals(trait, that.trait);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(localProfile, trait);
+        return Objects.hash(place, trait);
     }
 }

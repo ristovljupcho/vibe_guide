@@ -23,27 +23,24 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "local_profile_admin")
-public class LocalProfileAdmin {
+@Table(name = "place_gallery")
+public class PlaceGallery {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @ToString.Exclude
-    private User user;
+    private byte[] photo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "local_profile_id")
+    @JoinColumn(name = "place_id")
     @ToString.Exclude
-    private LocalProfile localProfile;
+    private Place place;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LocalProfileAdmin that = (LocalProfileAdmin) o;
+        PlaceGallery that = (PlaceGallery) o;
         return Objects.equals(id, that.id);
     }
 

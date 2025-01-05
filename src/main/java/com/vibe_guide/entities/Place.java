@@ -27,7 +27,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class LocalProfile {
+public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -52,21 +52,21 @@ public class LocalProfile {
     @Enumerated(EnumType.STRING)
     private PriceLevel priceLevel;
 
-    @OneToMany(mappedBy = "localProfile",
+    @OneToMany(mappedBy = "place",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private Set<LocalProfileAdmin> admins;
+    private Set<PlaceAdmin> admins;
 
-    @OneToMany(mappedBy = "localProfile",
+    @OneToMany(mappedBy = "place",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private Set<LocalProfileTrait> traits;
+    private Set<PlaceTrait> traits;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LocalProfile that = (LocalProfile) o;
+        Place that = (Place) o;
         return Objects.equals(id, that.id);
     }
 

@@ -12,5 +12,5 @@ import java.util.UUID;
 @AllArgsConstructor
 public class WorkingHoursId implements Serializable {
     private String dayOfWeek;
-    private UUID localProfile;
+    private UUID place;
 }

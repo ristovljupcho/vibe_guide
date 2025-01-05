@@ -10,7 +10,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocalProfileTraitId implements Serializable {
+public class PlaceTraitId implements Serializable {
     private UUID trait;
-    private UUID localProfile;
+    private UUID place;
 }
