@@ -1,12 +1,15 @@
 package com.vibe_guide.entities;
 
 import com.vibe_guide.enums.Role;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +18,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -37,6 +41,11 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Set<LocalProfileAdmin> localProfiles;
 
     @Override
     public boolean equals(Object o) {
