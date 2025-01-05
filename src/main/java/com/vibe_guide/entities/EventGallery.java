@@ -23,8 +23,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "photo_gallery_event")
-public class PhotoGalleryEvent {
+@Table(name = "event_gallery")
+public class EventGallery {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -40,7 +40,7 @@ public class PhotoGalleryEvent {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PhotoGalleryEvent that = (PhotoGalleryEvent) o;
+        EventGallery that = (EventGallery) o;
         return Objects.equals(id, that.id);
     }
 
