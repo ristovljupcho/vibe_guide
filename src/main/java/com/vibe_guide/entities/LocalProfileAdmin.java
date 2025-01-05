@@ -24,13 +24,14 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "local_profile_admin")
-public class LocalAdmin {
+public class LocalProfileAdmin {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,7 +43,7 @@ public class LocalAdmin {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LocalAdmin that = (LocalAdmin) o;
+        LocalProfileAdmin that = (LocalProfileAdmin) o;
         return Objects.equals(id, that.id);
     }
 

@@ -10,9 +10,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -55,16 +52,15 @@ public class LocalProfile {
     @Enumerated(EnumType.STRING)
     private PriceLevel priceLevel;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "local_profile_admin",
-            joinColumns = @JoinColumn(name = "local_profile_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
+    @OneToMany(mappedBy = "localProfile",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Set<LocalProfileAdmin> admins;
 
     @OneToMany(mappedBy = "localProfile",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private Set<LocalProfileTrait> localProfileTraits;
+    private Set<LocalProfileTrait> traits;
 
     @Override
     public boolean equals(Object o) {
