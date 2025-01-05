@@ -42,9 +42,9 @@ public class DailyOffer {
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "local_profile_id")
+    @JoinColumn(name = "place_id")
     @ToString.Exclude
-    private LocalProfile localProfile;
+    private Place place;
 
     @Override
     public boolean equals(Object o) {

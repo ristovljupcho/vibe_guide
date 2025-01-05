@@ -20,13 +20,13 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="create-local-profile-table" author="negrioska">
+    <changeSet id="create-place-table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="local_profile"/>
+                <tableExists tableName="place"/>
             </not>
         </preConditions>
-        <createTable tableName="local_profile">
+        <createTable tableName="place">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
@@ -42,40 +42,40 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="local_profile_trait_table" author="negrioska">
+    <changeSet id="place_trait_table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="local_profile_trait"/>
+                <tableExists tableName="place_trait"/>
             </not>
         </preConditions>
-        <createTable tableName="local_profile_trait">
-            <column name="local_profile_id" type="uuid"/>
+        <createTable tableName="place_trait">
+            <column name="place_id" type="uuid"/>
             <column name="trait_id" type="uuid"/>
             <column name="like_counter" type="INT"/>
             <column name="priority" type="BOOL"/>
             <column name="additional_information" type="VARCHAR(100)"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="local_profile_trait"
-                                 baseColumnNames="local_profile_id"
-                                 constraintName="fk_local_profile"
-                                 referencedTableName="local_profile"
+        <addForeignKeyConstraint baseTableName="place_trait"
+                                 baseColumnNames="place_id"
+                                 referencedTableName="place"
                                  referencedColumnNames="id"
                                  onUpdate="CASCADE"
-                                 onDelete="CASCADE"/>
+                                 onDelete="CASCADE"
+                                 constraintName="fk_place"/>
 
-        <addForeignKeyConstraint baseTableName="local_profile_trait"
+        <addForeignKeyConstraint baseTableName="place_trait"
                                  baseColumnNames="trait_id"
-                                 constraintName="fk_trait"
                                  referencedTableName="trait"
                                  referencedColumnNames="id"
                                  onUpdate="CASCADE"
-                                 onDelete="RESTRICT"/>
+                                 onDelete="RESTRICT"
+                                 constraintName="fk_trait"/>
 
         <addPrimaryKey
-                tableName="local_profile_trait"
-                columnNames="local_profile_id, trait_id"
-                constraintName="pk_local_profile_trait"/>
+                tableName="place_trait"
+                columnNames="place_id, trait_id"
+                constraintName="pk_place_trait"/>
     </changeSet>
 
     <changeSet id="create-daily-offer" author="negrioska">
@@ -94,16 +94,16 @@
             <column name="to_date" type="DATETIME NOT NULL"/>
             <column name="description" type="VARCHAR(500) NOT NULL"/>
             <column name="image" type="VARBINARY(8000)"/>
-            <column name="local_profile_id" type="UUID NOT NULL"/>
+            <column name="place_id" type="UUID NOT NULL"/>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="daily_offer"
-                                 baseColumnNames="local_profile_id"
-                                 constraintName="fk_local_profile_daily_offer"
-                                 referencedTableName="local_profile"
+                                 baseColumnNames="place_id"
+                                 referencedTableName="place"
                                  referencedColumnNames="id"
                                  onUpdate="CASCADE"
-                                 onDelete="CASCADE"/>
+                                 onDelete="CASCADE"
+                                 constraintName="fk_place_daily_offer"/>
     </changeSet>
 
     <changeSet id="create-user-table" author="negrioska">
@@ -138,56 +138,56 @@
             <column name="rating" type="INT NOT NULL"/>
             <column name="description" type="VARCHAR(255) NOT NULL"/>
             <column name="user_id" type="UUID NOT NULL"/>
-            <column name="local_profile_id" type="UUID NOT NULL"/>
+            <column name="place_id" type="UUID NOT NULL"/>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="review"
                                  baseColumnNames="user_id"
-                                 constraintName="fk_review_user"
                                  referencedTableName="user_table"
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"
-                                 onUpdate="CASCADE"/>
+                                 onUpdate="CASCADE"
+                                 constraintName="fk_review_user"/>
 
         <addForeignKeyConstraint baseTableName="review"
-                                 baseColumnNames="local_profile_id"
-                                 constraintName="fk_review_local_profile"
-                                 referencedTableName="local_profile"
+                                 baseColumnNames="place_id"
+                                 referencedTableName="place"
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"
-                                 onUpdate="CASCADE"/>
+                                 onUpdate="CASCADE"
+                                 constraintName="fk_review_place"/>
     </changeSet>
 
-    <changeSet id="create-local-admin-table" author="negrioska">
+    <changeSet id="create-place-admin-table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="local_profile_admin"/>
+                <tableExists tableName="place_admin"/>
             </not>
         </preConditions>
-        <createTable tableName="local_profile_admin">
+        <createTable tableName="place_admin">
             <column name="id" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
             <column name="user_id" type="UUID NOT NULL"/>
-            <column name="local_profile_id" type="UUID NOT NULL"/>
+            <column name="place_id" type="UUID NOT NULL"/>
             <column name="date_created" type="TIMESTAMP NOT NULL"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="local_profile_admin"
+        <addForeignKeyConstraint baseTableName="place_admin"
                                  baseColumnNames="user_id"
-                                 constraintName="fk_local_profile_admin_user"
                                  referencedTableName="user_table"
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"
-                                 onUpdate="CASCADE"/>
+                                 onUpdate="CASCADE"
+                                 constraintName="fk_place_admin_user"/>
 
-        <addForeignKeyConstraint baseTableName="local_profile_admin"
-                                 baseColumnNames="local_profile_id"
-                                 constraintName="fk_local_profile_admin_local_profile"
-                                 referencedTableName="local_profile"
+        <addForeignKeyConstraint baseTableName="place_admin"
+                                 baseColumnNames="place_id"
+                                 referencedTableName="place"
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"
-                                 onUpdate="CASCADE"/>
+                                 onUpdate="CASCADE"
+                                 constraintName="fk_place_admin_place"/>
     </changeSet>
 
     <changeSet id="create-event-table" author="petrovskiGj">
@@ -205,26 +205,26 @@
             <column name="description" type="TEXT NOT NULL"/>
             <column name="from_date" type="DATETIME NOT NULL"/>
             <column name="to_date" type="DATETIME"/>
-            <column name="local_profile_id" type="UUID NOT NULL"/>
+            <column name="place_id" type="UUID NOT NULL"/>
         </createTable>
 
         <addForeignKeyConstraint
                 baseTableName="event"
-                baseColumnNames="local_profile_id"
-                referencedTableName="local_profile"
+                baseColumnNames="place_id"
+                referencedTableName="place"
                 referencedColumnNames="id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
-                constraintName="fk_event_local_profile"/>
+                constraintName="fk_event_place"/>
     </changeSet>
 
-    <changeSet id="create-photo-gallery-event-table" author="petrovskiGj">
+    <changeSet id="create-event-gallery-table" author="petrovskiGj">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="photo_gallery_event"/>
+                <tableExists tableName="event_gallery"/>
             </not>
         </preConditions>
-        <createTable tableName="photo_gallery_event">
+        <createTable tableName="event_gallery">
 
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
@@ -234,37 +234,37 @@
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="photo_gallery_event"
+                baseTableName="event_gallery"
                 baseColumnNames="event_id"
                 referencedTableName="event"
                 referencedColumnNames="id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
-                constraintName="fk_photo_gallery_event"/>
+                constraintName="fk_event_gallery"/>
     </changeSet>
 
-    <changeSet id="create-photo-gallery-local-profile-table" author="petrovskiGj">
+    <changeSet id="create-place-gallery-table" author="petrovskiGj">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="photo_gallery_local_profile"/>
+                <tableExists tableName="place_gallery"/>
             </not>
         </preConditions>
-        <createTable tableName="photo_gallery_local_profile">
+        <createTable tableName="place_gallery">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="local_profile_id" type="UUID NOT NULL"/>
+            <column name="place_id" type="UUID NOT NULL"/>
             <column name="photo" type="VARBINARY(8000)"/>
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="photo_gallery_local_profile"
-                baseColumnNames="local_profile_id"
-                referencedTableName="local_profile"
+                baseTableName="place_gallery"
+                baseColumnNames="place_id"
+                referencedTableName="place"
                 referencedColumnNames="id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
-                constraintName="fk_photo_gallery_local_profile"/>
+                constraintName="fk_place_gallery"/>
     </changeSet>
 
     <changeSet id="create-working-hours-table" author="petrovskiGj">
@@ -277,21 +277,21 @@
             <column name="day_of_week" type="VARCHAR(50) NOT NULL"/>
             <column name="start_time" type="TIME NOT NULL"/>
             <column name="end_time" type="TIME NOT NULL"/>
-            <column name="local_profile_id" type="uuid NOT NULL"/>
+            <column name="place_id" type="uuid NOT NULL"/>
         </createTable>
 
         <addForeignKeyConstraint
                 baseTableName="working_hours"
-                baseColumnNames="local_profile_id"
-                referencedTableName="local_profile"
+                baseColumnNames="place_id"
+                referencedTableName="place"
                 referencedColumnNames="id"
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
-                constraintName="fk_working_hours_local_profile"/>
+                constraintName="fk_working_hours_place"/>
 
         <addPrimaryKey
                 tableName="working_hours"
-                columnNames="day_of_week, local_profile_id"
+                columnNames="day_of_week, place_id"
                 constraintName="pk_working_hours"/>
     </changeSet>
 </databaseChangeLog>

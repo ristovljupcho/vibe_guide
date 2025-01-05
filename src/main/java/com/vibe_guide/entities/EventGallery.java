@@ -23,8 +23,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "photo_gallery_local_profile")
-public class PhotoGalleryLocalProfile {
+@Table(name = "event_gallery")
+public class EventGallery {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -32,15 +32,15 @@ public class PhotoGalleryLocalProfile {
     private byte[] photo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "local_profile_id")
+    @JoinColumn(name = "event_id")
     @ToString.Exclude
-    private LocalProfile localProfile;
+    private Event event;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PhotoGalleryLocalProfile that = (PhotoGalleryLocalProfile) o;
+        EventGallery that = (EventGallery) o;
         return Objects.equals(id, that.id);
     }
 

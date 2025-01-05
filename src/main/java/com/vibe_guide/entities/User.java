@@ -45,7 +45,7 @@ public class User {
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private Set<LocalProfileAdmin> localProfiles;
+    private Set<PlaceAdmin> places;
 
     @Override
     public boolean equals(Object o) {

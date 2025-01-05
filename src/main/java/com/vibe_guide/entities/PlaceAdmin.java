@@ -23,8 +23,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "local_profile_admin")
-public class LocalProfileAdmin {
+@Table(name = "place_admin")
+public class PlaceAdmin {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -35,15 +35,15 @@ public class LocalProfileAdmin {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "local_profile_id")
+    @JoinColumn(name = "place_id")
     @ToString.Exclude
-    private LocalProfile localProfile;
+    private Place place;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LocalProfileAdmin that = (LocalProfileAdmin) o;
+        PlaceAdmin that = (PlaceAdmin) o;
         return Objects.equals(id, that.id);
     }
 

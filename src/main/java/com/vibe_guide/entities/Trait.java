@@ -41,7 +41,7 @@ public class Trait {
     @OneToMany(mappedBy = "trait",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private Set<LocalProfileTrait> localProfiles;
+    private Set<PlaceTrait> places;
 
     @Override
     public boolean equals(Object o) {

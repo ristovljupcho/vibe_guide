@@ -23,8 +23,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "photo_gallery_event")
-public class PhotoGalleryEvent {
+@Table(name = "place_gallery")
+public class PlaceGallery {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -32,15 +32,15 @@ public class PhotoGalleryEvent {
     private byte[] photo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
+    @JoinColumn(name = "place_id")
     @ToString.Exclude
-    private Event event;
+    private Place place;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PhotoGalleryEvent that = (PhotoGalleryEvent) o;
+        PlaceGallery that = (PlaceGallery) o;
         return Objects.equals(id, that.id);
     }
 
