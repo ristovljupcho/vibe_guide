@@ -39,7 +39,7 @@ public class DailyOffer {
 
     private String description;
 
-    private String image;
+    private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
