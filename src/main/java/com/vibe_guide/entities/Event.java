@@ -35,9 +35,9 @@ public class Event {
 
     private String description;
 
-    private LocalDateTime fromDate;
+    private LocalDateTime startDate;
 
-    private LocalDateTime toDate;
+    private LocalDateTime endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
