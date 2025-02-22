@@ -33,13 +33,13 @@ public class DailyOffer {
 
     private LocalDate dateCreated;
 
-    private LocalDateTime fromDate;
+    private LocalDateTime startDate;
 
-    private LocalDateTime toDate;
+    private LocalDateTime endDate;
 
     private String description;
 
-    private String image;
+    private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")

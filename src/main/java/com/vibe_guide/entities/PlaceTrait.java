@@ -1,10 +1,7 @@
 package com.vibe_guide.entities;
 
 import com.vibe_guide.entities.composite_keys.PlaceTraitId;
-import com.vibe_guide.enums.PriorityLevel;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
@@ -41,8 +38,7 @@ public class PlaceTrait {
 
     private Integer likeCounter;
 
-    @Enumerated(EnumType.STRING)
-    private PriorityLevel priorityLevel;
+    private Boolean priority;
 
     @Override
     public boolean equals(Object o) {

@@ -90,8 +90,8 @@
             </column>
             <column name="name" type="VARCHAR(100)"/>
             <column name="date_created" type="DATETIME NOT NULL"/>
-            <column name="from_date" type="DATETIME NOT NULL"/>
-            <column name="to_date" type="DATETIME NOT NULL"/>
+            <column name="start_date" type="DATETIME NOT NULL"/>
+            <column name="end_date" type="DATETIME NOT NULL"/>
             <column name="description" type="VARCHAR(500) NOT NULL"/>
             <column name="image" type="VARBINARY(8000)"/>
             <column name="place_id" type="UUID NOT NULL"/>
@@ -203,9 +203,10 @@
             <column name="name" type="VARCHAR(255) NOT NULL"/>
             <column name="date_created" type="DATE NOT NULL"/>
             <column name="description" type="TEXT NOT NULL"/>
-            <column name="from_date" type="DATETIME NOT NULL"/>
-            <column name="to_date" type="DATETIME"/>
+            <column name="start_date" type="DATETIME NOT NULL"/>
+            <column name="end_date" type="DATETIME"/>
             <column name="place_id" type="UUID NOT NULL"/>
+            <column name="entry_fee" type="FLOAT"/>
         </createTable>
 
         <addForeignKeyConstraint
@@ -294,4 +295,21 @@
                 columnNames="day_of_week, place_id"
                 constraintName="pk_working_hours"/>
     </changeSet>
+    <changeSet id="restriction_working_hours" author="negrioska">
+        <sql>
+            ALTER TABLE working_hours
+                ADD CONSTRAINT check_start_time_before_end_time
+                    CHECK (start_time &lt;= end_time)
+        </sql>
+    </changeSet>
+
+    <changeSet id="restriction_event" author="negrioska">
+        <sql>
+            ALTER TABLE event
+                ADD CONSTRAINT check_end_date_before_start_date
+                    CHECK (start_date &lt;= end_date)
+        </sql>
+    </changeSet>
+
+
 </databaseChangeLog>
