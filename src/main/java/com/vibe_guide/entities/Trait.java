@@ -36,7 +36,7 @@ public class Trait {
     private TraitType traitType;
 
     @Column(unique = true)
-    private String traitName;
+    private String name;
 
     @OneToMany(mappedBy = "trait",
             cascade = CascadeType.ALL,

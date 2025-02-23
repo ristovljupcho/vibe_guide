@@ -15,7 +15,7 @@
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="trait_name" type="VARCHAR(50)"/>
+            <column name="name" type="VARCHAR(50)"/>
             <column name="trait_type" type="VARCHAR(50)"/>
         </createTable>
     </changeSet>
