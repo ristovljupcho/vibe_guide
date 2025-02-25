@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -60,7 +61,7 @@ public class Place {
     @OneToMany(mappedBy = "place",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private Set<PlaceTrait> traits;
+    private Set<PlaceTrait> traits = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
