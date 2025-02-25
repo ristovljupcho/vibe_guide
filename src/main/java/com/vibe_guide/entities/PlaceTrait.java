@@ -36,9 +36,9 @@ public class PlaceTrait {
 
     private String additionalInformation;
 
-    private Integer likeCounter;
+    private Integer likeCounter = 0;
 
-    private Boolean priority;
+    private Boolean priority = false;
 
     @Override
     public boolean equals(Object o) {
