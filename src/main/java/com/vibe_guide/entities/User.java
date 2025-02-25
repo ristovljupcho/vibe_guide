@@ -42,8 +42,6 @@ public class User {
 
     private String password;
 
-    private boolean is2FAEnabled = false;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
