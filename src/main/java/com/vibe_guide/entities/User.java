@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -38,6 +39,14 @@ public class User {
     private String name;
 
     private String email;
+
+    private String password;
+
+    private boolean is2FAEnabled = false;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
     private Role role;
