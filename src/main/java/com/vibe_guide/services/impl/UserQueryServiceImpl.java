@@ -1,0 +1,48 @@
+package com.vibe_guide.services.impl;
+
+import com.vibe_guide.converters.UserConverter;
+import com.vibe_guide.dtos.UserPreviewResponseDTO;
+import com.vibe_guide.entities.User;
+import com.vibe_guide.enums.Role;
+import com.vibe_guide.enums.SortDirection;
+import com.vibe_guide.enums.UserSortBy;
+import com.vibe_guide.repositories.UserRepository;
+import com.vibe_guide.services.UserQueryService;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+@Service
+@AllArgsConstructor
+public class UserQueryServiceImpl implements UserQueryService {
+
+    private final UserRepository userRepository;
+    private final UserConverter userConverter;
+
+    @Override
+    public Page<UserPreviewResponseDTO> getPaginatedUsers(Role role,
+                                                          UserSortBy sortBy,
+                                                          SortDirection sortDirection,
+                                                          int page,
+                                                          int size) {
+        String sortField = switch (sortBy) {
+            case DEFAULT -> "id";
+            case USERNAME -> "username";
+        };
+
+        Sort sort =
+                Sort.by(sortDirection == SortDirection.DESC ? Sort.Order.desc(sortField) : Sort.Order.asc(sortField));
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+
+        Page<User> userPage;
+        if (role == null) {
+            userPage = userRepository.getPaginatedUsers(pageRequest);
+        } else {
+            userPage = userRepository.getPaginatedUsersByRole(role, pageRequest);
+        }
+
+        return userPage.map(userConverter::toUserPreviewResponseDTO);
+    }
+}
