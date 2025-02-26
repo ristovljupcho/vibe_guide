@@ -120,6 +120,9 @@
             <column name="name" type="VARCHAR(100) NOT NULL"/>
             <column name="email" type="VARCHAR(100) NOT NULL"/>
             <column name="role" type="VARCHAR(100) NOT NULL"/>
+            <column name="password" type="VARCHAR(100) NOT NULL"/>
+            <column name="created_at" type="TIMESTAMP NOT NULL"/>
+            <column name="updated_at" type="TIMESTAMP NOT NULL"/>
         </createTable>
     </changeSet>
 
