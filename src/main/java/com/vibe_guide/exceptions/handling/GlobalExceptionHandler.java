@@ -2,6 +2,7 @@ package com.vibe_guide.exceptions.handling;
 
 import com.vibe_guide.exceptions.CustomBadRequestException;
 import com.vibe_guide.exceptions.CustomNotFoundException;
+import com.vibe_guide.exceptions.CustomUnprocessableEntityException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ExceptionMessage exceptionMessage = new ExceptionMessage(customBadRequestException.getMessage());
         log.error("Custom BAD REQUEST exception: {}", customBadRequestException.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionMessage);
+    }
+
+    @ExceptionHandler(CustomUnprocessableEntityException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<ExceptionMessage> handleCustomUnprocessableEntityException(
+            CustomUnprocessableEntityException customUnprocessableEntityException) {
+        ExceptionMessage exceptionMessage = new ExceptionMessage(customUnprocessableEntityException.getMessage());
+        log.error("Unprocessable entity exception: {}", customUnprocessableEntityException.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(exceptionMessage);
     }
 }
