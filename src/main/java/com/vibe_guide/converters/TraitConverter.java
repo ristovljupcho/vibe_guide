@@ -22,7 +22,7 @@ public class TraitConverter {
      * @return {@link TraitPreviewResponseDTO} converted entity.
      */
     public TraitPreviewResponseDTO toTraitPreviewResponseDTO(Trait trait) {
-        UUID traitId = UUID.randomUUID();
+        UUID traitId = trait.getId();
         TraitType traitType = trait.getTraitType();
         String name = trait.getName();
 
