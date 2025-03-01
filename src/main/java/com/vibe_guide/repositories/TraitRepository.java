@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface TraitRepository extends JpaRepository<Trait, UUID> {
@@ -20,4 +21,6 @@ public interface TraitRepository extends JpaRepository<Trait, UUID> {
             "from Trait trait " +
             "where trait.traitType = :traitType")
     Page<Trait> getPaginatedTraitsByTraitType(@Param("traitType") TraitType traitType, Pageable pageable);
+
+    Optional<Trait> getTraitByTraitTypeAndName(TraitType traitType, String name);
 }
