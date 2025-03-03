@@ -41,13 +41,14 @@ public class TraitQueryServiceImpl implements TraitQueryService {
             case DEFAULT -> "id";
             case NAME -> "name";
         };
-        Sort sort =
-                Sort.by(sortDirection == SortDirection.DESC ? Sort.Order.desc(sortField) : Sort.Order.asc(sortField));
+        Sort sort = Sort.by(sortDirection == SortDirection.DESC ? Sort.Order.desc(sortField) :
+                Sort.Order.asc(sortField));
+
         PageRequest pageRequest = PageRequest.of(page, size, sort);
         Page<Trait> traitPage;
         if (traitType == null)
-            traitPage = traitRepository.getPaginatedTraits(pageRequest);
-        else traitPage = traitRepository.getPaginatedTraitsByTraitType(traitType, pageRequest);
+            traitPage = traitRepository.findAll(pageRequest);
+        else traitPage = traitRepository.findAllByTraitType(traitType, pageRequest);
 
         return traitPage.map(traitConverter::toTraitPreviewResponseDTO);
     }
