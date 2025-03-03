@@ -9,7 +9,8 @@ import java.util.UUID;
 
 /**
  * <ul>
- *     <li>Performs conversion of object from type {@link Trait} to {@link TraitPreviewResponseDTO}.</li>
+ *     <li>This class is responsible for providing conversion methods from {@link Trait} entity to Data Transfer
+ *     Objects and vice versa.</li>
  * </ul>
  */
 @Component
