@@ -9,7 +9,8 @@ import java.util.UUID;
 
 /**
  * <ul>
- *     <li>Performs conversion of object from type {@link Trait} to {@link TraitPreviewResponseDTO}.</li>
+ *     <li>This class is responsible for providing conversion methods from {@link Trait} entity to Data Transfer
+ *     Objects and vice versa.</li>
  * </ul>
  */
 @Component
@@ -22,7 +23,7 @@ public class TraitConverter {
      * @return {@link TraitPreviewResponseDTO} converted entity.
      */
     public TraitPreviewResponseDTO toTraitPreviewResponseDTO(Trait trait) {
-        UUID traitId = UUID.randomUUID();
+        UUID traitId = trait.getId();
         TraitType traitType = trait.getTraitType();
         String name = trait.getName();
 
