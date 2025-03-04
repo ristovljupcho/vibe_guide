@@ -1,17 +1,15 @@
 package com.vibe_guide.dtos;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-@Getter
-@Setter
-public class EventSearchCriteriaDTO {
-    UUID placeId;
-    String placeName;
-    String eventName;
-    LocalDateTime startDate;
-    LocalDateTime endDate;
-    Boolean isToday;
+
+public record EventSearchCriteriaDTO(
+        UUID placeId,
+        @NotEmpty
+        String eventName,
+        LocalDateTime startDate,
+        LocalDateTime endDate
+) {
 }

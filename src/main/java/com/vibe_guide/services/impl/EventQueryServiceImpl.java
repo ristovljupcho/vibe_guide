@@ -1,7 +1,7 @@
 package com.vibe_guide.services.impl;
 
 import com.vibe_guide.converters.EventConverter;
-import com.vibe_guide.dtos.EventPreviewResponseDTO;
+import com.vibe_guide.dtos.EventResponseDTO;
 import com.vibe_guide.dtos.EventSearchCriteriaDTO;
 import com.vibe_guide.entities.Event;
 import com.vibe_guide.repositories.EventRepository;
@@ -9,9 +9,12 @@ import com.vibe_guide.services.EventQueryService;
 import com.vibe_guide.specifications.EventSpecification;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Service
@@ -20,30 +23,38 @@ public class EventQueryServiceImpl implements EventQueryService {
     private final EventRepository eventRepository;
     private final EventConverter eventConverter;
 
-    @Override public Page<EventPreviewResponseDTO> findAllEvents(Pageable pageable) {
-        return this.eventRepository.findAll(pageable).map(eventConverter::toEventPreviewResponseDTO);
-    }
 
+    /**
+     * Retrieves {@link Event}      objects using pagination. Filtering is enabled using {@link EventSpecification} which will
+     * display {@link Event}        using dynamic queries.
+     * @param searchCriteria        dto used for the attributes in {@link EventSpecification}
+     * @param page                  page number
+     * @param size                  page size
+     * @return                      A {@link Page} containing {@link EventResponseDTO} objects.
+     */
     @Override
-    public Page<EventPreviewResponseDTO> findByCriteria(EventSearchCriteriaDTO searchCriteria, Pageable pageable) {
+    public Page<EventResponseDTO> findByCriteria(EventSearchCriteriaDTO searchCriteria, int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
         Specification<Event> spec = Specification.where(null);
 
-        if(searchCriteria.getPlaceId() != null) {
-            spec = spec.and(EventSpecification.hasPlaceId(searchCriteria.getPlaceId()));
-        }
-        if(searchCriteria.getPlaceName() != null && !searchCriteria.getPlaceName().isEmpty()) {
-            spec = spec.and(EventSpecification.hasPlaceName(searchCriteria.getPlaceName()));
-        }
-        if(searchCriteria.getEventName() != null && !searchCriteria.getEventName().isEmpty()) {
-            spec = spec.and(EventSpecification.containsEventName(searchCriteria.getEventName()));
-        }
-        if(searchCriteria.getStartDate() != null && searchCriteria.getEndDate() != null) {
-            spec = spec.and(EventSpecification.startDateBetween(searchCriteria.getStartDate(), searchCriteria.getEndDate()));
-        }
-        if (searchCriteria.getIsToday() != null && searchCriteria.getIsToday()) {
-            spec = spec.and(EventSpecification.isToday());
+        UUID placeId = searchCriteria.placeId();
+        if(placeId != null) {
+            spec = spec.and(EventSpecification.hasPlaceId(placeId));
         }
 
-        return this.eventRepository.findAll(spec, pageable).map(eventConverter::toEventPreviewResponseDTO);
+        String eventName = searchCriteria.eventName();
+        if(eventName != null && !eventName.isEmpty()) {
+            spec = spec.and(EventSpecification.containsEventName(eventName));
+        }
+        LocalDateTime startDate = searchCriteria.startDate();
+        if(startDate != null) {
+            spec = spec.and(EventSpecification.startsOnOrAfter(startDate));
+        }
+        LocalDateTime endDate = searchCriteria.endDate();
+        if(endDate != null) {
+            spec = spec.and(EventSpecification.endsOnOrBefore(endDate));
+        }
+
+        return eventRepository.findAll(spec, pageRequest).map(eventConverter::toEventResponseDTO);
     }
 }
