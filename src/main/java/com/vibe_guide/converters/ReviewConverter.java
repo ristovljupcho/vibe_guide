@@ -1,6 +1,7 @@
 package com.vibe_guide.converters;
 
 import com.vibe_guide.dtos.ReviewPreviewResponseDTO;
+import com.vibe_guide.entities.Place;
 import com.vibe_guide.entities.Review;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +10,10 @@ import java.util.UUID;
 
 /**
  * <ul>
- *     <li>
- *         Performs conversion of object from type {@link Review} to {@link ReviewPreviewResponseDTO}.
- *     </li>
+ * <li>
+ *This class is responsible for providing conversion methods from {@link Review} entity
+ *to Data Transfer Objects and vice versa.
+ * </li>
  * </ul>
  */
 @Component
@@ -24,16 +26,14 @@ public class ReviewConverter {
      * @return The converted {@link ReviewPreviewResponseDTO} entity.
      */
     public ReviewPreviewResponseDTO toReviewPreviewResponseDTO(Review review) {
-
-        UUID reviewId = review.getId();
+        String username = review.getUser().getUsername();
         LocalDate dateCreated = review.getDateCreated();
         LocalDate dateModified = review.getDateModified();
         Float rating = review.getRating();
         String description = review.getDescription();
         UUID placeId = review.getPlace().getId();
-        String username = review.getUser().getUsername();
 
-        return new ReviewPreviewResponseDTO(reviewId, dateCreated, dateModified, rating, description, placeId,
-                username);
+        return new ReviewPreviewResponseDTO(username ,placeId, rating, dateCreated, dateModified,
+                description);
     }
 }
