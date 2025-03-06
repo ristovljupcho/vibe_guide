@@ -1,7 +1,5 @@
 package com.vibe_guide.dtos;
 
-import com.vibe_guide.entities.Place;
-
 import java.time.LocalDate;
 import java.util.UUID;
 

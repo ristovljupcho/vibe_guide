@@ -1,7 +1,6 @@
 package com.vibe_guide.converters;
 
 import com.vibe_guide.dtos.ReviewPreviewResponseDTO;
-import com.vibe_guide.entities.Place;
 import com.vibe_guide.entities.Review;
 import org.springframework.stereotype.Component;
 
