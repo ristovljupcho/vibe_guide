@@ -17,12 +17,9 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
-@Service
-@AllArgsConstructor
-public class ReviewManagementServiceImpl implements ReviewManagementService {
+@Service @AllArgsConstructor public class ReviewManagementServiceImpl implements ReviewManagementService {
 
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
@@ -30,18 +27,16 @@ public class ReviewManagementServiceImpl implements ReviewManagementService {
 
     /**
      * Inserts a new {@link Review} with provided {@link ReviewInsertRequestDTO}
+     *
      * @param reviewInsertRequestDTO DTO used for inserting new {@link Review} for a certain place by existing User
      * @return Response message of type {@link ReviewResponseMessage}
      */
-    @Transactional
-    @Override
-    public String insertReview(ReviewInsertRequestDTO reviewInsertRequestDTO) {
+    @Transactional @Override public String insertReview(ReviewInsertRequestDTO reviewInsertRequestDTO) {
 
         User user = userRepository.findById(reviewInsertRequestDTO.userId())
                 .orElseThrow(() -> new UserNotFoundException(reviewInsertRequestDTO.userId()));
         Place place = placeRepository.findById(reviewInsertRequestDTO.placeId())
                 .orElseThrow(() -> new PlaceNotFoundException(reviewInsertRequestDTO.placeId()));
-
 
         Review review = new Review();
         review.setUser(user);
@@ -61,13 +56,10 @@ public class ReviewManagementServiceImpl implements ReviewManagementService {
      * @return a response message of type {@link ReviewResponseMessage} confirming the review update.
      * @throws ReviewNotFoundException if no review with the specified ID is found.
      */
-    @Transactional
-    @Override
-    public String updateReview(ReviewUpdateRequestDTO reviewUpdateRequestDTO) {
+    @Transactional @Override public String updateReview(ReviewUpdateRequestDTO reviewUpdateRequestDTO) {
         UUID reviewId = reviewUpdateRequestDTO.reviewId();
 
-        Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new ReviewNotFoundException(reviewId));
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException(reviewId));
         review.setRating(reviewUpdateRequestDTO.rating());
         review.setDescription(reviewUpdateRequestDTO.description());
         reviewRepository.save(review);
@@ -75,20 +67,15 @@ public class ReviewManagementServiceImpl implements ReviewManagementService {
         return ReviewResponseMessage.REVIEW_UPDATE_MESSAGE;
     }
 
-
     /**
      * Deletes a {@link Review} object with provided <b><i>UUID reviewId </i></b>
+     *
      * @param reviewId id of the {@link Review} object that needs to be deleted
      * @return a response message of type {@link ReviewResponseMessage} confirming the deletion.
      */
-    @Transactional
-    @Override
-    public String deleteReview(UUID reviewId) {
-        Optional<Review> review = reviewRepository.findById(reviewId);
-        if (review.isEmpty()) {
-            throw new ReviewNotFoundException(reviewId);
-        }
-        reviewRepository.delete(review.get());
+    @Transactional @Override public String deleteReview(UUID reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException(reviewId));
+        reviewRepository.delete(review);
         return ReviewResponseMessage.REVIEW_DELETE_MESSAGE;
     }
 

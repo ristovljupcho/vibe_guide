@@ -1,6 +1,6 @@
 package com.vibe_guide.dtos;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
@@ -8,7 +8,7 @@ import java.util.UUID;
 public record ReviewUpdateRequestDTO(
         @NotNull
         UUID reviewId,
-        @NotEmpty
+        @NotBlank
         String description,
         @NotNull
         Float rating
