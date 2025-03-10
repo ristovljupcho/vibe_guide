@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@Service @AllArgsConstructor public class ReviewManagementServiceImpl implements ReviewManagementService {
+@Service
+@AllArgsConstructor
+public class ReviewManagementServiceImpl implements ReviewManagementService {
 
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
