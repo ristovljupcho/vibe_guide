@@ -6,9 +6,22 @@ import com.vibe_guide.enums.Role;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
-
+/**
+ * <ul>
+ * <li>
+ *This class is responsible for providing conversion methods from {@link User} entity
+ *to Data Transfer Objects and vice versa.
+ * </li>
+ * </ul>
+ */
 @Component
 public class UserConverter {
+    /**
+     * * Converts a {@link User} entity to a {@link UserPreviewResponseDTO} entity.
+     *
+     * @param user {@link User} entity to convert.
+     * @return The converted {@link UserPreviewResponseDTO} entity.
+     */
     public UserPreviewResponseDTO toUserPreviewResponseDTO(User user) {
         UUID userId = user.getId();
         String username = user.getUsername();
