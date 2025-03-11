@@ -3,16 +3,20 @@ package com.vibe_guide.services.impl;
 import com.vibe_guide.converters.UserConverter;
 import com.vibe_guide.dtos.UserPreviewResponseDTO;
 import com.vibe_guide.entities.User;
-import com.vibe_guide.enums.Role;
-import com.vibe_guide.enums.SortDirection;
-import com.vibe_guide.enums.UserSortBy;
+import com.vibe_guide.enums.sorting.SortDirection;
+import com.vibe_guide.enums.sorting.UserSortBy;
+import com.vibe_guide.exceptions.MissingUsernameException;
+import com.vibe_guide.exceptions.UserNotFoundException;
 import com.vibe_guide.repositories.UserRepository;
 import com.vibe_guide.services.UserQueryService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -22,11 +26,44 @@ public class UserQueryServiceImpl implements UserQueryService {
     private final UserConverter userConverter;
 
     @Override
-    public Page<UserPreviewResponseDTO> getPaginatedUsers(Role role,
-                                                          UserSortBy sortBy,
+    public Page<UserPreviewResponseDTO> getPaginatedUsers(UserSortBy sortBy,
                                                           SortDirection sortDirection,
                                                           int page,
                                                           int size) {
+
+        Pageable pageable = createPageable(sortBy, sortDirection, page, size);
+
+        Page<User> userPage;
+
+        userPage = userRepository.findAll(pageable);
+
+        return userPage.map(userConverter::toUserPreviewResponseDTO);
+    }
+
+    @Override
+    public UserPreviewResponseDTO getUserById(UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        return userConverter.toUserPreviewResponseDTO(user);
+    }
+
+    @Override
+    public UserPreviewResponseDTO getUserByUsername(String username, String sortBy, String direction) {
+        if (username == null || username.isEmpty()) {
+            throw new MissingUsernameException();
+        }
+
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException(username);
+        }
+
+        return userConverter.toUserPreviewResponseDTO(user);
+    }
+
+
+    private Pageable createPageable(UserSortBy sortBy, SortDirection sortDirection, int page, int size) {
         String sortField = switch (sortBy) {
             case DEFAULT -> "id";
             case USERNAME -> "username";
@@ -34,15 +71,7 @@ public class UserQueryServiceImpl implements UserQueryService {
 
         Sort sort =
                 Sort.by(sortDirection == SortDirection.DESC ? Sort.Order.desc(sortField) : Sort.Order.asc(sortField));
-        PageRequest pageRequest = PageRequest.of(page, size, sort);
-
-        Page<User> userPage;
-        if (role == null) {
-            userPage = userRepository.getPaginatedUsers(pageRequest);
-        } else {
-            userPage = userRepository.getPaginatedUsersByRole(role, pageRequest);
-        }
-
-        return userPage.map(userConverter::toUserPreviewResponseDTO);
+        return PageRequest.of(page, size, sort);
     }
+
 }
