@@ -1,6 +1,7 @@
 package com.vibe_guide.converters;
 
-import com.vibe_guide.dtos.TraitPreviewResponseDTO;
+import com.vibe_guide.dtos.TraitCarouselResponseDTO;
+import com.vibe_guide.dtos.TraitResponseDTO;
 import com.vibe_guide.entities.Trait;
 import com.vibe_guide.enums.TraitType;
 import org.springframework.stereotype.Component;
@@ -17,16 +18,28 @@ import java.util.UUID;
 public class TraitConverter {
 
     /**
-     * Converts a {@link Trait} entity to a {@link TraitPreviewResponseDTO} entity.
+     * Converts a {@link Trait} entity to a {@link TraitResponseDTO} entity.
      *
      * @param trait {@link Trait} entity to convert.
-     * @return {@link TraitPreviewResponseDTO} converted entity.
+     * @return {@link TraitResponseDTO} converted entity.
      */
-    public TraitPreviewResponseDTO toTraitPreviewResponseDTO(Trait trait) {
+    public TraitResponseDTO toTraitPreviewResponseDTO(Trait trait) {
         UUID traitId = trait.getId();
         TraitType traitType = trait.getTraitType();
         String name = trait.getName();
 
-        return new TraitPreviewResponseDTO(traitId, traitType, name);
+        return new TraitResponseDTO(traitId, traitType, name);
+    }
+
+    /**
+     * Converts a {@link Trait} entity to a {@link TraitCarouselResponseDTO} entity.
+     *
+     * @param trait {@link Trait} entity to convert.
+     * @return {@link TraitCarouselResponseDTO} converted entity.
+     */
+    public TraitCarouselResponseDTO toTraitMenuResponseDTO(Trait trait) {
+        String name = trait.getName();
+
+        return new TraitCarouselResponseDTO(name);
     }
 }
