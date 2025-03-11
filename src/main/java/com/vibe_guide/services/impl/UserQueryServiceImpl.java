@@ -1,11 +1,12 @@
 package com.vibe_guide.services.impl;
 
+
 import com.vibe_guide.converters.UserConverter;
 import com.vibe_guide.dtos.UserPreviewResponseDTO;
 import com.vibe_guide.entities.User;
+import com.vibe_guide.enums.Role;
 import com.vibe_guide.enums.sorting.SortDirection;
 import com.vibe_guide.enums.sorting.UserSortBy;
-import com.vibe_guide.exceptions.MissingUsernameException;
 import com.vibe_guide.exceptions.UserNotFoundException;
 import com.vibe_guide.repositories.UserRepository;
 import com.vibe_guide.services.UserQueryService;
@@ -26,16 +27,15 @@ public class UserQueryServiceImpl implements UserQueryService {
     private final UserConverter userConverter;
 
     @Override
-    public Page<UserPreviewResponseDTO> getPaginatedUsers(UserSortBy sortBy,
+    public Page<UserPreviewResponseDTO> getPaginatedUsers(Role role,
+                                                          UserSortBy sortBy,
                                                           SortDirection sortDirection,
                                                           int page,
                                                           int size) {
 
         Pageable pageable = createPageable(sortBy, sortDirection, page, size);
 
-        Page<User> userPage;
-
-        userPage = userRepository.findAll(pageable);
+        Page<User> userPage = userRepository.findAll(pageable);
 
         return userPage.map(userConverter::toUserPreviewResponseDTO);
     }
@@ -50,18 +50,10 @@ public class UserQueryServiceImpl implements UserQueryService {
 
     @Override
     public UserPreviewResponseDTO getUserByUsername(String username, String sortBy, String direction) {
-        if (username == null || username.isEmpty()) {
-            throw new MissingUsernameException();
-        }
-
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UserNotFoundException(username);
-        }
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
 
         return userConverter.toUserPreviewResponseDTO(user);
     }
-
 
     private Pageable createPageable(UserSortBy sortBy, SortDirection sortDirection, int page, int size) {
         String sortField = switch (sortBy) {
