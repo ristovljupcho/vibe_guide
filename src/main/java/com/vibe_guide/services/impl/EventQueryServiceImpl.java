@@ -12,10 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
-
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,12 +25,13 @@ public class EventQueryServiceImpl implements EventQueryService {
 
 
     /**
-     * Retrieves {@link Event}      objects using pagination. Filtering is enabled using {@link EventSpecification} which will
-     * display {@link Event}        using dynamic queries.
-     * @param searchCriteria        dto used for the attributes in {@link EventSpecification}
-     * @param page                  page number
-     * @param size                  page size
-     * @return                      A {@link Page} containing {@link EventResponseDTO} objects.
+     * Retrieves {@link Event} objects using pagination. Filtering is enabled using {@link EventSpecification} which
+     * will display {@link Event} using dynamic queries.
+     *
+     * @param searchCriteria    dto used for the attributes in {@link EventSpecification}
+     * @param page              page number
+     * @param size              page size
+     * @return A {@link Page} containing {@link EventResponseDTO} objects.
      */
     @Override
     public Page<EventResponseDTO> findByCriteria(EventSearchCriteriaDTO searchCriteria, int page, int size) {
@@ -56,5 +57,19 @@ public class EventQueryServiceImpl implements EventQueryService {
         }
 
         return eventRepository.findAll(spec, pageRequest).map(eventConverter::toEventResponseDTO);
+    }
+
+    /**
+     * Retrieves a list of past {@link Event} objects that took place in the last month at a certain place.
+     *
+     * @param placeId   uuid of the Place used for filtering
+     * @return A list of {@link EventResponseDTO} containing event details.
+     */
+    @Override public List<EventResponseDTO> findPastEvents(UUID placeId) {
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+        LocalDateTime now = LocalDateTime.now();
+
+        List<Event> pastEvents = eventRepository.findPastEvents(placeId, oneMonthAgo, now);
+        return pastEvents.stream().map(eventConverter::toEventResponseDTO).collect(Collectors.toList());
     }
 }
