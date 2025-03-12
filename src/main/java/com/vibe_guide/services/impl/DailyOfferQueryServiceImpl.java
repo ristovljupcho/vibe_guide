@@ -3,10 +3,15 @@ package com.vibe_guide.services.impl;
 import com.vibe_guide.converters.DailyOfferConverter;
 import com.vibe_guide.dtos.DailyOfferResponseDTO;
 import com.vibe_guide.entities.DailyOffer;
+import com.vibe_guide.entities.Place;
+import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.repositories.DailyOfferRepository;
+import com.vibe_guide.repositories.PlaceRepository;
 import com.vibe_guide.services.DailyOfferQueryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -16,22 +21,33 @@ import java.util.stream.Collectors;
 public class DailyOfferQueryServiceImpl implements DailyOfferQueryService {
     private final DailyOfferRepository dailyOfferRepository;
     private final DailyOfferConverter dailyOfferConverter;
+    private final PlaceRepository placeRepository;
 
     /**
-     * Retrieves {@link DailyOffer} objects. Filtering is enabled using placeId which will
+     * Retrieves {@link DailyOffer} objects. Filtering is enabled using placeId and today's date, which will
      * display {@link DailyOffer} objects with a certain type.
-     * @param placeId   uuid of the place where the dailyOffer is valid, for filtering
      *
+     * @param placeId   uuid of the place where the dailyOffer is valid, for filtering
      * @return A list of {@link DailyOffer} containing {@link DailyOfferResponseDTO} objects.
      */
     @Override
-    public List<DailyOfferResponseDTO> getDailyOffers(UUID placeId) {
-        List<DailyOffer> dailyOffers;
+    public List<DailyOfferResponseDTO> getTodayDailyOffersByPlaceId(UUID placeId) {
+        Place place = placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
+        LocalDateTime today = LocalDateTime.now();
+        List<DailyOffer> dailyOffers = dailyOfferRepository.findTodayDailyOffersByPlaceId(today, placeId);
 
-        if (placeId != null)
-            dailyOffers = dailyOfferRepository.findByPlaceId(placeId);
-        else
-            dailyOffers = dailyOfferRepository.findAll();
+        return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).collect(Collectors.toList());
+    }
+
+    /**
+     * Retrieves {@link DailyOffer} objects. Filtering is enabled using today's date, which will display
+     * {@link DailyOffer} objects with a certain type.
+     *
+     * @return A list of {@link DailyOffer} containing {@link DailyOfferResponseDTO} objects.
+     */
+    @Override public List<DailyOfferResponseDTO> getTodayDailyOffers() {
+        LocalDateTime today = LocalDateTime.now();
+        List<DailyOffer> dailyOffers = dailyOfferRepository.findTodayDailyOffers(today);
 
         return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).collect(Collectors.toList());
     }
