@@ -6,11 +6,11 @@ import com.vibe_guide.entities.DailyOffer;
 import com.vibe_guide.repositories.DailyOfferRepository;
 import com.vibe_guide.services.DailyOfferQueryService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class DailyOfferQueryServiceImpl implements DailyOfferQueryService {
@@ -18,23 +18,21 @@ public class DailyOfferQueryServiceImpl implements DailyOfferQueryService {
     private final DailyOfferConverter dailyOfferConverter;
 
     /**
-     * Retrieves {@link DailyOffer} objects using pagination. Filtering is enabled using placeId which will
+     * Retrieves {@link DailyOffer} objects. Filtering is enabled using placeId which will
      * display {@link DailyOffer} objects with a certain type.
      * @param placeId   uuid of the place where the dailyOffer is valid, for filtering
-     * @param page      page number
-     * @param size      size of the page to be returned.
-     * @return A {@link DailyOffer} containing {@link DailyOfferResponseDTO} objects.
+     *
+     * @return A list of {@link DailyOffer} containing {@link DailyOfferResponseDTO} objects.
      */
     @Override
-    public Page<DailyOfferResponseDTO> getDailyOffers(UUID placeId, int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Page<DailyOffer> dailyOfferPage;
+    public List<DailyOfferResponseDTO> getDailyOffers(UUID placeId) {
+        List<DailyOffer> dailyOffers;
 
         if (placeId != null)
-            dailyOfferPage = dailyOfferRepository.findByPlaceId(placeId, pageRequest);
+            dailyOffers = dailyOfferRepository.findByPlaceId(placeId);
         else
-            dailyOfferPage = dailyOfferRepository.findAll(pageRequest);
+            dailyOffers = dailyOfferRepository.findAll();
 
-        return dailyOfferPage.map(dailyOfferConverter::toDailyOfferResponseDTO);
+        return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).collect(Collectors.toList());
     }
 }
