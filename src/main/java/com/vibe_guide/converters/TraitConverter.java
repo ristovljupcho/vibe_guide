@@ -1,8 +1,10 @@
 package com.vibe_guide.converters;
 
+import com.vibe_guide.dtos.TopTraitResponseDTO;
 import com.vibe_guide.dtos.TraitCarouselResponseDTO;
 import com.vibe_guide.dtos.TraitResponseDTO;
 import com.vibe_guide.entities.Trait;
+import com.vibe_guide.entities.views.TraitLikesSummary;
 import com.vibe_guide.enums.TraitType;
 import org.springframework.stereotype.Component;
 
@@ -41,5 +43,19 @@ public class TraitConverter {
         String name = trait.getName();
 
         return new TraitCarouselResponseDTO(name);
+    }
+
+    /**
+     * Converts a {@link TraitLikesSummary} entity to a {@link TopTraitResponseDTO} entity.
+     *
+     * @param traitLikesSummary {@link TraitLikesSummary} entity to convert.
+     * @return {@link TopTraitResponseDTO} converted entity.
+     */
+    public TopTraitResponseDTO toTopTraitResponseDTO(TraitLikesSummary traitLikesSummary) {
+        UUID traitId = traitLikesSummary.getId();
+        String name = traitLikesSummary.getName();
+        Integer totalLikes = traitLikesSummary.getTotalLikes();
+
+        return new TopTraitResponseDTO(traitId, name, totalLikes);
     }
 }
