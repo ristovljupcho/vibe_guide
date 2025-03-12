@@ -86,9 +86,14 @@
         </preConditions>
         <sql>
             CREATE MATERIALIZED VIEW trait_likes_summary AS
-            SELECT pt.trait_id, SUM(pt.like_counter) AS total_likes
-            FROM place_trait AS pt
-            GROUP BY pt.trait_id;
+            SELECT t.id, t.name, tt.total_likes
+            FROM trait AS t
+                     JOIN (
+                SELECT trait_id, SUM(like_counter) AS total_likes
+                FROM place_trait
+                GROUP BY trait_id
+            ) AS tt ON t.id = tt.trait_id
+            ORDER BY total_likes DESC;
         </sql>
     </changeSet>
 
