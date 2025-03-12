@@ -1,10 +1,8 @@
 package com.vibe_guide.converters;
 
 import com.vibe_guide.dtos.DailyOfferResponseDTO;
-import com.vibe_guide.dtos.TraitPreviewResponseDTO;
 import com.vibe_guide.entities.DailyOffer;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 /**
  * <ul>
