@@ -4,7 +4,7 @@ import com.vibe_guide.enums.TraitType;
 
 import java.util.UUID;
 
-public record TraitPreviewResponseDTO(
+public record TraitResponseDTO(
         UUID traitId,
         TraitType traitType,
         String name
