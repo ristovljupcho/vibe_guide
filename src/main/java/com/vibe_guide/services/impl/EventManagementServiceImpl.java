@@ -29,7 +29,7 @@ public class EventManagementServiceImpl implements EventManagementService {
      * @param eventInsertRequestDTO DTO used to insert new {@link Event} by providing:
      *                              String name, String description,LocalDateTime startDate,
      *                              LocalDateTime endDate and UUID placeId
-     * @return                      Response message of type {@link com.vibe_guide.utils.EventResponseMessages}
+     * @return                      Response message of type {@link EventResponseMessages}
      */
     @Override
     @Transactional
@@ -93,7 +93,8 @@ public class EventManagementServiceImpl implements EventManagementService {
     @Override
     @Transactional
     public String deleteEvent(UUID eventId) {
-        Optional<Event> event = eventRepository.findById(eventId);
+        Optional<Event> event = Optional.ofNullable(
+                eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId)));
         if (event.isEmpty())
             throw new EventNotFoundException(eventId);
 
