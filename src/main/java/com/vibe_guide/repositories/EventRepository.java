@@ -16,4 +16,10 @@ public interface EventRepository extends JpaRepository<Event, UUID>, JpaSpecific
             "AND e.startDate >= :oneMonthAgo " +
             "ORDER BY e.startDate DESC")
     List<Event> findPastEvents (UUID placeId, LocalDateTime now, LocalDateTime oneMonthAgo);
+
+    @Query("SELECT e " +
+            "FROM Event AS e " +
+            "WHERE e.place.id = :placeId " +
+            "ORDER BY e.startDate DESC")
+    List<Event> findEventsByPlaceId(UUID placeId);
 }

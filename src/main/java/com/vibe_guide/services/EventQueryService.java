@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface EventQueryService {
     Page<EventResponseDTO> findByCriteria(EventSearchCriteriaDTO searchCriteria, int page, int size);
     List<EventResponseDTO> findPastEvents(UUID placeId);
+    List<EventResponseDTO> findEventsByPlaceId(UUID placeId);
 }

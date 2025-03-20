@@ -4,7 +4,10 @@ import com.vibe_guide.converters.EventConverter;
 import com.vibe_guide.dtos.EventResponseDTO;
 import com.vibe_guide.dtos.EventSearchCriteriaDTO;
 import com.vibe_guide.entities.Event;
+import com.vibe_guide.entities.Place;
+import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.repositories.EventRepository;
+import com.vibe_guide.repositories.PlaceRepository;
 import com.vibe_guide.services.EventQueryService;
 import com.vibe_guide.specifications.EventSpecification;
 import lombok.AllArgsConstructor;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EventQueryServiceImpl implements EventQueryService {
     private final EventRepository eventRepository;
+    private final PlaceRepository placeRepository;
     private final EventConverter eventConverter;
 
 
@@ -66,10 +70,22 @@ public class EventQueryServiceImpl implements EventQueryService {
      * @return A list of {@link EventResponseDTO} containing event details.
      */
     @Override public List<EventResponseDTO> findPastEvents(UUID placeId) {
-        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
         LocalDateTime now = LocalDateTime.now();
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
 
-        List<Event> pastEvents = eventRepository.findPastEvents(placeId, oneMonthAgo, now);
+        List<Event> pastEvents = eventRepository.findPastEvents(placeId, now, oneMonthAgo);
         return pastEvents.stream().map(eventConverter::toEventResponseDTO).collect(Collectors.toList());
+    }
+
+    /**
+     * Retrieves a list of upcoming {@link Event} objects that are happening in that Place
+     * @param placeId  uuid of the Place used for filtering
+     * @return A list of {@link EventResponseDTO} containing event details.
+     */
+    @Override public List<EventResponseDTO> findEventsByPlaceId(UUID placeId) {
+        Place place = placeRepository.findById(placeId).orElseThrow(()->new PlaceNotFoundException(placeId));
+        List<Event> events = eventRepository.findEventsByPlaceId(placeId);
+
+        return events.stream().map(eventConverter::toEventResponseDTO).collect(Collectors.toList());
     }
 }
