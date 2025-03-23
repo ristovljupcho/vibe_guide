@@ -50,6 +50,6 @@ public class TraitQueryServiceImpl implements TraitQueryService {
             traitPage = traitRepository.findAll(pageRequest);
         else traitPage = traitRepository.findAllByTraitType(traitType, pageRequest);
 
-        return traitPage.map(traitConverter::toTraitPreviewResponseDTO);
+        return traitPage.map(traitConverter::toTraitResponseDTO);
     }
 }

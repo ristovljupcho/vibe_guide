@@ -21,4 +21,10 @@ public interface PlaceTraitRepository extends JpaRepository<PlaceTrait, PlaceTra
     @Query("SELECT tls " +
             "FROM TraitLikesSummary AS tls ")
     List<TraitLikesSummary> getTopTraits();
+
+    @Query("SELECT t " +
+            "FROM Trait t " +
+            "LEFT JOIN PlaceTrait pt ON t.id = pt.trait.id AND pt.place.id = :placeId " +
+            "WHERE pt.trait.id IS NULL")
+    List<Trait> getMissingTraitsForPlace(UUID placeId);
 }
