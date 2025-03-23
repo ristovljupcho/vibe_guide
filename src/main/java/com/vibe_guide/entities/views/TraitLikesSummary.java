@@ -1,5 +1,6 @@
 package com.vibe_guide.entities.views;
 
+import com.vibe_guide.enums.TraitType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -16,6 +17,8 @@ import java.util.UUID;
 public class TraitLikesSummary {
     @Id
     private UUID id;
+
+    private TraitType traitType;
 
     private String name;
 
