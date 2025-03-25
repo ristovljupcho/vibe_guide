@@ -25,7 +25,7 @@ public class TraitConverter {
      * @param trait {@link Trait} entity to convert.
      * @return {@link TraitResponseDTO} converted entity.
      */
-    public TraitResponseDTO toTraitPreviewResponseDTO(Trait trait) {
+    public TraitResponseDTO toTraitResponseDTO(Trait trait) {
         UUID traitId = trait.getId();
         TraitType traitType = trait.getTraitType();
         String name = trait.getName();
