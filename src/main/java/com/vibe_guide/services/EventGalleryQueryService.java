@@ -5,6 +5,6 @@ import com.vibe_guide.entities.EventGallery;
 import java.util.List;
 import java.util.UUID;
 
-public interface EventGalleryService {
+public interface EventGalleryQueryService {
     List<EventGallery> getEventGallery(UUID eventId);
 }

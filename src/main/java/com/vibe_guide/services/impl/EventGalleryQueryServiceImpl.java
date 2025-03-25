@@ -5,7 +5,7 @@ import com.vibe_guide.entities.EventGallery;
 import com.vibe_guide.exceptions.EventNotFoundException;
 import com.vibe_guide.repositories.EventGalleryRepository;
 import com.vibe_guide.repositories.EventRepository;
-import com.vibe_guide.services.EventGalleryService;
+import com.vibe_guide.services.EventGalleryQueryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class EventGalleryServiceImpl implements EventGalleryService {
+public class EventGalleryQueryServiceImpl implements EventGalleryQueryService {
     private final EventGalleryRepository eventGalleryRepository;
     private final EventRepository eventRepository;
 
@@ -22,6 +22,6 @@ public class EventGalleryServiceImpl implements EventGalleryService {
     public List<EventGallery> getEventGallery(UUID eventId) {
         Event event = eventRepository.findById(eventId).orElseThrow(()-> new EventNotFoundException(eventId));
 
-        return eventGalleryRepository.findByEventId(eventId);
+        return eventGalleryRepository.findAllByEventId(eventId);
     }
 }
