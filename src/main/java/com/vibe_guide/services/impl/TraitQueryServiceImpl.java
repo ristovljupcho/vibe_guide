@@ -1,7 +1,7 @@
 package com.vibe_guide.services.impl;
 
 import com.vibe_guide.converters.TraitConverter;
-import com.vibe_guide.dtos.TraitPreviewResponseDTO;
+import com.vibe_guide.dtos.TraitResponseDTO;
 import com.vibe_guide.entities.Trait;
 import com.vibe_guide.enums.sorting.SortDirection;
 import com.vibe_guide.enums.sorting.TraitSortBy;
@@ -32,11 +32,11 @@ public class TraitQueryServiceImpl implements TraitQueryService {
      *                      {@link SortDirection}.
      * @param page          page number.
      * @param size          size of the page to be returned.
-     * @return A {@link Page} containing {@link TraitPreviewResponseDTO} objects.
+     * @return A {@link Page} containing {@link TraitResponseDTO} objects.
      */
     @Override
-    public Page<TraitPreviewResponseDTO> getPaginatedTraits(TraitType traitType, TraitSortBy sortBy,
-                                                            SortDirection sortDirection, int page, int size) {
+    public Page<TraitResponseDTO> getPaginatedTraits(TraitType traitType, TraitSortBy sortBy,
+                                                     SortDirection sortDirection, int page, int size) {
         String sortField = switch (sortBy) {
             case DEFAULT -> "id";
             case NAME -> "name";
@@ -50,6 +50,6 @@ public class TraitQueryServiceImpl implements TraitQueryService {
             traitPage = traitRepository.findAll(pageRequest);
         else traitPage = traitRepository.findAllByTraitType(traitType, pageRequest);
 
-        return traitPage.map(traitConverter::toTraitPreviewResponseDTO);
+        return traitPage.map(traitConverter::toTraitResponseDTO);
     }
 }

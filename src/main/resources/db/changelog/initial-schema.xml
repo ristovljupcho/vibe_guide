@@ -78,6 +78,25 @@
                 constraintName="pk_place_trait"/>
     </changeSet>
 
+    <changeSet id="create-trait-likes-summary-view" author="ristovljupcho">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="trait_likes_summary"/>
+            </not>
+        </preConditions>
+        <sql>
+            CREATE MATERIALIZED VIEW trait_likes_summary AS
+            SELECT t.id, t.name, tt.total_likes
+            FROM trait AS t
+                     JOIN (
+                SELECT trait_id, SUM(like_counter) AS total_likes
+                FROM place_trait
+                GROUP BY trait_id
+            ) AS tt ON t.id = tt.trait_id
+            ORDER BY total_likes DESC;
+        </sql>
+    </changeSet>
+
     <changeSet id="create-daily-offer" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -298,6 +317,7 @@
                 columnNames="day_of_week, place_id"
                 constraintName="pk_working_hours"/>
     </changeSet>
+
     <changeSet id="restriction_working_hours" author="negrioska">
         <sql>
             ALTER TABLE working_hours
@@ -313,6 +333,4 @@
                     CHECK (start_date &lt;= end_date)
         </sql>
     </changeSet>
-
-
 </databaseChangeLog>
