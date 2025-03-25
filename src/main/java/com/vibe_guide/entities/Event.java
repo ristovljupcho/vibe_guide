@@ -14,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import jakarta.persistence.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,7 +50,8 @@ public class Event {
     @ToString.Exclude
     private Place place;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "event")
+    @ToString.Exclude
     private Set<EventGallery> galleries = new HashSet<>();
 
     @Override
