@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface PlaceTraitRepository extends JpaRepository<PlaceTrait, PlaceTraitId> {
@@ -28,6 +29,15 @@ public interface PlaceTraitRepository extends JpaRepository<PlaceTrait, PlaceTra
     @Query("SELECT tls " +
             "FROM TraitLikesSummary AS tls ")
     List<TraitLikesSummary> getTopTraits();
+
+    Optional<PlaceTrait> findByPlaceIdAndTraitId(UUID placeId, UUID traitId);
+
+    @Query("SELECT pt.trait.id " +
+            "FROM PlaceTrait AS pt " +
+            "WHERE pt.place.id = :placeId")
+    List<UUID> findAllTraitIdsByPlaceId(UUID placeId);
+
+    List<PlaceTrait> findAllByPlaceId(UUID placeId);
 
     @Query("SELECT t " +
             "FROM Trait t " +
