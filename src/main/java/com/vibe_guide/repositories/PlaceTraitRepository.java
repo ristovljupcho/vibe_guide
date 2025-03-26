@@ -19,6 +19,13 @@ public interface PlaceTraitRepository extends JpaRepository<PlaceTrait, PlaceTra
             "ORDER BY pt.priority DESC, pt.likeCounter DESC")
     List<Trait> getTraitsForPlaceCarousel(UUID placeId);
 
+    @Query("SELECT pt.trait " +
+            "FROM PlaceTrait AS pt " +
+            "WHERE pt.place.id = :placeId " +
+            "ORDER BY pt.priority DESC, pt.likeCounter DESC " +
+            "LIMIT 5")
+    List<Trait> getTopTraitsForPlace(UUID placeId);
+
     @Query("SELECT tls " +
             "FROM TraitLikesSummary AS tls ")
     List<TraitLikesSummary> getTopTraits();
@@ -31,6 +38,13 @@ public interface PlaceTraitRepository extends JpaRepository<PlaceTrait, PlaceTra
     List<UUID> findAllTraitIdsByPlaceId(UUID placeId);
 
     List<PlaceTrait> findAllByPlaceId(UUID placeId);
+
+    @Query("SELECT t " +
+            "FROM Trait t " +
+            "LEFT JOIN PlaceTrait pt ON t.id = pt.trait.id AND pt.place.id = :placeId " +
+            "WHERE pt.trait.id IS NULL")
+    List<Trait> getMissingTraitsForPlace(UUID placeId);
+}
 
     List<PlaceTrait> findAllByPlaceIdAndTraitIdIn(UUID placeId, List<UUID> traitIds);
 }

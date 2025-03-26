@@ -86,7 +86,7 @@
         </preConditions>
         <sql>
             CREATE MATERIALIZED VIEW trait_likes_summary AS
-            SELECT t.id, t.name, tt.total_likes
+            SELECT t.id, t.trait_type, t.name, tt.total_likes
             FROM trait AS t
                      JOIN (
                 SELECT trait_id, SUM(like_counter) AS total_likes
