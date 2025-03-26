@@ -35,6 +35,13 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
     private final TraitRepository traitRepository;
     private final PlaceTraitRepository placeTraitRepository;
 
+    /**
+     * Inserts a single {@link Trait} for {@link Place} with provided ID into the db.
+     *
+     * @param placeId                    ID of {@link Place}.
+     * @param placeTraitInsertRequestDTO Request DTO containing needed data.
+     * @return Response message of type {@link PlaceTraitResponseMessages}.
+     */
     @Transactional
     @Override
     public String insertSingleTraitInPlace(UUID placeId, PlaceTraitRequestDTO placeTraitInsertRequestDTO) {
@@ -56,6 +63,13 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
         return String.format(PlaceTraitResponseMessages.PLACE_TRAIT_INSERT_MESSAGE, placeId);
     }
 
+    /**
+     * Multiple insertion of {@link Trait}s for {@link Place} with provided ID into the db.
+     *
+     * @param placeId                  ID of {@link Place}.
+     * @param batchInsertTraitsInPlace Request DTO containing needed data.
+     * @return Response message of type {@link PlaceTraitResponseMessages}.
+     */
     @Transactional
     @Override
     public String batchInsertTraitsInPlace(UUID placeId, BatchInsertTraitsInPlace batchInsertTraitsInPlace) {
@@ -104,6 +118,13 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
                 newPlaceTraits.size(), placeId);
     }
 
+    /**
+     * Update a single {@link Trait} for {@link Place} with provided ID into the db.
+     *
+     * @param placeId                    ID of {@link Place}.
+     * @param placeTraitUpdateRequestDTO Request DTO containing needed data.
+     * @return Response message of type {@link PlaceTraitResponseMessages}.
+     */
     @Transactional
     @Override
     public String updateTraitForPlace(UUID placeId, PlaceTraitRequestDTO placeTraitUpdateRequestDTO) {
@@ -118,6 +139,13 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
         return String.format(PlaceTraitResponseMessages.PLACE_TRAIT_UPDATE_MESSAGE, placeId);
     }
 
+    /**
+     * Delete a single {@link Trait} for {@link Place} with provided ID of both {@link Trait} and {@link Place}.
+     *
+     * @param placeId ID of {@link Place}.
+     * @param traitId ID of {@link Trait}.
+     * @return Response message of type {@link PlaceTraitResponseMessages}.
+     */
     @Transactional
     @Override
     public String deleteSingleTraitInPlace(UUID placeId, UUID traitId) {
@@ -128,14 +156,21 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
         return String.format(PlaceTraitResponseMessages.PLACE_TRAIT_DELETE_MESSAGE, placeId);
     }
 
+    /**
+     * Multiple deletion of {@link Trait}s for {@link Place} with provided ID of both {@link Trait}s and {@link Place}.
+     *
+     * @param placeId                  ID of {@link Place}.
+     * @param batchDeleteTraitsInPlace Request DTO containing needed data.
+     * @return Response message of type {@link PlaceTraitResponseMessages}.
+     */
     @Transactional
     @Override
-    public String batchDeleteTraitsInPlace(UUID placeId, BatchDeleteTraitsInPlace request) {
+    public String batchDeleteTraitsInPlace(UUID placeId, BatchDeleteTraitsInPlace batchDeleteTraitsInPlace) {
         if (!placeRepository.existsById(placeId)) {
             throw new PlaceNotFoundException(placeId);
         }
 
-        List<UUID> traitsToDelete = request.traitIds();
+        List<UUID> traitsToDelete = batchDeleteTraitsInPlace.traitIds();
         Map<UUID, PlaceTrait> placeTraitMap = placeTraitRepository.findAllByPlaceId(placeId).stream()
                 .collect(Collectors.toMap(pt -> pt.getTrait().getId(), pt -> pt));
 
@@ -157,6 +192,12 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
     }
 
 
+    /**
+     * Converts a list of {@link UUID} of {@link Trait}s into a single {@link String}.
+     *
+     * @param traitIds List of IDs of {@link Trait}s.
+     * @return String of IDs joined by ', '.
+     */
     private String convertTraitIdsToString(List<UUID> traitIds) {
         return traitIds.stream().map(UUID::toString).collect(Collectors.joining(", "));
     }
