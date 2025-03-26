@@ -45,6 +45,3 @@ public interface PlaceTraitRepository extends JpaRepository<PlaceTrait, PlaceTra
             "WHERE pt.trait.id IS NULL")
     List<Trait> getMissingTraitsForPlace(UUID placeId);
 }
-
-    List<PlaceTrait> findAllByPlaceIdAndTraitIdIn(UUID placeId, List<UUID> traitIds);
-}
