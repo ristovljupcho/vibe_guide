@@ -1,5 +1,6 @@
 package com.vibe_guide.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -7,15 +8,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
+import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -31,6 +35,8 @@ public class Event {
 
     private String name;
 
+    @CreationTimestamp
+    @Column(updatable = false, nullable = false)
     private LocalDate dateCreated;
 
     private String description;
@@ -43,6 +49,10 @@ public class Event {
     @JoinColumn(name = "place_id")
     @ToString.Exclude
     private Place place;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "event")
+    @ToString.Exclude
+    private Set<EventGallery> galleries = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
