@@ -27,15 +27,6 @@ public class EventQueryServiceImpl implements EventQueryService {
     private final EventConverter eventConverter;
 
     /**
-     * Private helper method for checking if the placeId is corresponding to an existing Place
-     *
-     * @param placeId uuid of the Place
-     */
-    private void checkIfPlaceExists(UUID placeId) {
-        placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
-    }
-
-    /**
      * Retrieves {@link Event} objects using pagination. Filtering is enabled using {@link EventSpecification} which
      * will display {@link Event} using dynamic queries.
      *
@@ -76,7 +67,8 @@ public class EventQueryServiceImpl implements EventQueryService {
      * @param placeId uuid of the Place used for filtering
      * @return A list of {@link EventResponseDTO} containing event details.
      */
-    @Override public List<EventResponseDTO> findPastEvents(UUID placeId) {
+    @Override
+    public List<EventResponseDTO> findPastEvents(UUID placeId) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
 
@@ -105,7 +97,7 @@ public class EventQueryServiceImpl implements EventQueryService {
      * @return A list of {@link EventResponseDTO} containing event details.
      */
     @Override
-    public List<EventResponseDTO> findTodayEventsByPlaceId(UUID placeId) {
+    public List<EventResponseDTO> findTodaysEventsByPlaceId(UUID placeId) {
         checkIfPlaceExists(placeId);
         LocalDateTime today = LocalDateTime.now();
         List<Event> todayEvents = eventRepository.findTodayEventsByPlaceId(placeId, today);
@@ -118,10 +110,15 @@ public class EventQueryServiceImpl implements EventQueryService {
      *
      * @return A list of {@link EventResponseDTO} containing event details.
      */
-    @Override public List<EventResponseDTO> findUpcomingEvents() {
+    @Override
+    public List<EventResponseDTO> findUpcomingEvents() {
         LocalDateTime today = LocalDateTime.now();
         List<Event> upcomingEvents = eventRepository.findUpcomingEvents(today);
 
         return upcomingEvents.stream().map(eventConverter::toEventResponseDTO).toList();
+    }
+
+    private void checkIfPlaceExists(UUID placeId) {
+        placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
     }
 }
