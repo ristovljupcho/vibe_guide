@@ -17,7 +17,7 @@ public interface PlaceTopTraitsRepository extends JpaRepository<PlaceTopTraits, 
 
     @Query("SELECT p FROM PlaceTopTraits p " +
             "WHERE (SELECT COUNT(DISTINCT t.id) FROM PlaceTrait pt JOIN pt.trait t " +
-            "       WHERE pt.place.id = p.placeId AND t.name IN :traits) = :traitsSize")
+            "       WHERE pt.place.id = p.id AND t.name IN :traits) = :traitsSize")
     Page<PlaceTopTraits> findAllByTraitsPaginated(
             @Param("traits") List<String> traits,
             @Param("traitsSize") int traitsSize,
