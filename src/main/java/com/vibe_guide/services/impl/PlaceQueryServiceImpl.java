@@ -53,7 +53,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
         List<TraitResponseDTO> topTraits = placeTraitQueryService.getTopTraitsForPlace(placeId);
         List<EventResponseDTO> todaysEvents = eventQueryService.findTodaysEventsByPlaceId(placeId);
         List<DailyOfferResponseDTO> dailyOffers = dailyOfferQueryService.getTodayDailyOffersByPlaceId(placeId);
-        List<EventResponseDTO> monthlyEvents = eventQueryService.findMonthlyEventsByPlaceId(placeId);
+        List<EventResponseDTO> monthlyEvents = eventQueryService.findUpcomingEventsByPlaceId(placeId);
         List<TraitCarouselResponseDTO> carouselTraits = placeTraitQueryService.getTraitsForPlaceCarousel(placeId);
 
         return placeConverter.toPlaceResponseDTO(place, topTraits, todaysEvents, dailyOffers, monthlyEvents,
