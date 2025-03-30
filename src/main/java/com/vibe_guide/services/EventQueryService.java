@@ -13,4 +13,8 @@ public interface EventQueryService {
     List<EventResponseDTO> findTodaysEventsByPlaceId(UUID placeId);
 
     List<EventResponseDTO> findMonthlyEventsByPlaceId(UUID placeId);
+
+    List<EventResponseDTO> findPastEvents(UUID placeId);
+
+    List<EventResponseDTO> findEventsByPlaceId(UUID placeId);
 }
