@@ -78,25 +78,6 @@
                 constraintName="pk_place_trait"/>
     </changeSet>
 
-    <changeSet id="create-trait-likes-summary-view" author="ristovljupcho">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="trait_likes_summary"/>
-            </not>
-        </preConditions>
-        <sql>
-            CREATE MATERIALIZED VIEW trait_likes_summary AS
-            SELECT t.id, t.name, tt.total_likes
-            FROM trait AS t
-                     JOIN (
-                SELECT trait_id, SUM(like_counter) AS total_likes
-                FROM place_trait
-                GROUP BY trait_id
-            ) AS tt ON t.id = tt.trait_id
-            ORDER BY total_likes DESC;
-        </sql>
-    </changeSet>
-
     <changeSet id="create-daily-offer" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -331,6 +312,62 @@
             ALTER TABLE event
                 ADD CONSTRAINT check_end_date_before_start_date
                     CHECK (start_date &lt;= end_date)
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-trait-likes-summary-view" author="ristovljupcho">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="trait_likes_summary"/>
+            </not>
+        </preConditions>
+        <sql>
+            CREATE MATERIALIZED VIEW trait_likes_summary AS
+            SELECT t.id, t.trait_type, t.name, tt.total_likes
+            FROM trait AS t
+                     JOIN (
+                SELECT trait_id, SUM(like_counter) AS total_likes
+                FROM place_trait
+                GROUP BY trait_id
+            ) AS tt ON t.id = tt.trait_id
+            ORDER BY total_likes DESC;
+        </sql>
+    </changeSet>
+
+    <changeSet id="create-place-top-traits-view" author="ristovljupcho">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="place_top_traits"/>
+            </not>
+        </preConditions>
+        <sql>
+            CREATE MATERIALIZED VIEW place_top_traits AS
+        WITH ranked_traits AS (
+            SELECT
+                pt.place_id AS id,
+                p.name,
+                p.rating,
+                p.primary_type::TEXT,
+                t.name AS trait_name,
+                pt.priority,
+                pt.like_counter,
+                ROW_NUMBER() OVER (
+                    PARTITION BY pt.place_id
+                    ORDER BY pt.priority DESC, pt.like_counter DESC
+                ) AS trait_rank
+            FROM place_trait pt
+            JOIN trait t ON pt.trait_id = t.id
+            JOIN place p ON pt.place_id = p.id
+        )
+            SELECT
+                rt.id,
+                rt.name,
+                rt.rating,
+                rt.primary_type,
+                STRING_AGG(rt.trait_name, ', ' ORDER BY rt.priority DESC, rt.like_counter DESC) AS top_traits
+            FROM ranked_traits AS rt
+            WHERE rt.trait_rank &lt;= 5
+            GROUP BY rt.id, rt.name, rt.rating, rt.primary_type;
         </sql>
     </changeSet>
 </databaseChangeLog>
