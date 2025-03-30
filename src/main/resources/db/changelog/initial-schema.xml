@@ -334,7 +334,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="create-place-top-traits-view" author="your_name">
+    <changeSet id="create-place-top-traits-view" author="ristovljupcho">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="place_top_traits"/>
