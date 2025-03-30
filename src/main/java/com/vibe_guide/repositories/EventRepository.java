@@ -22,4 +22,16 @@ public interface EventRepository extends JpaRepository<Event, UUID>, JpaSpecific
             "WHERE e.place.id = :placeId " +
             "ORDER BY e.startDate DESC")
     List<Event> findEventsByPlaceId(UUID placeId);
+
+    @Query("SELECT e " +
+            "FROM Event AS e " +
+            "WHERE e.place.id = :placeId " +
+            "AND e.startDate <= :now " +
+            "AND e.endDate >= :now")
+    List<Event> findTodayEventsByPlaceId(UUID placeId, LocalDateTime now);
+
+    @Query("SELECT e " +
+            "FROM Event AS e " +
+            "WHERE e.startDate >= :now ")
+    List<Event> findUpcomingEvents(LocalDateTime now);
 }
