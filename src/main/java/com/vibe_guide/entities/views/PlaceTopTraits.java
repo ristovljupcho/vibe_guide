@@ -21,8 +21,7 @@ import java.util.UUID;
 @Table(name = "place_top_traits")
 public class PlaceTopTraits {
     @Id
-    @Column(name = "place_id")
-    private UUID placeId;
+    private UUID id;
 
     private String name;
     private double rating;

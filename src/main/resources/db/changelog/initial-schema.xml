@@ -344,7 +344,7 @@
             CREATE MATERIALIZED VIEW place_top_traits AS
         WITH ranked_traits AS (
             SELECT
-                pt.place_id,
+                pt.place_id AS id,
                 p.name,
                 p.rating,
                 p.primary_type::TEXT,
@@ -360,14 +360,14 @@
             JOIN place p ON pt.place_id = p.id
         )
             SELECT
-                rt.place_id,
+                rt.id,
                 rt.name,
                 rt.rating,
                 rt.primary_type,
                 STRING_AGG(rt.trait_name, ', ' ORDER BY rt.priority DESC, rt.like_counter DESC) AS top_traits
             FROM ranked_traits AS rt
             WHERE rt.trait_rank &lt;= 5
-            GROUP BY rt.place_id, rt.name, rt.rating, rt.primary_type;
+            GROUP BY rt.id, rt.name, rt.rating, rt.primary_type;
         </sql>
     </changeSet>
 </databaseChangeLog>
