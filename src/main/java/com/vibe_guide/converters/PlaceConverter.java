@@ -1,5 +1,6 @@
 package com.vibe_guide.converters;
 
+import com.vibe_guide.dtos.DailyOfferResponseDTO;
 import com.vibe_guide.dtos.EventResponseDTO;
 import com.vibe_guide.dtos.PlacePreviewResponseDTO;
 import com.vibe_guide.dtos.PlaceResponseDTO;
@@ -27,6 +28,8 @@ public class PlaceConverter {
      * Converts a {@link Place} entity with additional attributes:
      * <ul>
      *     <li>List of {@link TraitResponseDTO} as topTraits</li>
+     *     <li>List of {@link EventResponseDTO} as todaysEvents</li>
+     *     <li>List of {@link DailyOfferResponseDTO} as dailyOffers</li>
      *     <li>List of {@link EventResponseDTO} as dailyEvents</li>
      *     <li>List of {@link EventResponseDTO} as monthlyEvents</li>
      *     <li>List of {@link TraitCarouselResponseDTO} as carouselTraits</li>
@@ -35,14 +38,16 @@ public class PlaceConverter {
      *
      * @param place          {@link Place} entity to convert.
      * @param topTraits      List of {@link TraitResponseDTO}.
-     * @param dailyEvents    List of {@link EventResponseDTO}.
+     * @param todaysEvents   List of {@link EventResponseDTO}.
+     * @param dailyOffers    List of {@link DailyOfferResponseDTO}.
      * @param monthlyEvents  List of {@link EventResponseDTO}.
      * @param carouselTraits List of {@link TraitCarouselResponseDTO}.
      * @return {@link PlaceResponseDTO} converted entity.
      */
     public PlaceResponseDTO toPlaceResponseDTO(Place place,
                                                List<TraitResponseDTO> topTraits,
-                                               List<EventResponseDTO> dailyEvents,
+                                               List<EventResponseDTO> todaysEvents,
+                                               List<DailyOfferResponseDTO> dailyOffers,
                                                List<EventResponseDTO> monthlyEvents,
                                                List<TraitCarouselResponseDTO> carouselTraits) {
         UUID placeId = place.getId();
@@ -67,14 +72,21 @@ public class PlaceConverter {
                 primaryType,
                 priceLevel,
                 topTraits,
-                dailyEvents,
+                todaysEvents,
+                dailyOffers,
                 monthlyEvents,
                 carouselTraits
         );
     }
 
+    /**
+     * Converts a {@link PlaceTopTraits} to a {@link PlacePreviewResponseDTO} entity.
+     *
+     * @param placeTopTraits {@link PlaceTopTraits} entity to convert.
+     * @return {@link PlacePreviewResponseDTO} converted entity.
+     */
     public PlacePreviewResponseDTO toPlacePreviewResponseDTO(PlaceTopTraits placeTopTraits) {
-        UUID placeId = placeTopTraits.getPlaceId();
+        UUID placeId = placeTopTraits.getId();
         String name = placeTopTraits.getName();
         double rating = placeTopTraits.getRating();
         PrimaryType primaryType = placeTopTraits.getPrimaryType();
