@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -25,12 +26,14 @@ public class EventQueryServiceImpl implements EventQueryService {
 
 
     /**
-     * Retrieves {@link Event}      objects using pagination. Filtering is enabled using {@link EventSpecification} which will
+     * Retrieves {@link Event}      objects using pagination. Filtering is enabled using {@link EventSpecification}
+     * which will
      * display {@link Event}        using dynamic queries.
-     * @param searchCriteria        dto used for the attributes in {@link EventSpecification}
-     * @param page                  page number
-     * @param size                  page size
-     * @return                      A {@link Page} containing {@link EventResponseDTO} objects.
+     *
+     * @param searchCriteria dto used for the attributes in {@link EventSpecification}
+     * @param page           page number
+     * @param size           page size
+     * @return A {@link Page} containing {@link EventResponseDTO} objects.
      */
     @Override
     public Page<EventResponseDTO> findByCriteria(EventSearchCriteriaDTO searchCriteria, int page, int size) {
@@ -38,23 +41,33 @@ public class EventQueryServiceImpl implements EventQueryService {
         Specification<Event> spec = Specification.where(null);
 
         UUID placeId = searchCriteria.placeId();
-        if(placeId != null) {
+        if (placeId != null) {
             spec = spec.and(EventSpecification.hasPlaceId(placeId));
         }
 
         String eventName = searchCriteria.eventName();
-        if(eventName != null && !eventName.isEmpty()) {
+        if (eventName != null && !eventName.isEmpty()) {
             spec = spec.and(EventSpecification.containsEventName(eventName));
         }
         LocalDateTime startDate = searchCriteria.startDate();
-        if(startDate != null) {
+        if (startDate != null) {
             spec = spec.and(EventSpecification.startsOnOrAfter(startDate));
         }
         LocalDateTime endDate = searchCriteria.endDate();
-        if(endDate != null) {
+        if (endDate != null) {
             spec = spec.and(EventSpecification.endsOnOrBefore(endDate));
         }
 
         return eventRepository.findAll(spec, pageRequest).map(eventConverter::toEventResponseDTO);
+    }
+
+    @Override
+    public List<EventResponseDTO> findTodaysEventsByPlaceId(UUID placeId) {
+        return List.of();
+    }
+
+    @Override
+    public List<EventResponseDTO> findMonthlyEventsByPlaceId(UUID placeId) {
+        return List.of();
     }
 }
