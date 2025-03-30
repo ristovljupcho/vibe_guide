@@ -9,27 +9,33 @@ import com.vibe_guide.exceptions.EventNotFoundException;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.repositories.EventRepository;
 import com.vibe_guide.repositories.PlaceRepository;
+import com.vibe_guide.services.EventGalleryManagementService;
 import com.vibe_guide.services.EventManagementService;
 import com.vibe_guide.utils.EventResponseMessages;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 public class EventManagementServiceImpl implements EventManagementService {
     private final EventRepository eventRepository;
     private final PlaceRepository placeRepository;
+    private final EventGalleryManagementService eventGalleryManagementService;
 
     /**
      * Inserts a new {@link Event}  with provided {@link EventInsertRequestDTO}.
+     *
      * @param eventInsertRequestDTO DTO used to insert new {@link Event} by providing:
      *                              String name, String description,LocalDateTime startDate,
      *                              LocalDateTime endDate and UUID placeId
-     * @return                      Response message of type {@link EventResponseMessages}
+     * @return Response message of type {@link EventResponseMessages}
      */
     @Override
     @Transactional
@@ -50,15 +56,21 @@ public class EventManagementServiceImpl implements EventManagementService {
         event.setPlace(place);
         eventRepository.save(event);
 
+        List<MultipartFile> images = eventInsertRequestDTO.images();
+        if (images != null && !images.isEmpty()) {
+            eventGalleryManagementService.addImagesToEvent(event.getId(), images);
+        }
+
         return EventResponseMessages.EVENT_INSERT_MESSAGE;
     }
 
     /**
      * Updates a {@link Event}      object with provided {@link EventUpdateRequestDTO}
+     *
      * @param eventUpdateRequestDTO DTO used to update {@link Event} object by providing UUID eventId,
      *                              String name, String description,LocalDateTime startDate,
      *                              LocalDateTime endDate and UUID placeId
-     * @return                      Response message of type {@link EventResponseMessages}
+     * @return Response message of type {@link EventResponseMessages}
      */
     @Override
     @Transactional
@@ -72,7 +84,7 @@ public class EventManagementServiceImpl implements EventManagementService {
         Place place = placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
         UUID eventId = eventUpdateRequestDTO.eventId();
-        Event event = eventRepository.findById(eventId).orElseThrow(()-> new EventNotFoundException(eventId));
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
 
         event.setName(name);
         event.setDescription(description);
@@ -87,8 +99,8 @@ public class EventManagementServiceImpl implements EventManagementService {
     /**
      * Deletes a {@link Event} object with provided <b><i>UUID eventId</i></b>.
      *
-     * @param eventId   UUID of the {@link Event} object that needs to be deleted.
-     * @return          Response message of type {@link EventResponseMessages}
+     * @param eventId UUID of the {@link Event} object that needs to be deleted.
+     * @return Response message of type {@link EventResponseMessages}
      */
     @Override
     @Transactional
