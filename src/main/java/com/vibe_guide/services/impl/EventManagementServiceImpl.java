@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -105,11 +104,7 @@ public class EventManagementServiceImpl implements EventManagementService {
     @Override
     @Transactional
     public String deleteEvent(UUID eventId) {
-        Optional<Event> event = Optional.ofNullable(
-                eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId)));
-        if (event.isEmpty())
-            throw new EventNotFoundException(eventId);
-
+        eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
         eventRepository.deleteById(eventId);
 
         return EventResponseMessages.EVENT_DELETE_MESSAGE;
