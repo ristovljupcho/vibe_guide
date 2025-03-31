@@ -1,7 +1,10 @@
 package com.vibe_guide.entities;
 
 import com.vibe_guide.entities.composite_keys.WorkingHoursId;
+import com.vibe_guide.enums.DayOfWeek;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -25,7 +28,8 @@ import java.util.Objects;
 @IdClass(WorkingHoursId.class)
 public class WorkingHours {
     @Id
-    private String dayOfWeek;
+    @Enumerated(EnumType.STRING)
+    private DayOfWeek dayOfWeek;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
