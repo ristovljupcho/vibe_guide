@@ -1,5 +1,6 @@
 package com.vibe_guide.entities;
 
+import com.vibe_guide.utils.photoEncoder.Base64Image;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "event_gallery")
-public class EventGallery {
+public class EventGallery implements Base64Image {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -47,5 +48,14 @@ public class EventGallery {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    @Override
+    public byte[] getImage() {
+        return this.photo;
+    }
+
+    public String generateEncodedImage(){
+        return generateBase64Image();
     }
 }
