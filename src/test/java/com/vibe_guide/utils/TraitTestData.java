@@ -1,9 +1,11 @@
 package com.vibe_guide.utils;
 
+import com.vibe_guide.dtos.TraitCarouselResponseDTO;
 import com.vibe_guide.dtos.TraitInsertRequestDTO;
 import com.vibe_guide.dtos.TraitResponseDTO;
 import com.vibe_guide.dtos.TraitUpdateRequestDTO;
 import com.vibe_guide.entities.Trait;
+import com.vibe_guide.entities.views.TraitLikesSummary;
 import com.vibe_guide.enums.TraitType;
 import com.vibe_guide.enums.sorting.TraitSortBy;
 import lombok.experimental.UtilityClass;
@@ -56,8 +58,31 @@ public class TraitTestData {
         return new PageImpl<>(traits);
     }
 
+    public static List<Trait> getTraits() {
+        Trait trait1 = new Trait(
+                TRAIT_ID,
+                TRAIT_TYPE,
+                TRAIT_NAME,
+                new HashSet<>()
+        );
+        Trait trait2 = new Trait(
+                UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf842"),
+                TRAIT_TYPE,
+                "Trait 2",
+                new HashSet<>()
+        );
+        Trait trait3 = new Trait(
+                UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf843"),
+                TRAIT_TYPE,
+                "Trait 3",
+                new HashSet<>()
+        );
+
+        return List.of(trait1, trait2, trait3);
+    }
+
     public static Trait getTrait() {
-        return getPageTraits().getContent().getFirst();
+        return getTraits().getFirst();
     }
 
     public static Page<TraitResponseDTO> getPageTraitResponseDTOs() {
@@ -95,5 +120,53 @@ public class TraitTestData {
                 TRAIT_TYPE,
                 TRAIT_NAME
         );
+    }
+
+    public static List<TraitCarouselResponseDTO> getTraitCarouselResponseDTOs() {
+        TraitCarouselResponseDTO trait1 = new TraitCarouselResponseDTO(TRAIT_NAME);
+        TraitCarouselResponseDTO trait2 = new TraitCarouselResponseDTO("Trait 2");
+        TraitCarouselResponseDTO trait3 = new TraitCarouselResponseDTO("Trait 3");
+
+        return List.of(trait1, trait2, trait3);
+    }
+
+    public static List<TraitResponseDTO> getTraitResponseDTOs() {
+        TraitResponseDTO trait1 = new TraitResponseDTO(
+                TRAIT_ID,
+                TRAIT_TYPE,
+                TRAIT_NAME
+        );
+        TraitResponseDTO trait2 = new TraitResponseDTO(
+                UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf842"),
+                TRAIT_TYPE,
+                "Trait 2"
+        );
+        TraitResponseDTO trait3 = new TraitResponseDTO(
+                UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf843"),
+                TRAIT_TYPE,
+                "Trait 2"
+        );
+
+        return List.of(trait1, trait2, trait3);
+    }
+
+    public static List<TraitLikesSummary> getTraitLikeSummaries() {
+        TraitLikesSummary trait1 = new TraitLikesSummary();
+        trait1.setId(TRAIT_ID);
+        trait1.setTraitType(TRAIT_TYPE);
+        trait1.setName(TRAIT_NAME);
+        trait1.setTotalLikes(0);
+        TraitLikesSummary trait2 = new TraitLikesSummary();
+        trait2.setId(UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf842"));
+        trait2.setTraitType(TRAIT_TYPE);
+        trait2.setName("Trait 2");
+        trait2.setTotalLikes(0);
+        TraitLikesSummary trait3 = new TraitLikesSummary();
+        trait3.setId(UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf843"));
+        trait3.setTraitType(TRAIT_TYPE);
+        trait3.setName("Trait 3");
+        trait3.setTotalLikes(0);
+
+        return List.of(trait1, trait2, trait3);
     }
 }
