@@ -8,6 +8,8 @@ import java.util.UUID;
 
 public interface EventManagementService {
     String insertEvent(EventInsertRequestDTO eventInsertRequestDTO);
+
     String updateEvent(EventUpdateRequestDTO eventUpdateRequestDTO);
+
     String deleteEvent(UUID eventId);
 }
