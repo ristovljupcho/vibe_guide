@@ -1,18 +1,19 @@
 package com.vibe_guide.dtos;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record DailyOfferUpdateDTO(
-        @NotEmpty
+        @NotNull
         UUID dailyOfferId,
         @NotEmpty
         String name,
-        @NotEmpty
+        @NotNull
         LocalDateTime startDate,
-        @NotEmpty
+        @NotNull
         LocalDateTime endDate,
         @NotEmpty
         String description,
