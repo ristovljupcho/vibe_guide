@@ -41,7 +41,7 @@ public class TraitManagementServiceImpl implements TraitManagementService {
         trait.setName(name);
         traitRepository.save(trait);
 
-        return TraitResponseMessages.TRAIT_INSERT_MESSAGE;
+        return String.format(TraitResponseMessages.TRAIT_INSERT_MESSAGE, traitType, name);
     }
 
     /**
@@ -64,7 +64,7 @@ public class TraitManagementServiceImpl implements TraitManagementService {
         trait.setName(name);
         traitRepository.save(trait);
 
-        return TraitResponseMessages.TRAIT_UPDATE_MESSAGE;
+        return String.format(TraitResponseMessages.TRAIT_UPDATE_MESSAGE, traitId);
     }
 
     /**
@@ -82,7 +82,7 @@ public class TraitManagementServiceImpl implements TraitManagementService {
 
         traitRepository.deleteById(traitId);
 
-        return TraitResponseMessages.TRAIT_DELETE_MESSAGE;
+        return String.format(TraitResponseMessages.TRAIT_DELETE_MESSAGE, traitId);
     }
 
     /**
