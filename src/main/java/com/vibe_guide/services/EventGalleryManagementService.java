@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface EventGalleryManagementService {
     void addImagesToEvent(UUID eventId, List<MultipartFile> images);
 
-    void deleteAllImagesFromEvent(UUID eventId);
+    String deleteAllImagesFromEvent(UUID eventId);
 
-    void deleteImageFromEvent(UUID imageId);
+    String deleteImageFromEvent(UUID imageId);
 }
