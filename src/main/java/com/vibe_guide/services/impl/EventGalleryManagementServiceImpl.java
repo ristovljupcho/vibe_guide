@@ -29,7 +29,8 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
     @Transactional
     public void addImagesToEvent(UUID eventId, List<MultipartFile> images) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
-        List<EventGallery> galleries = new ArrayList<>();
+        List<EventGallery> eventGallery
+                = new ArrayList<>();
 
         for (MultipartFile image : images) {
             if (image != null && !image.isEmpty()) {
@@ -40,13 +41,13 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
                     EventGallery gallery = new EventGallery();
                     gallery.setPhoto(image.getBytes());
                     gallery.setEvent(event);
-                    galleries.add(gallery);
+                    eventGallery.add(gallery);
                 } catch (IOException e) {
                     throw new RuntimeException("Failed to read image bytes", e);
                 }
             }
         }
-        eventGalleryRepository.saveAll(galleries);
+        eventGalleryRepository.saveAll(eventGallery);
     }
 
     /**
@@ -56,6 +57,7 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
      */
     @Override
     public void deleteAllImagesFromEvent(UUID eventId) {
+        eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
         List<EventGallery> existingGalleries = eventGalleryRepository.findAllByEventId(eventId);
         eventGalleryRepository.deleteAll(existingGalleries);
     }
@@ -63,7 +65,7 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
     /**
      * Deletes a {@link EventGallery} object with provided <b><i>UUID imageId</i></b>.
      *
-     * @param imageId   UUID of the {@link EventGallery} object that needs to be deleted.
+     * @param imageId UUID of the {@link EventGallery} object that needs to be deleted.
      */
     @Override
     public void deleteImageFromEvent(UUID imageId) {
