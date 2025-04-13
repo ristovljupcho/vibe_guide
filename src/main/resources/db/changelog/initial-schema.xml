@@ -168,13 +168,18 @@
             </not>
         </preConditions>
         <createTable tableName="place_admin">
-            <column name="id" type="UUID">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="user_id" type="UUID NOT NULL"/>
             <column name="place_id" type="UUID NOT NULL"/>
+            <column name="user_id" type="UUID NOT NULL"/>
             <column name="date_created" type="TIMESTAMP NOT NULL"/>
         </createTable>
+
+        <addForeignKeyConstraint baseTableName="place_admin"
+                                 baseColumnNames="place_id"
+                                 referencedTableName="place"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 constraintName="fk_place_admin_place"/>
 
         <addForeignKeyConstraint baseTableName="place_admin"
                                  baseColumnNames="user_id"
@@ -184,13 +189,10 @@
                                  onUpdate="CASCADE"
                                  constraintName="fk_place_admin_user"/>
 
-        <addForeignKeyConstraint baseTableName="place_admin"
-                                 baseColumnNames="place_id"
-                                 referencedTableName="place"
-                                 referencedColumnNames="id"
-                                 onDelete="CASCADE"
-                                 onUpdate="CASCADE"
-                                 constraintName="fk_place_admin_place"/>
+        <addPrimaryKey
+                tableName="place_admin"
+                columnNames="place_id, user_id"
+                constraintName="pk_place_admin"/>
     </changeSet>
 
     <changeSet id="create-event-table" author="petrovskiGj">
@@ -322,14 +324,13 @@
             </not>
         </preConditions>
         <sql>
-            CREATE MATERIALIZED VIEW trait_likes_summary AS
+            CREATE
+            MATERIALIZED VIEW trait_likes_summary AS
             SELECT t.id, t.trait_type, t.name, tt.total_likes
             FROM trait AS t
-                     JOIN (
-                SELECT trait_id, SUM(like_counter) AS total_likes
-                FROM place_trait
-                GROUP BY trait_id
-            ) AS tt ON t.id = tt.trait_id
+                     JOIN (SELECT trait_id, SUM(like_counter) AS total_likes
+                           FROM place_trait
+                           GROUP BY trait_id) AS tt ON t.id = tt.trait_id
             ORDER BY total_likes DESC;
         </sql>
     </changeSet>
@@ -341,7 +342,8 @@
             </not>
         </preConditions>
         <sql>
-            CREATE MATERIALIZED VIEW place_top_traits AS
+            CREATE
+            MATERIALIZED VIEW place_top_traits AS
         WITH ranked_traits AS (
             SELECT
                 pt.place_id AS id,
@@ -359,12 +361,11 @@
             JOIN trait t ON pt.trait_id = t.id
             JOIN place p ON pt.place_id = p.id
         )
-            SELECT
-                rt.id,
-                rt.name,
-                rt.rating,
-                rt.primary_type,
-                STRING_AGG(rt.trait_name, ', ' ORDER BY rt.priority DESC, rt.like_counter DESC) AS top_traits
+            SELECT rt.id,
+                   rt.name,
+                   rt.rating,
+                   rt.primary_type,
+                   STRING_AGG(rt.trait_name, ', ' ORDER BY rt.priority DESC, rt.like_counter DESC) AS top_traits
             FROM ranked_traits AS rt
             WHERE rt.trait_rank &lt;= 5
             GROUP BY rt.id, rt.name, rt.rating, rt.primary_type;

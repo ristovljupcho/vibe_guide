@@ -1,12 +1,8 @@
 package com.vibe_guide.services.impl;
 
 import com.vibe_guide.converters.PlaceConverter;
-import com.vibe_guide.dtos.DailyOfferResponseDTO;
-import com.vibe_guide.dtos.EventResponseDTO;
 import com.vibe_guide.dtos.PlacePreviewResponseDTO;
 import com.vibe_guide.dtos.PlaceResponseDTO;
-import com.vibe_guide.dtos.TraitCarouselResponseDTO;
-import com.vibe_guide.dtos.TraitResponseDTO;
 import com.vibe_guide.entities.Place;
 import com.vibe_guide.entities.Trait;
 import com.vibe_guide.entities.views.PlaceTopTraits;
@@ -15,10 +11,8 @@ import com.vibe_guide.enums.sorting.SortDirection;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.repositories.PlaceRepository;
 import com.vibe_guide.repositories.PlaceTopTraitsRepository;
-import com.vibe_guide.services.DailyOfferQueryService;
-import com.vibe_guide.services.EventQueryService;
+import com.vibe_guide.services.PlaceConverterWithAttributes;
 import com.vibe_guide.services.PlaceQueryService;
-import com.vibe_guide.services.PlaceTraitQueryService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,9 +29,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
 
     private final PlaceRepository placeRepository;
     private final PlaceTopTraitsRepository placeTopTraitsRepository;
-    private final PlaceTraitQueryService placeTraitQueryService;
-    private final EventQueryService eventQueryService;
-    private final DailyOfferQueryService dailyOfferQueryService;
+    private final PlaceConverterWithAttributes placeConverterWithAttributes;
     private final PlaceConverter placeConverter;
 
     /**
@@ -50,14 +42,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
     public PlaceResponseDTO getPlaceById(UUID placeId) {
         Place place = placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
-        List<TraitResponseDTO> topTraits = placeTraitQueryService.getTopTraitsForPlace(placeId);
-        List<EventResponseDTO> todaysEvents = eventQueryService.findTodaysEventsByPlaceId(placeId);
-        List<DailyOfferResponseDTO> dailyOffers = dailyOfferQueryService.getTodayDailyOffersByPlaceId(placeId);
-        List<EventResponseDTO> monthlyEvents = eventQueryService.findUpcomingEventsByPlaceId(placeId);
-        List<TraitCarouselResponseDTO> carouselTraits = placeTraitQueryService.getTraitsForPlaceCarousel(placeId);
-
-        return placeConverter.toPlaceResponseDTO(place, topTraits, todaysEvents, dailyOffers, monthlyEvents,
-                carouselTraits);
+        return placeConverterWithAttributes.getPlaceResponseDTO(place);
     }
 
     /**
