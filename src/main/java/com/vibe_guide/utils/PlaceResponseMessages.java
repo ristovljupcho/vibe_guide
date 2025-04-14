@@ -4,5 +4,5 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class PlaceResponseMessages {
-    public static final String PLACE_DELETE_MESSAGE = "Place successfully deleted with id %s.";
+    public static final String PLACE_DELETE_MESSAGE = "Place with id '%s' and name '%s' successfully deleted.";
 }
