@@ -13,5 +13,5 @@ public interface PlaceQueryService {
     PlaceResponseDTO getPlaceById(UUID placeId);
 
     Page<PlacePreviewResponseDTO> getPaginatedPlaces(List<String> traits, PlaceSortBy sortBy,
-                                                     SortDirection sortOrder, int page, int size);
+                                                     SortDirection sortDirection, int page, int size);
 }
