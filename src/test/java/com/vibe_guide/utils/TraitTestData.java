@@ -23,6 +23,7 @@ public class TraitTestData {
     private static final Sort TRAIT_SORT = Sort.by(Sort.Direction.ASC, "name");
 
     public static final UUID TRAIT_ID = UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf841");
+    public static final UUID TRAIT_SECOND_ID = UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf842");
     public static final PageRequest TRAIT_PAGE_REQUEST =
             PageRequest.of(SharedTestData.PAGE, SharedTestData.SIZE, TRAIT_SORT);
     public static final String TRAIT_NAME = "Trait 1";
@@ -32,6 +33,7 @@ public class TraitTestData {
             "Trait of type " + TRAIT_TYPE + " and with name " + TRAIT_NAME + " successfully inserted.";
     public static final String TRAIT_UPDATE_MESSAGE = "Trait with id " + TRAIT_ID + " successfully updated.";
     public static final String TRAIT_DELETE_MESSAGE = "Trait with id " + TRAIT_ID + " successfully deleted.";
+    public static final UUID TRAIT_INVALID_ID = UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf849");
 
     public static Page<Trait> getPageTraits() {
         Trait trait1 = new Trait(
@@ -41,7 +43,7 @@ public class TraitTestData {
                 new HashSet<>()
         );
         Trait trait2 = new Trait(
-                UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf842"),
+                TRAIT_SECOND_ID,
                 TRAIT_TYPE,
                 "Trait 2",
                 new HashSet<>()
@@ -66,7 +68,7 @@ public class TraitTestData {
                 new HashSet<>()
         );
         Trait trait2 = new Trait(
-                UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf842"),
+                TRAIT_SECOND_ID,
                 TRAIT_TYPE,
                 "Trait 2",
                 new HashSet<>()
@@ -92,7 +94,7 @@ public class TraitTestData {
                 TRAIT_NAME
         );
         TraitResponseDTO trait2 = new TraitResponseDTO(
-                UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf842"),
+                TRAIT_SECOND_ID,
                 TRAIT_TYPE,
                 "Trait 2"
         );
@@ -137,7 +139,7 @@ public class TraitTestData {
                 TRAIT_NAME
         );
         TraitResponseDTO trait2 = new TraitResponseDTO(
-                UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf842"),
+                TRAIT_SECOND_ID,
                 TRAIT_TYPE,
                 "Trait 2"
         );
@@ -157,7 +159,7 @@ public class TraitTestData {
         trait1.setName(TRAIT_NAME);
         trait1.setTotalLikes(0);
         TraitLikesSummary trait2 = new TraitLikesSummary();
-        trait2.setId(UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf842"));
+        trait2.setId(TRAIT_SECOND_ID);
         trait2.setTraitType(TRAIT_TYPE);
         trait2.setName("Trait 2");
         trait2.setTotalLikes(0);
@@ -168,5 +170,9 @@ public class TraitTestData {
         trait3.setTotalLikes(0);
 
         return List.of(trait1, trait2, trait3);
+    }
+
+    public static List<UUID> getTraitIds() {
+        return List.of(TRAIT_ID);
     }
 }
