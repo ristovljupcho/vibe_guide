@@ -3,11 +3,12 @@ package com.vibe_guide.dtos;
 import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-public record PlaceUpdateInfoRequestDTO(
-        @NotEmpty
+public record PlaceRequestDTO(
+        @NotNull
         UUID placeId,
         @NotEmpty
         String name,
@@ -21,9 +22,9 @@ public record PlaceUpdateInfoRequestDTO(
         String address,
         @NotEmpty
         String menuLink,
-        @NotEmpty
+        @NotNull
         PrimaryType primaryType,
-        @NotEmpty
+        @NotNull
         PriceLevel priceLevel
 ) {
 }
