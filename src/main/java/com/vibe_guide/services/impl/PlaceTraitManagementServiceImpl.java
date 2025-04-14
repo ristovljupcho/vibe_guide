@@ -117,8 +117,7 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
 
         placeTraitRepository.saveAll(newPlaceTraits);
 
-        return String.format(PlaceTraitResponseMessages.PLACE_TRAIT_BATCH_INSERT_MESSAGE,
-                newPlaceTraits.size(), placeId);
+        return String.format(PlaceTraitResponseMessages.PLACE_TRAIT_BATCH_INSERT_MESSAGE, placeId);
     }
 
     /**
