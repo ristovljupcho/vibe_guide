@@ -44,7 +44,7 @@ public class PlaceConverterWithAttributesImpl implements PlaceConverterWithAttri
         List<EventResponseDTO> todaysEvents = eventQueryService.findTodaysEventsByPlaceId(placeId);
         List<DailyOfferResponseDTO> dailyOffers = dailyOfferQueryService.getTodayDailyOffersByPlaceId(placeId);
         List<EventResponseDTO> monthlyEvents = eventQueryService.findUpcomingEventsByPlaceId(placeId);
-        List<TraitCarouselResponseDTO> carouselTraits = placeTraitQueryService.getTraitsForPlaceCarousel(placeId);
+        List<TraitCarouselResponseDTO> carouselTraits = placeTraitQueryService.getTraitsForDisplayInPlaceCarousel(placeId);
 
         return placeConverter.toPlaceResponseDTO(place, topTraits, todaysEvents, dailyOffers, monthlyEvents,
                 carouselTraits);
