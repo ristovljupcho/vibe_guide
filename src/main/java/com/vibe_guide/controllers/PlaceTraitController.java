@@ -31,7 +31,7 @@ public class PlaceTraitController {
     private final PlaceTraitQueryService placeTraitQueryService;
     private final PlaceTraitManagementService placeTraitManagementService;
 
-    @GetMapping("/carousel")
+    @GetMapping("/traits/carousel")
     public ResponseEntity<List<TraitCarouselResponseDTO>> getTraitsForCarousel(@PathVariable UUID placeId) {
         List<TraitCarouselResponseDTO> response = placeTraitQueryService.getTraitsForDisplayInPlaceCarousel(placeId);
 
@@ -60,7 +60,7 @@ public class PlaceTraitController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/batch-insert-trait")
+    @PostMapping("/batch-insert-traits")
     public ResponseEntity<String> batchInsertTraitForPlace(@PathVariable UUID placeId,
                                                            @RequestBody @Validated BatchInsertTraitsInPlace dto) {
         String response = placeTraitManagementService.batchInsertTraitsInPlace(placeId, dto);
@@ -68,8 +68,8 @@ public class PlaceTraitController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/change-info")
-    public ResponseEntity<String> changeInfoForTrait(@PathVariable UUID placeId,
+    @PutMapping("/traits/update")
+    public ResponseEntity<String> updateTraitForPlace(@PathVariable UUID placeId,
                                                      @RequestBody @Validated PlaceTraitRequestDTO dto) {
         String response = placeTraitManagementService.updateTraitForPlace(placeId, dto);
 
@@ -83,7 +83,7 @@ public class PlaceTraitController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/batch-delete-traits ")
+    @DeleteMapping("/batch-delete-traits")
     public ResponseEntity<String> deleteTraitForPlace(@PathVariable UUID placeId,
                                                       @RequestBody @Validated BatchDeleteTraitsInPlace dto) {
         String response = placeTraitManagementService.batchDeleteTraitsInPlace(placeId, dto);
