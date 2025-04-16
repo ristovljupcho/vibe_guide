@@ -30,7 +30,8 @@ public class PlaceTraitTestData {
     public List<PlaceTraitRequestDTO> getPlaceTraitRequestDTOs() {
         PlaceTraitRequestDTO placeTrait1 = new PlaceTraitRequestDTO(
                 TraitTestData.TRAIT_ID,
-                "Additional information."
+                "Additional information.",
+                true
         );
 
         return List.of(placeTrait1);
@@ -49,7 +50,8 @@ public class PlaceTraitTestData {
     public List<PlaceTraitRequestDTO> getInvalidPlaceTraitRequestDTOs() {
         PlaceTraitRequestDTO placeTrait = new PlaceTraitRequestDTO(
                 TraitTestData.TRAIT_INVALID_ID,
-                "Additional information."
+                "Additional information.",
+                true
         );
 
         return List.of(placeTrait);
@@ -64,7 +66,8 @@ public class PlaceTraitTestData {
     private static List<PlaceTraitRequestDTO> getNewPlaceTraitRequestDTOs() {
         PlaceTraitRequestDTO placeTrait = new PlaceTraitRequestDTO(
                 TraitTestData.TRAIT_SECOND_ID,
-                "Additional information."
+                "Additional information.",
+                true
         );
 
         return List.of(placeTrait);

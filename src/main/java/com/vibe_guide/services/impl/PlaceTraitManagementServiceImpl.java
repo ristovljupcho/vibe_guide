@@ -52,11 +52,13 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
             throw new TraitAlreadyPresentForPlaceException(placeId, traitId);
         }
         String additionalInformation = placeTraitInsertRequestDTO.additionalInformation();
+        boolean priority = placeTraitInsertRequestDTO.priority();
 
         PlaceTrait placeTrait = new PlaceTrait();
         placeTrait.setPlace(place);
         placeTrait.setTrait(trait);
         placeTrait.setAdditionalInformation(additionalInformation);
+        placeTrait.setPriority(priority);
 
         placeTraitRepository.save(placeTrait);
 
@@ -106,11 +108,13 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
             UUID traitId = dto.traitId();
             Trait trait = requestedTraitsMap.get(traitId);
             String additionalInformation = dto.additionalInformation();
+            boolean priority = dto.priority();
 
             PlaceTrait placeTrait = new PlaceTrait();
             placeTrait.setPlace(place);
             placeTrait.setTrait(trait);
             placeTrait.setAdditionalInformation(additionalInformation);
+            placeTrait.setPriority(priority);
 
             newPlaceTraits.add(placeTrait);
         }
@@ -132,9 +136,11 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
     public String updateTraitForPlace(UUID placeId, PlaceTraitRequestDTO placeTraitUpdateRequestDTO) {
         UUID traitId = placeTraitUpdateRequestDTO.traitId();
         PlaceTrait placeTrait = getPlaceTrait(placeId, traitId);
-        String additionalInformation = placeTraitUpdateRequestDTO.additionalInformation();
 
+        String additionalInformation = placeTraitUpdateRequestDTO.additionalInformation();
         placeTrait.setAdditionalInformation(additionalInformation);
+        boolean priority = placeTraitUpdateRequestDTO.priority();
+        placeTrait.setPriority(priority);
 
         placeTraitRepository.save(placeTrait);
 
