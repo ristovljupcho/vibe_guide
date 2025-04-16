@@ -59,9 +59,9 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
     @Override
     public Page<PlacePreviewResponseDTO> getPaginatedPlaces(List<String> traits, PlaceSortBy sortBy,
                                                             SortDirection sortDirection, int page, int size) {
-        PlaceSortBy effectiveSortBy = (sortBy != null) ? sortBy : PlaceSortBy.DEFAULT;
+        PlaceSortBy actualSortBy = (sortBy != null) ? sortBy : PlaceSortBy.DEFAULT;
 
-        String sortField = switch (effectiveSortBy) {
+        String sortField = switch (actualSortBy) {
             case DEFAULT -> "name";
             case RATING -> "rating";
             case PRICE_LEVEL -> "priceLevel";
