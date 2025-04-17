@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PlaceTraitQueryService {
-    List<TraitCarouselResponseDTO> getTraitsForPlaceCarousel(UUID placeId);
+    List<TraitCarouselResponseDTO> getTraitsForDisplayInPlaceCarousel(UUID placeId);
 
     List<TraitResponseDTO> getTopTraitsForPlace(UUID placeId);
 

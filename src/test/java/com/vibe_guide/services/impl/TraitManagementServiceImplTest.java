@@ -53,7 +53,7 @@ class TraitManagementServiceImplTest {
 
     @SneakyThrows
     @Test
-    void insertTrait_traitInsertSuccessful_throwsTraitAlreadyPresentException() {
+    void insertTrait_traitInsertSuccessful_returnsMessage() {
         // given
         given(traitRepository.getTraitByTraitTypeAndName(TraitTestData.TRAIT_TYPE,
                 TraitTestData.TRAIT_NAME)).willReturn(Optional.empty());
@@ -103,7 +103,7 @@ class TraitManagementServiceImplTest {
 
     @SneakyThrows
     @Test
-    void updateTrait_traitUpdateSuccessful_throwsTraitAlreadyPresentException() {
+    void updateTrait_traitUpdateSuccessful_returnsMessage() {
         // given
         given(traitRepository.getTraitByTraitTypeAndName(TraitTestData.TRAIT_TYPE, TraitTestData.TRAIT_NAME))
                 .willReturn(Optional.empty());
@@ -132,7 +132,7 @@ class TraitManagementServiceImplTest {
 
     @SneakyThrows
     @Test
-    void deleteTrait_traitDeleteSuccessful_throwsTraitNotFoundException() {
+    void deleteTrait_traitDeleteSuccessful_returnsMessage() {
         // given
         given(traitRepository.findById(any())).willReturn(Optional.of(TraitTestData.getTrait()));
 

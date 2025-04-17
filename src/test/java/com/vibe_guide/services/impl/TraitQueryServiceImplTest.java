@@ -72,6 +72,6 @@ class TraitQueryServiceImplTest {
         );
 
         // then
-        assertThat(actualResult).isEqualTo(TraitTestData.getPageTraitResponseDTOs());
+        assertThat(actualResult).isEqualTo(traitResponseDTOs);
     }
 }

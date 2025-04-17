@@ -31,7 +31,7 @@ public class PlaceTraitQueryServiceImpl implements PlaceTraitQueryService {
      * @return List of {@link TraitCarouselResponseDTO} containing trait names.
      */
     @Override
-    public List<TraitCarouselResponseDTO> getTraitsForPlaceCarousel(UUID placeId) {
+    public List<TraitCarouselResponseDTO> getTraitsForDisplayInPlaceCarousel(UUID placeId) {
         checkIfPlaceExists(placeId);
         List<Trait> traits = placeTraitRepository.getTraitsForPlaceCarousel(placeId);
 

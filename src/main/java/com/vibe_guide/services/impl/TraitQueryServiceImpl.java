@@ -37,7 +37,9 @@ public class TraitQueryServiceImpl implements TraitQueryService {
     @Override
     public Page<TraitResponseDTO> getPaginatedTraits(TraitType traitType, TraitSortBy sortBy,
                                                      SortDirection sortDirection, int page, int size) {
-        String sortField = switch (sortBy) {
+        TraitSortBy actualSortBy = (sortBy != null) ? sortBy : TraitSortBy.DEFAULT;
+
+        String sortField = switch (actualSortBy) {
             case DEFAULT -> "id";
             case NAME -> "name";
         };

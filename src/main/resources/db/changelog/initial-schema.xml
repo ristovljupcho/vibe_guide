@@ -69,7 +69,7 @@
                                  referencedTableName="trait"
                                  referencedColumnNames="id"
                                  onUpdate="CASCADE"
-                                 onDelete="RESTRICT"
+                                 onDelete="CASCADE"
                                  constraintName="fk_trait"/>
 
         <addPrimaryKey
