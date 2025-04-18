@@ -42,20 +42,20 @@ class PlaceTraitQueryServiceImplTest {
 
     @SneakyThrows
     @Test
-    void getTraitsForPlaceCarousel_placeNotFound_throwsPlaceNotFoundException() {
+    void getTraitsForDisplayInPlaceCarousel_placeNotFound_throwsNotFoundException() {
         // given
         given(placeRepository.existsById(any())).willReturn(false);
 
         // when & then
         assertThatExceptionOfType(PlaceNotFoundException.class)
-                .isThrownBy(() -> placeTraitQueryService.getTraitsForPlaceCarousel(PlaceTestData.PLACE_ID))
-                .withMessage("Place with id " + PlaceTestData.PLACE_ID + " not found");
+                .isThrownBy(() -> placeTraitQueryService.getTraitsForDisplayInPlaceCarousel(PlaceTestData.PLACE_ID))
+                .withMessage("Place with id " + PlaceTestData.PLACE_ID + " not found.");
         verify(placeTraitRepository, times(0)).getTraitsForPlaceCarousel(any());
         verify(traitConverter, times(0)).toTraitCarouselResponseDTO(any());
     }
 
     @Test
-    void getTraitsForPlaceCarousel_atLeastOneTraitIsFound_returnListOfTraitCarouselResponseDTO() {
+    void getTraitsForDisplayInPlaceCarousel_atLeastOneTraitIsFound_returnListOfTraitDisplayInPlaceCarouselResponseDTO() {
         // given
         List<TraitCarouselResponseDTO> DTOs = TraitTestData.getTraitCarouselResponseDTOs();
 
@@ -65,7 +65,7 @@ class PlaceTraitQueryServiceImplTest {
 
         // when
         List<TraitCarouselResponseDTO> actualResult =
-                placeTraitQueryService.getTraitsForPlaceCarousel(PlaceTestData.PLACE_ID);
+                placeTraitQueryService.getTraitsForDisplayInPlaceCarousel(PlaceTestData.PLACE_ID);
 
         // then
         assertThat(actualResult).isEqualTo(DTOs);
@@ -80,7 +80,7 @@ class PlaceTraitQueryServiceImplTest {
         // when & then
         assertThatExceptionOfType(PlaceNotFoundException.class)
                 .isThrownBy(() -> placeTraitQueryService.getTopTraitsForPlace(PlaceTestData.PLACE_ID))
-                .withMessage("Place with id " + PlaceTestData.PLACE_ID + " not found");
+                .withMessage("Place with id " + PlaceTestData.PLACE_ID + " not found.");
         verify(placeTraitRepository, times(0)).getTopTraitsForPlace(any());
         verify(traitConverter, times(0)).toTraitResponseDTO((Trait) any());
     }
@@ -111,7 +111,7 @@ class PlaceTraitQueryServiceImplTest {
         // then & when
         assertThatExceptionOfType(PlaceNotFoundException.class)
                 .isThrownBy(() -> placeTraitQueryService.getMissingTraitsForPlace(PlaceTestData.PLACE_ID))
-                .withMessage("Place with id " + PlaceTestData.PLACE_ID + " not found");
+                .withMessage("Place with id " + PlaceTestData.PLACE_ID + " not found.");
         verify(placeTraitRepository, times(0)).getMissingTraitsForPlace(any());
         verify(traitConverter, times(0)).toTraitResponseDTO((Trait) any());
     }
