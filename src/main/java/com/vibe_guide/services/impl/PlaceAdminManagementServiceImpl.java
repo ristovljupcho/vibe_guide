@@ -37,7 +37,7 @@ public class PlaceAdminManagementServiceImpl implements PlaceAdminManagementServ
      */
     @Transactional
     @Override
-    public String addPlaceAdmin(UUID placeId, PlaceAdminRequestDTO placeAdminRequestDTO) {
+    public String insertPlaceAdmin(UUID placeId, PlaceAdminRequestDTO placeAdminRequestDTO) {
         Place place = placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
         UUID userId = placeAdminRequestDTO.userId();
@@ -51,6 +51,7 @@ public class PlaceAdminManagementServiceImpl implements PlaceAdminManagementServ
         PlaceAdmin placeAdmin = new PlaceAdmin();
         placeAdmin.setPlace(place);
         placeAdmin.setUser(user);
+        placeAdmin.setId(placeAdminId);
 
         placeAdminRepository.save(placeAdmin);
 
