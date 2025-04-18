@@ -43,7 +43,8 @@ public class UserConverter {
     public PlaceAdminResponseDTO toPlaceAdminResponseDTO(User user) {
         UUID userId = user.getId();
         String email = user.getEmail();
+        String username = user.getUsername();
 
-        return new PlaceAdminResponseDTO(userId, email);
+        return new PlaceAdminResponseDTO(userId, email, username);
     }
 }
