@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public record PlaceAdminResponseDTO(
         UUID userId,
-        String email
+        String email,
+        String username
 ) {
 }
