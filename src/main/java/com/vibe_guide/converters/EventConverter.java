@@ -6,6 +6,8 @@ import com.vibe_guide.entities.Place;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Base64;
+import java.util.List;
 
 /**
  * <ul>
@@ -26,10 +28,13 @@ public class EventConverter {
         String eventName = event.getName();
         Place place = event.getPlace();
         String placeName = place.getName();
-        String description = place.getDescription();
+        String description = event.getDescription();
         LocalDateTime startDate = event.getStartDate();
         LocalDateTime endDate = event.getEndDate();
 
-        return new EventResponseDTO(eventName, placeName, description, startDate, endDate);
+        List<String> base64Images = event.getGalleries().stream()
+                .map(g -> Base64.getEncoder().encodeToString(g.getPhoto()))
+                .toList();
+        return new EventResponseDTO(eventName, placeName, description, startDate, endDate, base64Images);
     }
 }
