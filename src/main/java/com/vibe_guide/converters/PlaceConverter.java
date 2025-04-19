@@ -62,7 +62,7 @@ public class PlaceConverter {
         PrimaryType primaryType = place.getPrimaryType();
         PriceLevel priceLevel = place.getPriceLevel();
 
-        List<String> base64images = place.getGallery().stream()
+        List<String> gallery = place.getGallery().stream()
                 .map(g -> Base64.getEncoder().encodeToString(g.getPhoto())).toList();
 
         return new PlaceResponseDTO(
@@ -76,7 +76,7 @@ public class PlaceConverter {
                 menuLink,
                 primaryType,
                 priceLevel,
-                base64images,
+                gallery,
                 topTraits,
                 todaysEvents,
                 dailyOffers,
