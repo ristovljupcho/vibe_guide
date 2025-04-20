@@ -1,6 +1,8 @@
 package com.vibe_guide.utils;
 
+import com.vibe_guide.dtos.DailyOfferInsertDTO;
 import com.vibe_guide.dtos.DailyOfferResponseDTO;
+import com.vibe_guide.dtos.DailyOfferUpdateDTO;
 import com.vibe_guide.entities.DailyOffer;
 import lombok.experimental.UtilityClass;
 
@@ -77,5 +79,37 @@ public class DailyOfferTestData {
 
     public DailyOfferResponseDTO getDailyOfferResponseDTO() {
         return getDailyOfferResponseDTOs().getFirst();
+    }
+
+    public List<DailyOfferInsertDTO> getDailyOfferInsertDTOs() {
+        DailyOfferInsertDTO dto1 = new DailyOfferInsertDTO(
+                DAILY_OFFER_NAME,
+                START_DATE,
+                END_DATE,
+                DAILY_OFFER_DESCRIPTION,
+                IMAGE_BYTES
+        );
+
+        return List.of(dto1);
+    }
+
+    public DailyOfferInsertDTO getDailyOfferInsertDTO() {
+        return getDailyOfferInsertDTOs().getFirst();
+    }
+
+    public List<DailyOfferUpdateDTO> getDailyOfferUpdateDTOs() {
+        DailyOfferUpdateDTO dto1 = new DailyOfferUpdateDTO(
+                DAILY_OFFER_ID,
+                DAILY_OFFER_NAME,
+                START_DATE,
+                END_DATE,
+                DAILY_OFFER_DESCRIPTION,
+                IMAGE_BYTES
+        );
+
+        return List.of(dto1);
+    }
+    public static DailyOfferUpdateDTO getDailyOfferUpdateDTO() {
+        return getDailyOfferUpdateDTOs().getFirst();
     }
 }
