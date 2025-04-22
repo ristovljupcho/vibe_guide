@@ -17,6 +17,7 @@ public record PlaceResponseDTO(
         String menuLink,
         PrimaryType primaryType,
         PriceLevel priceLevel,
+        List<String> images,
         List<TraitResponseDTO> topTraits,
         List<EventResponseDTO> dailyEvents,
         List<DailyOfferResponseDTO> dailyOffers,

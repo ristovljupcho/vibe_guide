@@ -2,6 +2,7 @@ package com.vibe_guide.utils;
 
 import com.vibe_guide.entities.Place;
 import com.vibe_guide.entities.PlaceAdmin;
+import com.vibe_guide.entities.PlaceGallery;
 import com.vibe_guide.entities.PlaceTrait;
 import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
@@ -24,7 +25,7 @@ public class PlaceTestData {
     private static final PriceLevel PLACE_PRICE_LEVEL = PriceLevel.EXPENSIVE;
     private static final Set<PlaceAdmin> PLACE_ADMIN_SET = new HashSet<>();
     private static final Set<PlaceTrait> PLACE_TRAIT_SET = new HashSet<>();
-
+    private static final Set<PlaceGallery> PLACE_IMAGE_SET = new HashSet<>();
     public static final UUID PLACE_ID = UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf811");
     public static final String PLACE_NAME = "Place Name 1";
 
@@ -41,7 +42,8 @@ public class PlaceTestData {
                 PLACE_PRIMARY_TYPE,
                 PLACE_PRICE_LEVEL,
                 PLACE_ADMIN_SET,
-                PLACE_TRAIT_SET
+                PLACE_TRAIT_SET,
+                PLACE_IMAGE_SET
         );
         Place place2 = new Place(
                 UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf812"),
@@ -55,7 +57,8 @@ public class PlaceTestData {
                 PLACE_PRIMARY_TYPE,
                 PLACE_PRICE_LEVEL,
                 PLACE_ADMIN_SET,
-                PLACE_TRAIT_SET
+                PLACE_TRAIT_SET,
+                PLACE_IMAGE_SET
         );
         Place place3 = new Place(
                 UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf813"),
@@ -69,7 +72,8 @@ public class PlaceTestData {
                 PLACE_PRIMARY_TYPE,
                 PLACE_PRICE_LEVEL,
                 PLACE_ADMIN_SET,
-                PLACE_TRAIT_SET
+                PLACE_TRAIT_SET,
+                PLACE_IMAGE_SET
         );
 
         return List.of(place1, place2, place3);
