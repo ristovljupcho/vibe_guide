@@ -1,12 +1,16 @@
 package com.vibe_guide.utils;
 
+import com.vibe_guide.dtos.EventInsertRequestDTO;
 import com.vibe_guide.dtos.EventResponseDTO;
 import com.vibe_guide.dtos.EventSearchCriteriaDTO;
+import com.vibe_guide.dtos.EventUpdateRequestDTO;
 import com.vibe_guide.entities.Event;
 import com.vibe_guide.entities.EventGallery;
 import lombok.experimental.UtilityClass;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -22,6 +26,9 @@ public class EventTestData {
     private static final LocalDateTime EVENT_START_DATE = LocalDateTime.now().plusDays(1);
     private static final LocalDateTime EVENT_END_DATE = LocalDateTime.now().plusDays(2);
     private static final Set<EventGallery> EVENT_GALLERY_SET = new HashSet<>();
+
+    MultipartFile mockFile1 = new MockMultipartFile("image1", "image1.jpg", "image/jpeg", new byte[0]);
+    MultipartFile mockFile2 = new MockMultipartFile("image2", "image2.jpg", "image/jpeg", new byte[0]);
 
     public List<Event> getEvents() {
         Event event1 = new Event();
@@ -63,14 +70,16 @@ public class EventTestData {
     }
 
     public static List<EventResponseDTO> getEventResponseDTOs() {
-        EventResponseDTO dto1 = new EventResponseDTO(EVENT_NAME, PlaceTestData.PLACE_NAME, EVENT_DESCRIPTION,
-                EVENT_START_DATE, EVENT_END_DATE);
-        EventResponseDTO dto2 = new EventResponseDTO(EVENT_NAME, PlaceTestData.PLACE_NAME, EVENT_DESCRIPTION,
-                EVENT_START_DATE, EVENT_END_DATE);
-        EventResponseDTO dto3 = new EventResponseDTO(EVENT_NAME, PlaceTestData.PLACE_NAME, EVENT_DESCRIPTION,
-                EVENT_START_DATE, EVENT_END_DATE);
 
-        return List.of(dto1,dto2, dto3);
+        List<String> sampleImages = List.of("img1.jpg", "img2.jpg");
+        EventResponseDTO dto1 = new EventResponseDTO(EVENT_NAME, PlaceTestData.PLACE_NAME, EVENT_DESCRIPTION,
+                EVENT_START_DATE, EVENT_END_DATE, sampleImages);
+        EventResponseDTO dto2 = new EventResponseDTO(EVENT_NAME, PlaceTestData.PLACE_NAME, EVENT_DESCRIPTION,
+                EVENT_START_DATE, EVENT_END_DATE, sampleImages);
+        EventResponseDTO dto3 = new EventResponseDTO(EVENT_NAME, PlaceTestData.PLACE_NAME, EVENT_DESCRIPTION,
+                EVENT_START_DATE, EVENT_END_DATE, sampleImages);
+
+        return List.of(dto1, dto2, dto3);
     }
 
     public static Page<EventResponseDTO> getEventResponseDTOsPage() {
@@ -79,5 +88,57 @@ public class EventTestData {
 
     public static EventSearchCriteriaDTO getEventsSearchCriteriaDTO() {
         return new EventSearchCriteriaDTO(PlaceTestData.PLACE_ID, EVENT_NAME, EVENT_START_DATE, EVENT_END_DATE);
+    }
+
+    public List<EventInsertRequestDTO> getEventInsertRequestDTOs() {
+        List<MultipartFile> sampleImages = List.of(mockFile1, mockFile2);
+
+        EventInsertRequestDTO dto1 = new EventInsertRequestDTO(
+                EVENT_NAME,
+                EVENT_DESCRIPTION,
+                EVENT_START_DATE,
+                EVENT_END_DATE,
+                PlaceTestData.PLACE_ID,
+                sampleImages
+        );
+
+        EventInsertRequestDTO dto2 = new EventInsertRequestDTO(
+                EVENT_NAME,
+                EVENT_DESCRIPTION,
+                EVENT_START_DATE,
+                EVENT_END_DATE,
+                PlaceTestData.PLACE_ID,
+                sampleImages
+        );
+        EventInsertRequestDTO dto3 = new EventInsertRequestDTO(
+                EVENT_NAME,
+                EVENT_DESCRIPTION,
+                EVENT_START_DATE,
+                EVENT_END_DATE,
+                PlaceTestData.PLACE_ID,
+                sampleImages
+        );
+        return List.of(dto1, dto2, dto3);
+    }
+
+    public EventInsertRequestDTO getEventInsertRequestDTO() {
+        return getEventInsertRequestDTOs().getFirst();
+    }
+
+    public List<EventUpdateRequestDTO> getEventUpdateDTOs() {
+
+        EventUpdateRequestDTO dto1 = new EventUpdateRequestDTO(
+                UUID.fromString("123e4567-e89b-12d3-a456-426614174001"),
+                EVENT_NAME,
+                EVENT_DESCRIPTION,
+                EVENT_START_DATE,
+                EVENT_END_DATE,
+                PlaceTestData.PLACE_ID
+        );
+        return List.of(dto1);
+    }
+
+    public EventUpdateRequestDTO getEventUpdateRequestDTO() {
+        return getEventUpdateDTOs().getFirst();
     }
 }
