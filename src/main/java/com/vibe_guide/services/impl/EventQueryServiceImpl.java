@@ -73,6 +73,7 @@ public class EventQueryServiceImpl implements EventQueryService {
      */
     @Override
     public List<EventResponseDTO> findPastEvents(UUID placeId) {
+        checkIfPlaceExists(placeId);
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
 
