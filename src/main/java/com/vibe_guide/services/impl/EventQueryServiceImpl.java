@@ -49,16 +49,20 @@ public class EventQueryServiceImpl implements EventQueryService {
         if (eventName != null && !eventName.isEmpty()) {
             spec = spec.and(EventSpecification.containsEventName(eventName));
         }
+
         LocalDateTime startDate = searchCriteria.startDate();
         if (startDate != null) {
             spec = spec.and(EventSpecification.startsOnOrAfter(startDate));
         }
+
         LocalDateTime endDate = searchCriteria.endDate();
         if (endDate != null) {
             spec = spec.and(EventSpecification.endsOnOrBefore(endDate));
         }
 
-        return eventRepository.findAll(spec, pageRequest).map(eventConverter::toEventResponseDTO);
+        Page<Event> pageOfEvents = eventRepository.findAll(spec, pageRequest);
+
+        return pageOfEvents.map(eventConverter::toEventResponseDTO);
     }
 
     /**
