@@ -17,7 +17,7 @@ import java.util.UUID;
 @UtilityClass
 public class EventTestData {
     public static final UUID EVENT_ID = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
-    private static final String EVENT_NAME = "Daily Offer Name 1";
+    private static final String EVENT_NAME = "Event Name 1";
     private static final String EVENT_DESCRIPTION = "Description 1";
     private static final LocalDateTime EVENT_START_DATE = LocalDateTime.now().plusDays(1);
     private static final LocalDateTime EVENT_END_DATE = LocalDateTime.now().plusDays(2);
