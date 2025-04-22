@@ -4,7 +4,9 @@ import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 public record PlaceRequestDTO(
@@ -25,6 +27,7 @@ public record PlaceRequestDTO(
         @NotNull
         PrimaryType primaryType,
         @NotNull
-        PriceLevel priceLevel
+        PriceLevel priceLevel,
+        List<MultipartFile> images
 ) {
 }

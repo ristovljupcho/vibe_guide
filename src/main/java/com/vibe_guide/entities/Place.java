@@ -63,6 +63,11 @@ public class Place {
             fetch = FetchType.LAZY)
     private Set<PlaceTrait> traits = new HashSet<>();
 
+    @OneToMany(mappedBy = "place",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Set<PlaceGallery> gallery = new HashSet<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
