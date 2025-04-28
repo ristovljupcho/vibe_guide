@@ -25,6 +25,12 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
     private final EventRepository eventRepository;
     private final EventGalleryRepository eventGalleryRepository;
 
+    /**
+     * Inserts {@link EventGallery} objects with provided<b><i>UUID eventId</i></b>.
+     *
+     * @param eventId UUID of the {@link Event} object, for which the images need to be inserted.
+     * @param images  list of MultipartFile images
+     */
     @Override
     @Transactional
     public void addImagesToEvent(UUID eventId, List<MultipartFile> images) {

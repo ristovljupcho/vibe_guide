@@ -48,16 +48,11 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    //не е потребен DaoAuthenticationProvider, бидејќи JWT токените се користат за аутентификација на корисниците, а
-    // не за основна форма на логирање со лозинка. Ако сепак сакаш да го оставиш DaoAuthenticationProvider
-    // за други цели (например за локално логирање или регистрација),
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder()); // Користи го Argon2PasswordEncoder
+        authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
 }
-
-
