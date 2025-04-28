@@ -15,12 +15,12 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JWTService {
+public class JwtService {
 
     @Value("${jwt.secret}")
     private String secretKey;
 
-    private static final long JWT_EXPIRATION_MS = 1000 * 60 * 60 * 10; // 10 hours
+    private static final long JWT_EXPIRATION_MS = (long) 1000 * 60 * 60 * 10;
 
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
@@ -36,11 +36,11 @@ public class JWTService {
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        final String userName = extractUserName(token);
+        final String userName = extractUsername(token);
         return userName.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
-    public String extractUserName(String token) {
+    public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
