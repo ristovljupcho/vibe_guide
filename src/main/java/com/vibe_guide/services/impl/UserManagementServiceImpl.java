@@ -1,6 +1,6 @@
 package com.vibe_guide.services.impl;
 
-import com.vibe_guide.config.jwt.JWTService;
+import com.vibe_guide.config.jwt.JwtService;
 import com.vibe_guide.dtos.UserChangePasswordRequestDTO;
 import com.vibe_guide.dtos.UserLoginRequestDTO;
 import com.vibe_guide.dtos.UserRegisterRequestDTO;
@@ -30,7 +30,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JWTService jwtService;
+    private final JwtService jwtService;
 
     @Transactional
     @Override
