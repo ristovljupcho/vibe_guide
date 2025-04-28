@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ public class DailyOffer implements Base64Image {
 
     private String name;
 
+    @CreationTimestamp
     private LocalDate dateCreated;
 
     private LocalDateTime startDate;
@@ -59,7 +61,7 @@ public class DailyOffer implements Base64Image {
         return Objects.hashCode(id);
     }
 
-    public String generateEncodedImage(){
+    public String generateEncodedImage() {
         return generateBase64Image();
     }
 }

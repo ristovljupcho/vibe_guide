@@ -12,6 +12,7 @@ import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
 import org.springframework.stereotype.Component;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,6 +61,10 @@ public class PlaceConverter {
         String menuLink = place.getMenuLink();
         PrimaryType primaryType = place.getPrimaryType();
         PriceLevel priceLevel = place.getPriceLevel();
+
+        List<String> gallery = place.getGallery().stream()
+                .map(g -> Base64.getEncoder().encodeToString(g.getPhoto())).toList();
+
         return new PlaceResponseDTO(
                 placeId,
                 name,
@@ -71,6 +76,7 @@ public class PlaceConverter {
                 menuLink,
                 primaryType,
                 priceLevel,
+                gallery,
                 topTraits,
                 todaysEvents,
                 dailyOffers,
