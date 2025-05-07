@@ -2,6 +2,7 @@ package com.vibe_guide.utils;
 
 import com.vibe_guide.enums.sorting.SortDirection;
 import lombok.experimental.UtilityClass;
+import org.springframework.data.domain.PageRequest;
 
 @UtilityClass
 public class SharedTestData {
