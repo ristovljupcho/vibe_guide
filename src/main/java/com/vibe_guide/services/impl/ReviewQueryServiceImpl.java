@@ -81,7 +81,7 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
         if(placeId != null) {
             specification = specification.and(ReviewSpecification.hasPlaceId(placeId));
         }
-        UUID userId = searchCriteria.placeId();
+        UUID userId = searchCriteria.userId();
         if(userId != null) {
             specification = specification.and(ReviewSpecification.hasUserId(userId));
         }

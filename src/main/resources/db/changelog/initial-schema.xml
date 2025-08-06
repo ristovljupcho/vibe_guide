@@ -138,7 +138,7 @@
             </column>
             <column name="date_created" type="DATETIME NOT NULL"/>
             <column name="date_modified" type="DATETIME"/>
-            <column name="rating" type="INT NOT NULL"/>
+            <column name="rating" type="DECIMAL(3, 1) NOT NULL"/>
             <column name="description" type="VARCHAR(255) NOT NULL"/>
             <column name="user_id" type="UUID NOT NULL"/>
             <column name="place_id" type="UUID NOT NULL"/>
