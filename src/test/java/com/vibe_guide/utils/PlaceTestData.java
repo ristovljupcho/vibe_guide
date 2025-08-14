@@ -15,7 +15,6 @@ import java.util.UUID;
 
 @UtilityClass
 public class PlaceTestData {
-    private static final String PLACE_NAME = "Place Name 1";
     private static final String PLACE_DESCRIPTION = "Place Description";
     private static final String PLACE_MAPS_URI = "Place Maps URI";
     private static final String PLACE_PHONE_NUMBER = "Phone Number";
@@ -28,6 +27,7 @@ public class PlaceTestData {
     private static final Set<PlaceTrait> PLACE_TRAIT_SET = new HashSet<>();
     private static final Set<PlaceGallery> PLACE_IMAGE_SET = new HashSet<>();
     public static final UUID PLACE_ID = UUID.fromString("6a3e9932-4802-4815-8de8-2f1e99bdf811");
+    public static final String PLACE_NAME = "Place Name 1";
 
     public List<Place> getPlaces() {
         Place place1 = new Place(
