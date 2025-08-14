@@ -64,7 +64,7 @@ class DailyOfferQueryServiceImplTest {
 
         // when
         List<DailyOfferResponseDTO> actualResult =
-                dailyOfferQueryService.getTodayDailyOffersByPlaceId(DailyOfferTestData.DAILY_OFFER_ID);
+                dailyOfferQueryService.getTodayDailyOffersByPlaceId(PlaceTestData.PLACE_ID);
 
         // then
         assertThat(actualResult).isEqualTo(dtos);
