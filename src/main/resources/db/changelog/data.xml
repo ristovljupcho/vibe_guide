@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="insert-trait" author="ristovljupcho">
+        <insert tableName="trait">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Cozy"/>
+            <column name="trait_type" value="VIBE"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Classy"/>
+            <column name="trait_type" value="VIBE"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Beer"/>
+            <column name="trait_type" value="DRINK"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Wine"/>
+            <column name="trait_type" value="DRINK"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Cocktails"/>
+            <column name="trait_type" value="DRINK"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Pizza"/>
+            <column name="trait_type" value="FOOD"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Burger"/>
+            <column name="trait_type" value="FOOD"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Live Music"/>
+            <column name="trait_type" value="VIBE"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Sports TV"/>
+            <column name="trait_type" value="VIBE"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Sushi"/>
+            <column name="trait_type" value="FOOD"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-place" author="ristovljupcho">
+        <insert tableName="place">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Sky Lounge"/>
+            <column name="description" value="Rooftop bar with panoramic views"/>
+            <column name="maps_uri" value="https://maps.example.com/sky"/>
+            <column name="phone_number" value="123-456-789"/>
+            <column name="address" value="Main St 1"/>
+            <column name="rating" value="4.5"/>
+            <column name="menu_link" value="https://menu.sky.com"/>
+            <column name="price_level" value="$$$"/>
+            <column name="primary_type" value="BAR"/>
+        </insert>
+        <insert tableName="place">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Beer Garden"/>
+            <column name="description" value="Outdoor beer garden with live music"/>
+            <column name="maps_uri" value="https://maps.example.com/beer"/>
+            <column name="phone_number" value="987-654-321"/>
+            <column name="address" value="Park St 12"/>
+            <column name="rating" value="4.2"/>
+            <column name="menu_link" value="https://menu.beer.com"/>
+            <column name="price_level" value="$$"/>
+            <column name="primary_type" value="PUB"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-place-trait" author="ristovljupcho">
+        <insert tableName="place_trait">
+            <column name="place_id" value="(SELECT id FROM place LIMIT 1)"/>
+            <column name="trait_id" value="(SELECT id FROM trait LIMIT 1)"/>
+            <column name="like_counter" value="25"/>
+            <column name="priority" value="true"/>
+            <column name="additional_information" value="Popular among students"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-daily-offer" author="ristovljupcho">
+        <insert tableName="daily_offer">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Happy Hour"/>
+            <column name="date_created" valueDate="2025-08-01T10:00:00"/>
+            <column name="start_date" valueDate="2025-08-01T17:00:00"/>
+            <column name="end_date" valueDate="2025-08-01T19:00:00"/>
+            <column name="description" value="50% off cocktails"/>
+            <column name="image" value=""/>
+            <column name="place_id" value="(SELECT id FROM place LIMIT 1)"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-user" author="ristovljupcho">
+        <insert tableName="user_table">
+            <column name="id" value="random-uuid()"/>
+            <column name="username" value="john_doe"/>
+            <column name="name" value="John Doe"/>
+            <column name="email" value="john@example.com"/>
+            <column name="role" value="CLIENT"/>
+            <column name="password" value="hashed_pw"/>
+            <column name="created_at" valueDate="2025-08-01T09:00:00"/>
+            <column name="updated_at" valueDate="2025-08-01T09:00:00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-review" author="ristovljupcho">
+        <insert tableName="review">
+            <column name="id" value="random-uuid()"/>
+            <column name="date_created" valueDate="2025-08-02T12:00:00"/>
+            <column name="date_modified" valueDate="2025-08-02T12:00:00"/>
+            <column name="rating" value="5"/>
+            <column name="description" value="Amazing bar!"/>
+            <column name="user_id" value="(SELECT id FROM user_table LIMIT 1)"/>
+            <column name="place_id" value="(SELECT id FROM place LIMIT 1)"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-place-admin" author="ristovljupcho">
+        <insert tableName="place_admin">
+            <column name="place_id" value="(SELECT id FROM place LIMIT 1)"/>
+            <column name="user_id" value="(SELECT id FROM user_table LIMIT 2 OFFSET 1)"/>
+            <column name="date_created" valueDate="2025-08-01T09:30:00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-event" author="ristovljupcho">
+        <insert tableName="event">
+            <column name="id" value="random-uuid()"/>
+            <column name="name" value="Jazz Night"/>
+            <column name="date_created" valueDate="2025-08-01"/>
+            <column name="description" value="Live jazz concert"/>
+            <column name="start_date" valueDate="2025-08-05T20:00:00"/>
+            <column name="end_date" valueDate="2025-08-05T23:00:00"/>
+            <column name="place_id" value="(SELECT id FROM place LIMIT 1)"/>
+            <column name="entry_fee" value="10"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-event-gallery" author="ristovljupcho">
+        <insert tableName="event_gallery">
+            <column name="id" value="random-uuid()"/>
+            <column name="event_id" value="(SELECT id FROM event LIMIT 1)"/>
+            <column name="photo" value=""/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-place-gallery" author="ristovljupcho">
+        <insert tableName="place_gallery">
+            <column name="id" value="random-uuid()"/>
+            <column name="place_id" value="(SELECT id FROM place LIMIT 1)"/>
+            <column name="photo" value=""/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-working-hours" author="ristovljupcho">
+        <insert tableName="working_hours">
+            <column name="day_of_week" value="MONDAY"/>
+            <column name="start_time" value="09:00:00"/>
+            <column name="end_time" value="23:00:00"/>
+            <column name="place_id" value="(SELECT id FROM place LIMIT 1)"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
