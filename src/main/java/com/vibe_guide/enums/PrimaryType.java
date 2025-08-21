@@ -1,7 +1,10 @@
 package com.vibe_guide.enums;
 
 public enum PrimaryType {
-    COFFEE_SHOP,
     BAR,
-    RESTAURANT
+    PUB,
+    CLUB,
+    RESTAURANT,
+    CAFE,
+    LOUNGE
 }
