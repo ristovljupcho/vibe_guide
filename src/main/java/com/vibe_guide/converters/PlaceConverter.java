@@ -7,9 +7,9 @@ import com.vibe_guide.dtos.PlaceResponseDTO;
 import com.vibe_guide.dtos.TraitCarouselResponseDTO;
 import com.vibe_guide.dtos.TraitResponseDTO;
 import com.vibe_guide.entities.Place;
-import com.vibe_guide.entities.views.PlaceTopTraits;
 import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
+import com.vibe_guide.projections.PlacePreviewProjection;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
@@ -85,19 +85,23 @@ public class PlaceConverter {
         );
     }
 
+
     /**
-     * Converts a {@link PlaceTopTraits} to a {@link PlacePreviewResponseDTO} entity.
+     * Converts projection {@link PlacePreviewProjection} used for retrieving data from repository to usable DTO
+     * {@link PlacePreviewResponseDTO}.
      *
-     * @param placeTopTraits {@link PlaceTopTraits} entity to convert.
+     * @param placePreviewProjection entity to convert.
      * @return {@link PlacePreviewResponseDTO} converted entity.
      */
-    public PlacePreviewResponseDTO toPlacePreviewResponseDTO(PlaceTopTraits placeTopTraits) {
-        UUID placeId = placeTopTraits.getId();
-        String name = placeTopTraits.getName();
-        double rating = placeTopTraits.getRating();
-        PrimaryType primaryType = placeTopTraits.getPrimaryType();
-        List<String> topTraits = placeTopTraits.getTopTraitsList();
-
-        return new PlacePreviewResponseDTO(placeId, name, rating, primaryType, topTraits);
+    public PlacePreviewResponseDTO toPlacePreviewResponseDTO(PlacePreviewProjection placePreviewProjection) {
+        return new PlacePreviewResponseDTO(
+                placePreviewProjection.getPlaceId(),
+                placePreviewProjection.getPlaceName(),
+                placePreviewProjection.getDescription(),
+                placePreviewProjection.getAddress(),
+                placePreviewProjection.getRating(),
+                placePreviewProjection.getPrimaryType(),
+                placePreviewProjection.getTopTraits()
+        );
     }
 }
