@@ -27,7 +27,7 @@ public class TraitTestData {
     public static final PageRequest TRAIT_PAGE_REQUEST =
             PageRequest.of(SharedTestData.PAGE, SharedTestData.SIZE, TRAIT_SORT);
     public static final String TRAIT_NAME = "Trait 1";
-    public static final TraitType TRAIT_TYPE = TraitType.MUSIC_TYPE;
+    public static final TraitType TRAIT_TYPE = TraitType.DRINK;
     public static final TraitSortBy TRAIT_SORT_BY = TraitSortBy.NAME;
     public static final String TRAIT_INSERT_MESSAGE =
             "Trait of type " + TRAIT_TYPE + " and with name " + TRAIT_NAME + " successfully inserted.";

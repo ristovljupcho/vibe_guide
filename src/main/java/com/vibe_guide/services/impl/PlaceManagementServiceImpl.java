@@ -1,5 +1,6 @@
 package com.vibe_guide.services.impl;
 
+import com.vibe_guide.converters.PlaceConverter;
 import com.vibe_guide.dtos.PlaceRequestDTO;
 import com.vibe_guide.dtos.PlaceResponseDTO;
 import com.vibe_guide.entities.Place;
@@ -7,7 +8,6 @@ import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.repositories.PlaceRepository;
-import com.vibe_guide.services.PlaceConverterWithAttributes;
 import com.vibe_guide.services.PlaceManagementService;
 import com.vibe_guide.utils.PlaceResponseMessages;
 import jakarta.transaction.Transactional;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @Service
 public class PlaceManagementServiceImpl implements PlaceManagementService {
     private PlaceRepository placeRepository;
-    private PlaceConverterWithAttributes placeConverterWithAttributes;
+    private PlaceConverter placeConverter;
 
     @Override
     public PlaceResponseDTO insertPlace() {
@@ -59,7 +59,7 @@ public class PlaceManagementServiceImpl implements PlaceManagementService {
 
         placeRepository.save(place);
 
-        return placeConverterWithAttributes.getPlaceResponseDTO(place);
+        return placeConverter.toPlaceResponseDTO(place);
     }
 
     /**

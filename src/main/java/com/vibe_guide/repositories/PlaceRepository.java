@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface PlaceRepository extends JpaRepository<Place, UUID> {
     @Query(value = """
-            SELECT 
+            SELECT
                 p.id AS placeId,
                 p.name AS placeName,
                 p.description,
