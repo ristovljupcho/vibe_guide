@@ -8,6 +8,8 @@ import java.util.UUID;
 
 public record DailyOfferUpdateDTO(
         @NotNull
+        UUID placeId,
+        @NotNull
         UUID dailyOfferId,
         @NotEmpty
         String name,
