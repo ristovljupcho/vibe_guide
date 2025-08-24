@@ -41,30 +41,30 @@ class DailyOfferQueryServiceImplTest {
 
     @SneakyThrows
     @Test
-    void getTodayDailyOffersByPlaceId_placeNotFound_throwsPlaceNotFoundException() {
+    void getTodayOffersByPlaceId_placeNotFound_throwsPlaceNotFoundException() {
         // given
         given(placeRepository.findById(any())).willReturn(Optional.empty());
 
         // when & then
         assertThatExceptionOfType(PlaceNotFoundException.class)
-                .isThrownBy(() -> dailyOfferQueryService.getTodayDailyOffersByPlaceId(PlaceTestData.PLACE_ID))
+                .isThrownBy(() -> dailyOfferQueryService.getTodayOffersByPlaceId(PlaceTestData.PLACE_ID))
                 .withMessage("Place with id " + PlaceTestData.PLACE_ID + " not found.");
-        verify(dailyOfferRepository, times(0)).findTodayDailyOffersByPlaceId(any(), any());
+        verify(dailyOfferRepository, times(0)).findDailyOffersByPlaceId(any(), any());
         verify(dailyOfferConverter, times(0)).toDailyOfferResponseDTO(any());
     }
 
     @Test
-    void getTodayDailyOffersByPlaceId_placeFoundWithProvidedId_returnsDailyOfferResponseDTO() {
+    void getTodayDailyOffersByPlaceId_placeFoundWithProvidedId_returnsOfferResponseDTO() {
         // given
         List<DailyOfferResponseDTO> dtos = DailyOfferTestData.getDailyOfferResponseDTOs();
         given(placeRepository.findById(any())).willReturn(Optional.of(PlaceTestData.getPlace()));
-        given(dailyOfferRepository.findTodayDailyOffersByPlaceId(any(), any())).willReturn(
+        given(dailyOfferRepository.findDailyOffersByPlaceId(any(), any())).willReturn(
                 DailyOfferTestData.getDailyOffers());
         given(dailyOfferConverter.toDailyOfferResponseDTO(any())).willReturn(dtos.get(0), dtos.get(1), dtos.get(2));
 
         // when
         List<DailyOfferResponseDTO> actualResult =
-                dailyOfferQueryService.getTodayDailyOffersByPlaceId(PlaceTestData.PLACE_ID);
+                dailyOfferQueryService.getTodayOffersByPlaceId(PlaceTestData.PLACE_ID);
 
         // then
         assertThat(actualResult).isEqualTo(dtos);
@@ -74,7 +74,7 @@ class DailyOfferQueryServiceImplTest {
     void getTodayDailyOffers_successfulFetch_returnsDailyOfferResponseDTO() {
         // given
         List<DailyOfferResponseDTO> dtos = DailyOfferTestData.getDailyOfferResponseDTOs();
-        given(dailyOfferRepository.findTodayDailyOffers(any())).willReturn(DailyOfferTestData.getDailyOffers());
+        given(dailyOfferRepository.findAllDailyOffers(any())).willReturn(DailyOfferTestData.getDailyOffers());
         given(dailyOfferConverter.toDailyOfferResponseDTO(any())).willReturn(dtos.get(0), dtos.get(1), dtos.get(2));
 
         // when
