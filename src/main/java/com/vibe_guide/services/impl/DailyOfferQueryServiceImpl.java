@@ -30,10 +30,18 @@ public class DailyOfferQueryServiceImpl implements DailyOfferQueryService {
      * @return A list of {@link DailyOffer} containing {@link DailyOfferResponseDTO} objects.
      */
     @Override
-    public List<DailyOfferResponseDTO> getTodayDailyOffersByPlaceId(UUID placeId) {
+    public List<DailyOfferResponseDTO> getTodayOffersByPlaceId(UUID placeId) {
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
         LocalDateTime today = LocalDateTime.now();
-        List<DailyOffer> dailyOffers = dailyOfferRepository.findTodayDailyOffersByPlaceId(today, placeId);
+        List<DailyOffer> dailyOffers = dailyOfferRepository.findDailyOffersByPlaceId(today, placeId);
+
+        return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).collect(Collectors.toList());
+    }
+
+    @Override public List<DailyOfferResponseDTO> findUpcomingOffersByPlaceId(UUID placeId) {
+        placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
+        LocalDateTime today = LocalDateTime.now();
+        List<DailyOffer> dailyOffers = dailyOfferRepository.findUpcomingOffersByPlaceId(today, placeId);
 
         return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).collect(Collectors.toList());
     }
@@ -46,7 +54,7 @@ public class DailyOfferQueryServiceImpl implements DailyOfferQueryService {
      */
     @Override public List<DailyOfferResponseDTO> getTodayDailyOffers() {
         LocalDateTime today = LocalDateTime.now();
-        List<DailyOffer> dailyOffers = dailyOfferRepository.findTodayDailyOffers(today);
+        List<DailyOffer> dailyOffers = dailyOfferRepository.findAllDailyOffers(today);
 
         return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).collect(Collectors.toList());
     }
