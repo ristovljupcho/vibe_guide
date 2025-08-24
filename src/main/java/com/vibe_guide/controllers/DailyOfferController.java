@@ -23,7 +23,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/daily-offers")
+@RequestMapping("/offers")
 @Validated
 public class DailyOfferController {
     private final DailyOfferQueryService dailyOfferQueryService;
@@ -38,28 +38,31 @@ public class DailyOfferController {
     @GetMapping("/place/{placeId}")
     public ResponseEntity<List<DailyOfferResponseDTO>> getTodayDailyOffersByPlaceId(
             @PathVariable UUID placeId) {
-        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getTodayDailyOffersByPlaceId(placeId);
+        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getTodayOffersByPlaceId(placeId);
+        return ResponseEntity.ok(offers);
+    }
+    @GetMapping("/upcoming/{placeId}")
+    public ResponseEntity<List<DailyOfferResponseDTO>> getUpcomingOffersByPlaceId(
+            @PathVariable UUID placeId) {
+        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.findUpcomingOffersByPlaceId(placeId);
         return ResponseEntity.ok(offers);
     }
 
-    @PostMapping("/place/{placeId}/insert")
+    @PostMapping("/insert")
     public ResponseEntity<String> insertDailyOffer(
-            @PathVariable UUID placeId,
             @RequestBody @Valid DailyOfferInsertDTO dto) {
-        String msg = dailyOfferManagementService.insertDailyOffer(placeId, dto);
-        return ResponseEntity.ok(msg);
+        String response = dailyOfferManagementService.insertOffer(dto);
+        return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/place/{placeId}/daily-offer/{dailyOfferId}")
+    @PutMapping("/update")
     public ResponseEntity<String> updateDailyOffer(
-            @PathVariable UUID placeId,
-            @PathVariable UUID dailyOfferId,
             @RequestBody @Valid DailyOfferUpdateDTO dto) {
-        String msg = dailyOfferManagementService.updateDailyOffer(placeId, dailyOfferId, dto);
-        return ResponseEntity.ok(msg);
+        String response = dailyOfferManagementService.updateDailyOffer(dto);
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{dailyOfferId}")
+    @DeleteMapping("/delete/{dailyOfferId}")
     public ResponseEntity<String> deleteDailyOffer(
             @PathVariable UUID dailyOfferId) {
         String msg = dailyOfferManagementService.deleteDailyOffer(dailyOfferId);
