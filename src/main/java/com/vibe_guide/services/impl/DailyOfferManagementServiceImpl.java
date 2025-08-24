@@ -25,7 +25,8 @@ public class DailyOfferManagementServiceImpl implements DailyOfferManagementServ
 
     @Override
     @Transactional
-    public String insertDailyOffer(UUID placeId, DailyOfferInsertDTO dailyOfferInsertDTO) {
+    public String insertOffer(DailyOfferInsertDTO dailyOfferInsertDTO) {
+        UUID placeId = dailyOfferInsertDTO.placeId();
         Place place = placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
         DailyOffer dailyOffer = new DailyOffer();
@@ -46,7 +47,9 @@ public class DailyOfferManagementServiceImpl implements DailyOfferManagementServ
 
     @Override
     @Transactional
-    public String updateDailyOffer(UUID placeId, UUID dailyOfferId, DailyOfferUpdateDTO dailyOfferUpdateDTO) {
+    public String updateDailyOffer(DailyOfferUpdateDTO dailyOfferUpdateDTO) {
+        UUID placeId = dailyOfferUpdateDTO.placeId();
+        UUID dailyOfferId = dailyOfferUpdateDTO.dailyOfferId();
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
         DailyOffer dailyOffer = dailyOfferRepository.findById(dailyOfferId)
                 .orElseThrow(() -> new DailyOfferNotFoundException(dailyOfferId));
