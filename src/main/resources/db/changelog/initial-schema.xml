@@ -93,7 +93,7 @@
             <column name="start_date" type="DATETIME NOT NULL"/>
             <column name="end_date" type="DATETIME NOT NULL"/>
             <column name="description" type="VARCHAR(500) NOT NULL"/>
-            <column name="image" type="VARBINARY(8000)"/>
+            <column name="image" type="BYTEA"/>
             <column name="place_id" type="UUID NOT NULL"/>
         </createTable>
 
@@ -236,7 +236,7 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="event_id" type="UUID NOT NULL"/>
-            <column name="photo" type="VARBINARY(8000)"/>
+            <column name="photo" type="BYTEA"/>
         </createTable>
 
         <addForeignKeyConstraint
@@ -260,7 +260,7 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="place_id" type="UUID NOT NULL"/>
-            <column name="photo" type="VARBINARY(8000)"/>
+            <column name="photo" type="BYTEA"/>
         </createTable>
 
         <addForeignKeyConstraint
