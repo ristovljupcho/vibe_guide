@@ -45,8 +45,8 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
                 }
                 try {
                     EventGallery gallery = new EventGallery();
-                    gallery.setPhoto(image.getBytes());
                     gallery.setEvent(event);
+                    gallery.setPhoto(image.getBytes());
                     eventGallery.add(gallery);
                 } catch (IOException e) {
                     throw new RuntimeException("Failed to read image bytes", e);
@@ -57,7 +57,7 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
     }
 
     /**
-     * Deletes a {@link EventGallery} objects with provided <b><i>UUID eventId</i></b>.
+     * Deletes all {@link EventGallery} objects with provided <b><i>UUID eventId</i></b>.
      *
      * @param eventId UUID of the {@link Event} objects, for which images need to be deleted.
      */
@@ -75,9 +75,9 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
      */
     @Override
     public void deleteImageFromEvent(UUID imageId) {
-        if (!eventGalleryRepository.existsById(imageId))
+        if (!eventGalleryRepository.existsById(imageId)) {
             throw new ImageNotFoundException(imageId);
-
+        }
         eventGalleryRepository.deleteById(imageId);
     }
 }
