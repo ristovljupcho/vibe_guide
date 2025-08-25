@@ -83,6 +83,7 @@ public class DailyOfferTestData {
 
     public List<DailyOfferInsertDTO> getDailyOfferInsertDTOs() {
         DailyOfferInsertDTO dto1 = new DailyOfferInsertDTO(
+                PlaceTestData.PLACE_ID,
                 DAILY_OFFER_NAME,
                 START_DATE,
                 END_DATE,
@@ -99,6 +100,7 @@ public class DailyOfferTestData {
 
     public List<DailyOfferUpdateDTO> getDailyOfferUpdateDTOs() {
         DailyOfferUpdateDTO dto1 = new DailyOfferUpdateDTO(
+                PlaceTestData.PLACE_ID,
                 DAILY_OFFER_ID,
                 DAILY_OFFER_NAME,
                 START_DATE,
