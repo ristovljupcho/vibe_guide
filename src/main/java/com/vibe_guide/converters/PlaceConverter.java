@@ -56,8 +56,7 @@ public class PlaceConverter {
                 rating,
                 menuLink,
                 primaryType,
-                priceLevel,
-                images
+                priceLevel
         );
     }
 
