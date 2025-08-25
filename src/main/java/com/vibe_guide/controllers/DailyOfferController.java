@@ -31,21 +31,21 @@ public class DailyOfferController {
 
     @GetMapping
     ResponseEntity<List<DailyOfferResponseDTO>> getTodayDailyOffers() {
-        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getTodayDailyOffers();
+        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getDailyOffers();
         return ResponseEntity.ok(offers);
     }
 
     @GetMapping("/place/{placeId}")
     public ResponseEntity<List<DailyOfferResponseDTO>> getTodayDailyOffersByPlaceId(
             @PathVariable UUID placeId) {
-        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getTodayOffersByPlaceId(placeId);
+        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getDailyOffersByPlaceId(placeId);
         return ResponseEntity.ok(offers);
     }
 
     @GetMapping("/upcoming/{placeId}")
     public ResponseEntity<List<DailyOfferResponseDTO>> getUpcomingOffersByPlaceId(
             @PathVariable UUID placeId) {
-        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.findUpcomingOffersByPlaceId(placeId);
+        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getUpcomingOffersByPlaceId(placeId);
         return ResponseEntity.ok(offers);
     }
 

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -30,21 +29,13 @@ public class DailyOfferQueryServiceImpl implements DailyOfferQueryService {
      * @return A list of {@link DailyOffer} containing {@link DailyOfferResponseDTO} objects.
      */
     @Override
-    public List<DailyOfferResponseDTO> getTodayOffersByPlaceId(UUID placeId) {
-        placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
+    public List<DailyOfferResponseDTO> getDailyOffersByPlaceId(UUID placeId) {
+        checkIfPlaceExists(placeId);
+
         LocalDateTime today = LocalDateTime.now();
         List<DailyOffer> dailyOffers = dailyOfferRepository.findDailyOffersByPlaceId(today, placeId);
 
-        return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<DailyOfferResponseDTO> findUpcomingOffersByPlaceId(UUID placeId) {
-        placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
-        LocalDateTime today = LocalDateTime.now();
-        List<DailyOffer> dailyOffers = dailyOfferRepository.findUpcomingOffersByPlaceId(today, placeId);
-
-        return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).collect(Collectors.toList());
+        return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).toList();
     }
 
     /**
@@ -54,10 +45,43 @@ public class DailyOfferQueryServiceImpl implements DailyOfferQueryService {
      * @return A list of {@link DailyOffer} containing {@link DailyOfferResponseDTO} objects.
      */
     @Override
-    public List<DailyOfferResponseDTO> getTodayDailyOffers() {
+    public List<DailyOfferResponseDTO> getDailyOffers() {
         LocalDateTime today = LocalDateTime.now();
         List<DailyOffer> dailyOffers = dailyOfferRepository.findAllDailyOffers(today);
 
-        return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).collect(Collectors.toList());
+        return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).toList();
+    }
+
+    /**
+     * Retrieves {@link DailyOffer} objects. Method retrieves all upcoming offers for a certain place.
+     *
+     * @param placeId uuid of the place where the dailyOffer is valid, for filtering
+     * @return A list of {@link DailyOffer} containing {@link DailyOfferResponseDTO} objects.
+     */
+    @Override
+    public List<DailyOfferResponseDTO> getUpcomingOffersByPlaceId(UUID placeId) {
+        checkIfPlaceExists(placeId);
+
+        LocalDateTime today = LocalDateTime.now();
+        List<DailyOffer> dailyOffers = dailyOfferRepository.findUpcomingOffersByPlaceId(today, placeId);
+
+        return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).toList();
+    }
+
+    /**
+     * Retrieves {@link DailyOffer} objects. Method retrieves all upcoming offers.
+     *
+     * @return A list of {@link DailyOffer} containing {@link DailyOfferResponseDTO} objects.
+     */
+    @Override
+    public List<DailyOfferResponseDTO> getUpcomingOffers() {
+        LocalDateTime today = LocalDateTime.now();
+        List<DailyOffer> dailyOffers = dailyOfferRepository.findAllUpcomingOffers(today);
+
+        return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).toList();
+    }
+
+    void checkIfPlaceExists(UUID placeId) {
+        placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
     }
 }

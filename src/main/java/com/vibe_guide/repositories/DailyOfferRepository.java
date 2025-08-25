@@ -27,4 +27,9 @@ public interface DailyOfferRepository extends JpaRepository<DailyOffer, UUID> {
             "WHERE do.startDate > :today " +
             "AND do.place.id = :placeId")
     List<DailyOffer> findUpcomingOffersByPlaceId(LocalDateTime today, UUID placeId);
+
+    @Query("SELECT do " +
+            "FROM DailyOffer AS do " +
+            "WHERE do.startDate > :today")
+    List<DailyOffer> findAllUpcomingOffers(LocalDateTime today);
 }
