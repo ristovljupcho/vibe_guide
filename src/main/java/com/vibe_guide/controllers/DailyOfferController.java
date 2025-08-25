@@ -41,6 +41,7 @@ public class DailyOfferController {
         List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getTodayOffersByPlaceId(placeId);
         return ResponseEntity.ok(offers);
     }
+
     @GetMapping("/upcoming/{placeId}")
     public ResponseEntity<List<DailyOfferResponseDTO>> getUpcomingOffersByPlaceId(
             @PathVariable UUID placeId) {

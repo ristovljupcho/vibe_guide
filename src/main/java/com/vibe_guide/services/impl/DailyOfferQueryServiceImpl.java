@@ -38,7 +38,8 @@ public class DailyOfferQueryServiceImpl implements DailyOfferQueryService {
         return dailyOffers.stream().map(dailyOfferConverter::toDailyOfferResponseDTO).collect(Collectors.toList());
     }
 
-    @Override public List<DailyOfferResponseDTO> findUpcomingOffersByPlaceId(UUID placeId) {
+    @Override
+    public List<DailyOfferResponseDTO> findUpcomingOffersByPlaceId(UUID placeId) {
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
         LocalDateTime today = LocalDateTime.now();
         List<DailyOffer> dailyOffers = dailyOfferRepository.findUpcomingOffersByPlaceId(today, placeId);
@@ -52,7 +53,8 @@ public class DailyOfferQueryServiceImpl implements DailyOfferQueryService {
      *
      * @return A list of {@link DailyOffer} containing {@link DailyOfferResponseDTO} objects.
      */
-    @Override public List<DailyOfferResponseDTO> getTodayDailyOffers() {
+    @Override
+    public List<DailyOfferResponseDTO> getTodayDailyOffers() {
         LocalDateTime today = LocalDateTime.now();
         List<DailyOffer> dailyOffers = dailyOfferRepository.findAllDailyOffers(today);
 

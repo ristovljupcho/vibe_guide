@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public interface DailyOfferQueryService {
     List<DailyOfferResponseDTO> getTodayOffersByPlaceId(UUID placeId);
+
     List<DailyOfferResponseDTO> findUpcomingOffersByPlaceId(UUID placeId);
+
     List<DailyOfferResponseDTO> getTodayDailyOffers();
 }
