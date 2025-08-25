@@ -24,4 +24,9 @@ public class EventGalleryQueryServiceImpl implements EventGalleryQueryService {
 
         return eventGalleryRepository.findAllByEventId(eventId);
     }
+
+    @Override public EventGallery getGalleryById(UUID imageId) {
+        return eventGalleryRepository.findById(imageId)
+                .orElseThrow(() -> new RuntimeException("Image not found"));
+    }
 }

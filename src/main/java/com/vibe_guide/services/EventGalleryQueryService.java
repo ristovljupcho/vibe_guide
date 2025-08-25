@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface EventGalleryQueryService {
     List<EventGallery> getEventGallery(UUID eventId);
+    EventGallery getGalleryById(UUID imageId);
 }
