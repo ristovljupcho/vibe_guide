@@ -40,11 +40,6 @@ public class EventQueryServiceImpl implements EventQueryService {
         PageRequest pageRequest = PageRequest.of(page, size);
         Specification<Event> spec = Specification.where(null);
 
-        UUID placeId = searchCriteria.placeId();
-        if (placeId != null) {
-            spec = spec.and(EventSpecification.hasPlaceId(placeId));
-        }
-
         String eventName = searchCriteria.eventName();
         if (eventName != null && !eventName.isEmpty()) {
             spec = spec.and(EventSpecification.containsEventName(eventName));
