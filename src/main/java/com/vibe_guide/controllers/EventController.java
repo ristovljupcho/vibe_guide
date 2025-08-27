@@ -3,11 +3,13 @@ package com.vibe_guide.controllers;
 
 import com.vibe_guide.dtos.EventInsertRequestDTO;
 import com.vibe_guide.dtos.EventResponseDTO;
+import com.vibe_guide.dtos.EventSearchCriteriaDTO;
 import com.vibe_guide.dtos.EventUpdateRequestDTO;
 import com.vibe_guide.services.EventManagementService;
 import com.vibe_guide.services.EventQueryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +34,20 @@ public class EventController {
 
     private final EventQueryService eventQueryService;
     private final EventManagementService eventManagementService;
+
+    @GetMapping("/paginated")
+    ResponseEntity<Page<EventResponseDTO>> getPaginatedEvents(
+            @RequestParam(required = false) String placeName,
+            @RequestParam(required = false) LocalDateTime startDate,
+            @RequestParam(required = false) LocalDateTime endDate,
+            @RequestParam Integer page,
+            @RequestParam Integer size) {
+        EventSearchCriteriaDTO searchCriteria =
+                new EventSearchCriteriaDTO(placeName, startDate, endDate);
+        Page<EventResponseDTO> response = eventQueryService.getPaginatedEvents(searchCriteria, page, size);
+
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/{placeId}/past")
     ResponseEntity<List<EventResponseDTO>> getPastEventsByPlaceId(@PathVariable UUID placeId) {
@@ -60,7 +78,7 @@ public class EventController {
     }
 
     @PostMapping("/insert")
-    ResponseEntity<String>  insertEvent(@RequestBody @Valid EventInsertRequestDTO dto) {
+    ResponseEntity<String> insertEvent(@RequestBody @Valid EventInsertRequestDTO dto) {
         String response = eventManagementService.insertEvent(dto);
 
         return ResponseEntity.ok(response);
