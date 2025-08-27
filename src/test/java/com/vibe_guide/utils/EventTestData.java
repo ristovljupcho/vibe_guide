@@ -87,7 +87,7 @@ public class EventTestData {
     }
 
     public static EventSearchCriteriaDTO getEventsSearchCriteriaDTO() {
-        return new EventSearchCriteriaDTO(PlaceTestData.PLACE_ID, EVENT_NAME, EVENT_START_DATE, EVENT_END_DATE);
+        return new EventSearchCriteriaDTO(EVENT_NAME, EVENT_START_DATE, EVENT_END_DATE);
     }
 
     public List<EventInsertRequestDTO> getEventInsertRequestDTOs() {
