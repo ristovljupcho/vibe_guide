@@ -40,13 +40,12 @@ class DailyOfferManagementServiceImplTest {
     @Test
     void insertDailyOffer_placeNotFound_throwsPlaceNotFoundException() {
         // given
-        UUID placeId = PlaceTestData.PLACE_ID;
         DailyOfferInsertDTO dto = DailyOfferTestData.getDailyOfferInsertDTO();
         given(placeRepository.findById(any())).willReturn(Optional.empty());
 
         // when & then
         assertThatExceptionOfType(PlaceNotFoundException.class)
-                .isThrownBy(() -> dailyOfferManagementService.insertDailyOffer(placeId, dto))
+                .isThrownBy(() -> dailyOfferManagementService.insertOffer(dto))
                 .withMessageContaining("Place with id " + PlaceTestData.PLACE_ID + " not found");
         verify(dailyOfferRepository, times(0)).findAllById(any());
     }
@@ -54,12 +53,11 @@ class DailyOfferManagementServiceImplTest {
     @Test
     void insertDailyOffer_dailyOfferInsertedSuccessfully_returnsMessage() {
         // given
-        UUID placeId = PlaceTestData.PLACE_ID;
         DailyOfferInsertDTO dto = DailyOfferTestData.getDailyOfferInsertDTO();
         given(placeRepository.findById(any())).willReturn(Optional.of(PlaceTestData.getPlace()));
 
         // when
-        String actualResult = dailyOfferManagementService.insertDailyOffer(placeId, dto);
+        String actualResult = dailyOfferManagementService.insertOffer(dto);
 
         // then
         assertThat(actualResult).isEqualTo("DailyOffer successfully inserted.");
@@ -77,8 +75,7 @@ class DailyOfferManagementServiceImplTest {
         // when & then
         assertThatExceptionOfType(PlaceNotFoundException.class)
                 .isThrownBy(
-                        () -> dailyOfferManagementService.updateDailyOffer(placeId, DailyOfferTestData.DAILY_OFFER_ID,
-                                dto))
+                        () -> dailyOfferManagementService.updateDailyOffer(dto))
                 .withMessage("Place with id " + placeId + " not found.");
         verify(dailyOfferRepository, times(0)).save(any());
     }
@@ -86,14 +83,13 @@ class DailyOfferManagementServiceImplTest {
     @Test
     void updateDailyOffer_dailyOfferUpdateSuccessfully_returnsMessage() {
         // given
-        UUID placeId = PlaceTestData.PLACE_ID;
         DailyOfferUpdateDTO dto = DailyOfferTestData.getDailyOfferUpdateDTO();
         given(placeRepository.findById(any())).willReturn(Optional.of(PlaceTestData.getPlace()));
         given(dailyOfferRepository.findById(any())).willReturn(Optional.of(DailyOfferTestData.getDailyOffer()));
 
         // when
         String actualResult =
-                dailyOfferManagementService.updateDailyOffer(placeId, DailyOfferTestData.DAILY_OFFER_ID, dto);
+                dailyOfferManagementService.updateDailyOffer(dto);
 
         // then
         assertThat(actualResult).isEqualTo("DailyOffer successfully updated.");
