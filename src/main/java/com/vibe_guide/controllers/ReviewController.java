@@ -1,7 +1,7 @@
 package com.vibe_guide.controllers;
 
 import com.vibe_guide.dtos.ReviewInsertRequestDTO;
-import com.vibe_guide.dtos.ReviewPreviewResponseDTO;
+import com.vibe_guide.dtos.ReviewResponseDTO;
 import com.vibe_guide.dtos.ReviewUpdateRequestDTO;
 import com.vibe_guide.enums.ReviewSortBy;
 import com.vibe_guide.enums.sorting.SortDirection;
@@ -35,42 +35,42 @@ public class ReviewController {
     private final ReviewManagementService reviewManagementService;
 
     @GetMapping("/{placeId}")
-    ResponseEntity<Page<ReviewPreviewResponseDTO>> getPaginatedReviewsForPlace(
+    ResponseEntity<Page<ReviewResponseDTO>> getPaginatedReviewsForPlace(
             @PathVariable UUID placeId,
             @RequestParam(required = false) ReviewSortBy sortBy,
             @RequestParam(required = false) SortDirection sortDirection,
             @RequestParam Integer page,
             @RequestParam Integer size) {
-        Page<ReviewPreviewResponseDTO> response =
+        Page<ReviewResponseDTO> response =
                 reviewQueryService.getPaginatedReviews(placeId, sortBy, sortDirection, page, size);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{placeId}/top")
-    ResponseEntity<List<ReviewPreviewResponseDTO>> getTopReviews(@PathVariable UUID placeId){
-        List<ReviewPreviewResponseDTO> response = reviewQueryService.getTopFiveReviews(placeId);
+    ResponseEntity<List<ReviewResponseDTO>> getTopReviews(@PathVariable UUID placeId) {
+        List<ReviewResponseDTO> response = reviewQueryService.getTopFiveReviews(placeId);
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/insert")
-    ResponseEntity<String> insertReview(@RequestBody @Valid ReviewInsertRequestDTO reviewInsertRequestDTO){
-        String response  = reviewManagementService.insertReview(reviewInsertRequestDTO);
+    ResponseEntity<String> insertReview(@RequestBody @Valid ReviewInsertRequestDTO reviewInsertRequestDTO) {
+        String response = reviewManagementService.insertReview(reviewInsertRequestDTO);
 
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/update")
-    ResponseEntity<String> updateReview(@RequestBody @Valid ReviewUpdateRequestDTO reviewUpdateRequestDTO){
-        String response  = reviewManagementService.updateReview(reviewUpdateRequestDTO);
+    ResponseEntity<String> updateReview(@RequestBody @Valid ReviewUpdateRequestDTO reviewUpdateRequestDTO) {
+        String response = reviewManagementService.updateReview(reviewUpdateRequestDTO);
 
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{placeId}/delete")
-    ResponseEntity<String> deleteReview(@PathVariable UUID placeId){
-        String response  = reviewManagementService.deleteReview(placeId);
+    ResponseEntity<String> deleteReview(@PathVariable UUID placeId) {
+        String response = reviewManagementService.deleteReview(placeId);
 
         return ResponseEntity.ok(response);
     }
