@@ -19,6 +19,8 @@ public interface ReviewRepository extends JpaRepository<Review, UUID>, JpaSpecif
 
     Page<Review> findByPlaceIdOrderByRatingDesc(UUID placeId, Pageable pageable);
 
+    List<Review> findAllByPlaceIdOrderByDateCreatedAsc(UUID placeId);
+
     @Query("SELECT review " +
             "FROM Review review " +
             "JOIN Place place ON review.place.id = place.id " +
