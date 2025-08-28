@@ -1,11 +1,10 @@
 package com.vibe_guide.dtos;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
-public record ReviewPreviewResponseDTO(
+public record ReviewResponseDTO(
         String username,
-        UUID placeId,
+        String placeName,
         Float rating,
         LocalDate dateCreated,
         LocalDate dateModified,
