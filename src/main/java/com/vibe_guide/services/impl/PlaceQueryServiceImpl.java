@@ -75,12 +75,19 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
 
         Page<PlaceTopTraits> placePage;
         if (traits == null || traits.isEmpty()) {
-            placePage = placeTopTraitsRepository.findAllPaginated(pageRequest);
+            placePage = placeTopTraitsRepository.findAll(pageRequest);
         } else {
             int traitsSize = traits.size();
             placePage = placeTopTraitsRepository.findAllByTraitsPaginated(traits, traitsSize, pageRequest);
         }
 
         return placePage.map(placeConverter::toPlacePreviewResponseDTO);
+    }
+
+    @Override
+    public List<PlacePreviewResponseDTO> getTopPlaces() {
+        List<PlaceTopTraits> places = placeTopTraitsRepository.findTop10ByOrderByRatingDesc();
+
+        return places.stream().map(placeConverter::toPlacePreviewResponseDTO).toList();
     }
 }

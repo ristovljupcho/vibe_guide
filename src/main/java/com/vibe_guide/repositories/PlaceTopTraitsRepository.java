@@ -11,10 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PlaceTopTraitsRepository extends JpaRepository<PlaceTopTraits, UUID> {
-
-    @Query("SELECT p FROM PlaceTopTraits p")
-    Page<PlaceTopTraits> findAllPaginated(Pageable pageable);
-
     @Query("SELECT p FROM PlaceTopTraits p " +
             "WHERE (SELECT COUNT(DISTINCT t.id) FROM PlaceTrait pt JOIN pt.trait t " +
             "       WHERE pt.place.id = p.id AND t.name IN :traits) = :traitsSize")
@@ -22,4 +18,6 @@ public interface PlaceTopTraitsRepository extends JpaRepository<PlaceTopTraits, 
             @Param("traits") List<String> traits,
             @Param("traitsSize") int traitsSize,
             Pageable pageable);
+
+    List<PlaceTopTraits> findTop10ByOrderByRatingDesc();
 }

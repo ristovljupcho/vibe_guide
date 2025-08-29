@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="populate-trait-table" author="ristovljupcho">
+        <insert tableName="trait">
+            <column name="id" value="123e4567-e89b-12d3-a456-426614174001"/>
+            <column name="name" value="Coffee"/>
+            <column name="trait_type" value="DRINK"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="123e4567-e89b-12d3-a456-426614174002"/>
+            <column name="name" value="Beer"/>
+            <column name="trait_type" value="DRINK"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="123e4567-e89b-12d3-a456-426614174003"/>
+            <column name="name" value="Cocktail"/>
+            <column name="trait_type" value="DRINK"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="123e4567-e89b-12d3-a456-426614174004"/>
+            <column name="name" value="Pizza"/>
+            <column name="trait_type" value="FOOD"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="123e4567-e89b-12d3-a456-426614174005"/>
+            <column name="name" value="Burgers"/>
+            <column name="trait_type" value="FOOD"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="123e4567-e89b-12d3-a456-426614174006"/>
+            <column name="name" value="Pasta"/>
+            <column name="trait_type" value="FOOD"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="123e4567-e89b-12d3-a456-426614174007"/>
+            <column name="name" value="Chill"/>
+            <column name="trait_type" value="VIBE"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="123e4567-e89b-12d3-a456-426614174008"/>
+            <column name="name" value="Live Music"/>
+            <column name="trait_type" value="VIBE"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="123e4567-e89b-12d3-a456-426614174009"/>
+            <column name="name" value="Rock Live Music"/>
+            <column name="trait_type" value="VIBE"/>
+        </insert>
+        <insert tableName="trait">
+            <column name="id" value="123e4567-e89b-12d3-a456-426614174000"/>
+            <column name="name" value="House Music"/>
+            <column name="trait_type" value="VIBE"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-place-table" author="ristovljupcho">
+        <insert tableName="place">
+            <column name="id" value="223e4567-e89b-12d3-a456-426614174001"/>
+            <column name="name" value="City Cafe"/>
+            <column name="description"
+                    value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."/>
+            <column name="maps_uri" value="http://maps.example.com/citycafe"/>
+            <column name="phone_number" value="123-456-7890"/>
+            <column name="address" value="123 Main St, City"/>
+            <column name="rating" value="4.5"/>
+            <column name="menu_link" value="http://citycafe.com/menu"/>
+            <column name="price_level" value="MODERATE"/>
+            <column name="primary_type" value="CAFE"/>
+        </insert>
+        <insert tableName="place">
+            <column name="id" value="223e4567-e89b-12d3-a456-426614174002"/>
+            <column name="name" value="Downtown Pub"/>
+            <column name="description" value="Lively pub with craft beers."/>
+            <column name="maps_uri" value="http://maps.example.com/downtownpub"/>
+            <column name="phone_number" value="234-567-8901"/>
+            <column name="address" value="456 Oak St, City"/>
+            <column name="rating" value="4.2"/>
+            <column name="menu_link" value="http://downtownpub.com/menu"/>
+            <column name="price_level" value="INEXPENSIVE"/>
+            <column name="primary_type" value="PUB"/>
+        </insert>
+        <insert tableName="place">
+            <column name="id" value="223e4567-e89b-12d3-a456-426614174003"/>
+            <column name="name" value="Sky Lounge"/>
+            <column name="description" value="Upscale lounge with city views."/>
+            <column name="maps_uri" value="http://maps.example.com/skylounge"/>
+            <column name="phone_number" value="345-678-9012"/>
+            <column name="address" value="789 Sky Rd, City"/>
+            <column name="rating" value="4.8"/>
+            <column name="menu_link" value="http://skylounge.com/menu"/>
+            <column name="price_level" value="EXPENSIVE"/>
+            <column name="primary_type" value="LOUNGE"/>
+        </insert>
+        <insert tableName="place">
+            <column name="id" value="223e4567-e89b-12d3-a456-426614174004"/>
+            <column name="name" value="Vibe Club"/>
+            <column name="description" value="Nightclub with live DJs."/>
+            <column name="maps_uri" value="http://maps.example.com/vibeclub"/>
+            <column name="phone_number" value="456-789-0123"/>
+            <column name="address" value="101 Night St, City"/>
+            <column name="rating" value="4.0"/>
+            <column name="menu_link" value="http://vibeclub.com/menu"/>
+            <column name="price_level" value="MODERATE"/>
+            <column name="primary_type" value="CLUB"/>
+        </insert>
+        <insert tableName="place">
+            <column name="id" value="223e4567-e89b-12d3-a456-426614174005"/>
+            <column name="name" value="Green Restaurant"/>
+            <column name="description" value="Farm-to-table dining experience."/>
+            <column name="maps_uri" value="http://maps.example.com/greenrestaurant"/>
+            <column name="phone_number" value="567-890-1234"/>
+            <column name="address" value="202 Farm Rd, City"/>
+            <column name="rating" value="4.7"/>
+            <column name="menu_link" value="http://greenrestaurant.com/menu"/>
+            <column name="price_level" value="EXPENSIVE"/>
+            <column name="primary_type" value="RESTAURANT"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-place-trait-table" author="ristovljupcho">
+        <insert tableName="place_trait">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+            <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174001"/>
+            <column name="like_counter" value="10"/>
+            <column name="priority" value="true"/>
+            <column name="additional_information" value="Specialty coffee"/>
+        </insert>
+        <insert tableName="place_trait">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+            <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174002"/>
+            <column name="like_counter" value="10"/>
+            <column name="priority" value="true"/>
+            <column name="additional_information" value="Craft Beer"/>
+        </insert>
+        <insert tableName="place_trait">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+            <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174003"/>
+            <column name="like_counter" value="10"/>
+            <column name="priority" value="true"/>
+            <column name="additional_information" value="Summer Cocktails"/>
+        </insert>
+        <insert tableName="place_trait">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+            <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174000"/>
+            <column name="like_counter" value="10"/>
+            <column name="priority" value="true"/>
+            <column name="additional_information" value="90s House Hits"/>
+        </insert>
+        <insert tableName="place_trait">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
+            <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174002"/>
+            <column name="like_counter" value="15"/>
+            <column name="priority" value="false"/>
+            <column name="additional_information" value="Broad Choice of Craft Beer"/>
+        </insert>
+        <insert tableName="place_trait">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+            <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174003"/>
+            <column name="like_counter" value="20"/>
+            <column name="priority" value="true"/>
+            <column name="additional_information" value="Signature cocktails"/>
+        </insert>
+        <insert tableName="place_trait">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+            <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174000"/>
+            <column name="like_counter" value="25"/>
+            <column name="priority" value="true"/>
+            <column name="additional_information" value="Weekly DJ sets"/>
+        </insert>
+        <insert tableName="place_trait">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+            <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174004"/>
+            <column name="like_counter" value="12"/>
+            <column name="priority" value="false"/>
+            <column name="additional_information" value="Wood-fired pizza"/>
+        </insert>
+        <insert tableName="place_trait">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+            <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174005"/>
+            <column name="like_counter" value="12"/>
+            <column name="priority" value="false"/>
+            <column name="additional_information" value="Smash burger"/>
+        </insert>
+        <insert tableName="place_trait">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+            <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174006"/>
+            <column name="like_counter" value="12"/>
+            <column name="priority" value="false"/>
+            <column name="additional_information" value="Italian pasta"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-daily-offer-table" author="ristovljupcho">
+        <insert tableName="daily_offer">
+            <column name="id" value="323e4567-e89b-12d3-a456-426614174001"/>
+            <column name="name" value="Coffee Deal"/>
+            <column name="date_created" value="2025-08-22 10:00:00"/>
+            <column name="start_date" value="2025-08-22 10:00:00"/>
+            <column name="end_date" value="2025-08-22 23:59:59"/>
+            <column name="description" value="Buy one coffee, get one free."/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+        </insert>
+        <insert tableName="daily_offer">
+            <column name="id" value="323e4567-e89b-12d3-a456-426614174002"/>
+            <column name="name" value="Burger Special"/>
+            <column name="date_created" value="2025-08-22 11:00:00"/>
+            <column name="start_date" value="2025-08-22 11:00:00"/>
+            <column name="end_date" value="2025-08-22 23:59:59"/>
+            <column name="description" value="20% off all burgers."/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
+        </insert>
+        <insert tableName="daily_offer">
+            <column name="id" value="323e4567-e89b-12d3-a456-426614174003"/>
+            <column name="name" value="Cocktail Night"/>
+            <column name="date_created" value="2025-08-22 12:00:00"/>
+            <column name="start_date" value="2025-08-22 12:00:00"/>
+            <column name="end_date" value="2025-08-22 23:59:59"/>
+            <column name="description" value="Happy hour cocktails."/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+        </insert>
+        <insert tableName="daily_offer">
+            <column name="id" value="323e4567-e89b-12d3-a456-426614174004"/>
+            <column name="name" value="Dance Party"/>
+            <column name="date_created" value="2025-08-22 13:00:00"/>
+            <column name="start_date" value="2025-08-22 13:00:00"/>
+            <column name="end_date" value="2025-08-22 23:59:59"/>
+            <column name="description" value="Free entry before 10 PM."/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
+        </insert>
+        <insert tableName="daily_offer">
+            <column name="id" value="323e4567-e89b-12d3-a456-426614174005"/>
+            <column name="name" value="Pizza Deal"/>
+            <column name="date_created" value="2025-08-22 14:00:00"/>
+            <column name="start_date" value="2025-08-22 14:00:00"/>
+            <column name="end_date" value="2025-08-22 23:59:59"/>
+            <column name="description" value="Free dessert with pizza."/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-user-table" author="ristovljupcho">
+        <insert tableName="user_table">
+            <column name="id" value="423e4567-e89b-12d3-a456-426614174001"/>
+            <column name="username" value="john_doe"/>
+            <column name="name" value="John Doe"/>
+            <column name="email" value="john.doe@example.com"/>
+            <column name="role" value="USER"/>
+            <column name="password" value="hashed_password1"/>
+            <column name="created_at" value="2025-08-22 09:00:00"/>
+        </insert>
+        <insert tableName="user_table">
+            <column name="id" value="423e4567-e89b-12d3-a456-426614174002"/>
+            <column name="username" value="jane_smith"/>
+            <column name="name" value="Jane Smith"/>
+            <column name="email" value="jane.smith@example.com"/>
+            <column name="role" value="USER"/>
+            <column name="password" value="hashed_password2"/>
+            <column name="created_at" value="2025-08-22 09:00:00"/>
+        </insert>
+        <insert tableName="user_table">
+            <column name="id" value="423e4567-e89b-12d3-a456-426614174003"/>
+            <column name="username" value="admin1"/>
+            <column name="name" value="Admin One"/>
+            <column name="email" value="admin1@example.com"/>
+            <column name="role" value="ADMIN"/>
+            <column name="password" value="hashed_password3"/>
+            <column name="created_at" value="2025-08-22 09:00:00"/>
+        </insert>
+        <insert tableName="user_table">
+            <column name="id" value="423e4567-e89b-12d3-a456-426614174004"/>
+            <column name="username" value="mike_brown"/>
+            <column name="name" value="Mike Brown"/>
+            <column name="email" value="mike.brown@example.com"/>
+            <column name="role" value="USER"/>
+            <column name="password" value="hashed_password4"/>
+            <column name="created_at" value="2025-08-22 09:00:00"/>
+        </insert>
+        <insert tableName="user_table">
+            <column name="id" value="423e4567-e89b-12d3-a456-426614174005"/>
+            <column name="username" value="emma_wilson"/>
+            <column name="name" value="Emma Wilson"/>
+            <column name="email" value="emma.wilson@example.com"/>
+            <column name="role" value="USER"/>
+            <column name="password" value="hashed_password5"/>
+            <column name="created_at" value="2025-08-22 09:00:00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-review-table" author="ristovljupcho">
+        <insert tableName="review">
+            <column name="id" value="523e4567-e89b-12d3-a456-426614174001"/>
+            <column name="date_created" value="2025-08-22 10:00:00"/>
+            <column name="rating" value="5"/>
+            <column name="description" value="Amazing coffee and ambiance!"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174001"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+        </insert>
+        <insert tableName="review">
+            <column name="id" value="523e4567-e89b-12d3-a456-426614174002"/>
+            <column name="date_created" value="2025-08-22 11:00:00"/>
+            <column name="rating" value="4"/>
+            <column name="description" value="Great beers, lively crowd."/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174002"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
+        </insert>
+        <insert tableName="review">
+            <column name="id" value="523e4567-e89b-12d3-a456-426614174003"/>
+            <column name="date_created" value="2025-08-22 12:00:00"/>
+            <column name="rating" value="5"/>
+            <column name="description" value="Stunning views and drinks."/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174003"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+        </insert>
+        <insert tableName="review">
+            <column name="id" value="523e4567-e89b-12d3-a456-426614174004"/>
+            <column name="date_created" value="2025-08-22 13:00:00"/>
+            <column name="rating" value="3"/>
+            <column name="description" value="Fun but crowded."/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174004"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
+        </insert>
+        <insert tableName="review">
+            <column name="id" value="523e4567-e89b-12d3-a456-426614174005"/>
+            <column name="date_created" value="2025-08-22 14:00:00"/>
+            <column name="rating" value="4"/>
+            <column name="description" value="Delicious food, great service."/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174005"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-place-admin-table" author="ristovljupcho">
+        <insert tableName="place_admin">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174003"/>
+            <column name="date_created" value="2025-08-22 09:00:00"/>
+        </insert>
+        <insert tableName="place_admin">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174003"/>
+            <column name="date_created" value="2025-08-22 09:00:00"/>
+        </insert>
+        <insert tableName="place_admin">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174003"/>
+            <column name="date_created" value="2025-08-22 09:00:00"/>
+        </insert>
+        <insert tableName="place_admin">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174003"/>
+            <column name="date_created" value="2025-08-22 09:00:00"/>
+        </insert>
+        <insert tableName="place_admin">
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174003"/>
+            <column name="date_created" value="2025-08-22 09:00:00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-event-table" author="ristovljupcho">
+        <insert tableName="event">
+            <column name="id" value="623e4567-e89b-12d3-a456-426614174001"/>
+            <column name="name" value="Coffee Tasting"/>
+            <column name="date_created" value="2025-08-22"/>
+            <column name="description" value="Explore different coffee blends."/>
+            <column name="start_date" value="2025-08-23 10:00:00"/>
+            <column name="end_date" value="2025-08-23 12:00:00"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+            <column name="entry_fee" value="10.0"/>
+        </insert>
+        <insert tableName="event">
+            <column name="id" value="623e4567-e89b-12d3-a456-426614174002"/>
+            <column name="name" value="Beer Night"/>
+            <column name="date_created" value="2025-08-22"/>
+            <column name="description" value="Craft beer sampling event."/>
+            <column name="start_date" value="2025-08-23 18:00:00"/>
+            <column name="end_date" value="2025-08-23 22:00:00"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
+            <column name="entry_fee" value="15.0"/>
+        </insert>
+        <insert tableName="event">
+            <column name="id" value="623e4567-e89b-12d3-a456-426614174003"/>
+            <column name="name" value="Jazz Evening"/>
+            <column name="date_created" value="2025-08-22"/>
+            <column name="description" value="Live jazz music performance."/>
+            <column name="start_date" value="2025-08-23 20:00:00"/>
+            <column name="end_date" value="2025-08-23 23:00:00"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+            <column name="entry_fee" value="20.0"/>
+        </insert>
+        <insert tableName="event">
+            <column name="id" value="623e4567-e89b-12d3-a456-426614174004"/>
+            <column name="name" value="DJ Night"/>
+            <column name="date_created" value="2025-08-22"/>
+            <column name="description" value="Dance to top DJs."/>
+            <column name="start_date" value="2025-08-23 22:00:00"/>
+            <column name="end_date" value="2025-08-23 23:59:59"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
+            <column name="entry_fee" value="25.0"/>
+        </insert>
+        <insert tableName="event">
+            <column name="id" value="623e4567-e89b-12d3-a456-426614174005"/>
+            <column name="name" value="Wine Tasting"/>
+            <column name="date_created" value="2025-08-22"/>
+            <column name="description" value="Sample fine wines."/>
+            <column name="start_date" value="2025-08-23 19:00:00"/>
+            <column name="end_date" value="2025-08-23 21:00:00"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+            <column name="entry_fee" value="30.0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-event-gallery-table" author="ristovljupcho">
+        <insert tableName="event_gallery">
+            <column name="id" value="723e4567-e89b-12d3-a456-426614174001"/>
+            <column name="event_id" value="623e4567-e89b-12d3-a456-426614174001"/>
+            <column name="photo" value="0x1234567890ABCDEF"/>
+        </insert>
+        <insert tableName="event_gallery">
+            <column name="id" value="723e4567-e89b-12d3-a456-426614174002"/>
+            <column name="event_id" value="623e4567-e89b-12d3-a456-426614174002"/>
+            <column name="photo" value="0x234567890ABCDEF1"/>
+        </insert>
+        <insert tableName="event_gallery">
+            <column name="id" value="723e4567-e89b-12d3-a456-426614174003"/>
+            <column name="event_id" value="623e4567-e89b-12d3-a456-426614174003"/>
+            <column name="photo" value="0x345678901ABCDEF2"/>
+        </insert>
+        <insert tableName="event_gallery">
+            <column name="id" value="723e4567-e89b-12d3-a456-426614174004"/>
+            <column name="event_id" value="623e4567-e89b-12d3-a456-426614174004"/>
+            <column name="photo" value="0x456789012ABCDEF3"/>
+        </insert>
+        <insert tableName="event_gallery">
+            <column name="id" value="723e4567-e89b-12d3-a456-426614174005"/>
+            <column name="event_id" value="623e4567-e89b-12d3-a456-426614174005"/>
+            <column name="photo" value="0x567890123ABCDEF4"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-place-gallery-table" author="ristovljupcho">
+        <insert tableName="place_gallery">
+            <column name="id" value="823e4567-e89b-12d3-a456-426614174001"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+            <column name="photo" value="0x678901234ABCDEF5"/>
+        </insert>
+        <insert tableName="place_gallery">
+            <column name="id" value="823e4567-e89b-12d3-a456-426614174002"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
+            <column name="photo" value="0x789012345ABCDEF6"/>
+        </insert>
+        <insert tableName="place_gallery">
+            <column name="id" value="823e4567-e89b-12d3-a456-426614174003"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+            <column name="photo" value="0x890123456ABCDEF7"/>
+        </insert>
+        <insert tableName="place_gallery">
+            <column name="id" value="823e4567-e89b-12d3-a456-426614174004"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
+            <column name="photo" value="0x901234567ABCDEF8"/>
+        </insert>
+        <insert tableName="place_gallery">
+            <column name="id" value="823e4567-e89b-12d3-a456-426614174005"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+            <column name="photo" value="0x012345678ABCDEF9"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-working-hours-table" author="ristovljupcho">
+        <insert tableName="working_hours">
+            <column name="day_of_week" value="Monday"/>
+            <column name="start_time" value="08:00:00"/>
+            <column name="end_time" value="18:00:00"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+        </insert>
+        <insert tableName="working_hours">
+            <column name="day_of_week" value="Tuesday"/>
+            <column name="start_time" value="12:00:00"/>
+            <column name="end_time" value="22:00:00"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
+        </insert>
+        <insert tableName="working_hours">
+            <column name="day_of_week" value="Wednesday"/>
+            <column name="start_time" value="16:00:00"/>
+            <column name="end_time" value="23:00:00"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+        </insert>
+        <insert tableName="working_hours">
+            <column name="day_of_week" value="Thursday"/>
+            <column name="start_time" value="18:00:00"/>
+            <column name="end_time" value="23:59:59"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
+        </insert>
+        <insert tableName="working_hours">
+            <column name="day_of_week" value="Friday"/>
+            <column name="start_time" value="11:00:00"/>
+            <column name="end_time" value="22:00:00"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

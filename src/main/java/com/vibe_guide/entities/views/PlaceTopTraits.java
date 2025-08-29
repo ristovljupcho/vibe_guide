@@ -1,5 +1,6 @@
 package com.vibe_guide.entities.views;
 
+import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,10 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 @Immutable
@@ -24,18 +24,18 @@ public class PlaceTopTraits {
     private UUID id;
 
     private String name;
+    private String description;
     private double rating;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "primary_type")
     private PrimaryType primaryType;
 
-    @Column(name = "top_traits")
-    private String topTraits;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "price_level")
+    private PriceLevel priceLevel;
 
-    public List<String> getTopTraitsList() {
-        return topTraits != null ?
-                Arrays.asList(topTraits.split(", ")) :
-                Collections.emptyList();
-    }
+    @Column(name = "top_traits")
+    @JdbcTypeCode(SqlTypes.ARRAY)
+    private String[] topTraits;
 }

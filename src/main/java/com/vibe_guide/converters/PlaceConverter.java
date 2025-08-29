@@ -92,12 +92,14 @@ public class PlaceConverter {
      * @return {@link PlacePreviewResponseDTO} converted entity.
      */
     public PlacePreviewResponseDTO toPlacePreviewResponseDTO(PlaceTopTraits placeTopTraits) {
-        UUID placeId = placeTopTraits.getId();
+        UUID id = placeTopTraits.getId();
         String name = placeTopTraits.getName();
+        String description = placeTopTraits.getDescription();
         double rating = placeTopTraits.getRating();
         PrimaryType primaryType = placeTopTraits.getPrimaryType();
-        List<String> topTraits = placeTopTraits.getTopTraitsList();
+        PriceLevel priceLevel = placeTopTraits.getPriceLevel();
+        String[] topTraits = placeTopTraits.getTopTraits();
 
-        return new PlacePreviewResponseDTO(placeId, name, rating, primaryType, topTraits);
+        return new PlacePreviewResponseDTO(id, name, description, rating, primaryType, priceLevel, topTraits);
     }
 }
