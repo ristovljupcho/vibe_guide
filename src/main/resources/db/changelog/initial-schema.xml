@@ -344,31 +344,33 @@
         <sql>
             CREATE
             MATERIALIZED VIEW place_top_traits AS
-        WITH ranked_traits AS (
-            SELECT
-                pt.place_id AS id,
-                p.name,
-                p.rating,
-                p.primary_type::TEXT,
-                t.name AS trait_name,
-                pt.priority,
-                pt.like_counter,
-                ROW_NUMBER() OVER (
-                    PARTITION BY pt.place_id
-                    ORDER BY pt.priority DESC, pt.like_counter DESC
-                ) AS trait_rank
-            FROM place_trait pt
-            JOIN trait t ON pt.trait_id = t.id
-            JOIN place p ON pt.place_id = p.id
-        )
-            SELECT rt.id,
-                   rt.name,
-                   rt.rating,
-                   rt.primary_type,
-                   STRING_AGG(rt.trait_name, ', ' ORDER BY rt.priority DESC, rt.like_counter DESC) AS top_traits
-            FROM ranked_traits AS rt
-            WHERE rt.trait_rank &lt;= 5
-            GROUP BY rt.id, rt.name, rt.rating, rt.primary_type;
+            WITH ranked_traits AS (
+                SELECT
+                    p.id,
+                    p.name,
+                    p.description,
+                    p.rating,
+                    p.primary_type,
+                    p.price_level,
+                    t.name AS trait_name,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY p.id
+                        ORDER BY pt.priority DESC, pt.like_counter DESC, t.name ASC
+                    ) AS rn
+                FROM place p
+                LEFT JOIN place_trait pt ON pt.place_id = p.id
+                LEFT JOIN trait t ON t.id = pt.trait_id
+            )
+            SELECT id,
+                   name,
+                   description,
+                   rating,
+                   primary_type,
+                   price_level,
+                   ARRAY_AGG(trait_name ORDER BY rn) AS top_traits
+            FROM ranked_traits
+            WHERE rn &lt;= 5
+            GROUP BY id, name, description, rating, primary_type, price_level;
         </sql>
     </changeSet>
 </databaseChangeLog>

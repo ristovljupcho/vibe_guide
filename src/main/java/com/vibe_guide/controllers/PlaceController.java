@@ -46,6 +46,13 @@ public class PlaceController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/top")
+    ResponseEntity<List<PlacePreviewResponseDTO>> getTopPlaces(){
+        List<PlacePreviewResponseDTO> response = placeQueryService.getTopPlaces();
+
+        return  ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{placeId}")
     ResponseEntity<PlaceResponseDTO> getPlace(@PathVariable UUID placeId) {
         PlaceResponseDTO response = placeQueryService.getPlaceById(placeId);
