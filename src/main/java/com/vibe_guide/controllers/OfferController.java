@@ -1,10 +1,10 @@
 package com.vibe_guide.controllers;
 
-import com.vibe_guide.dtos.DailyOfferInsertDTO;
-import com.vibe_guide.dtos.DailyOfferResponseDTO;
-import com.vibe_guide.dtos.DailyOfferUpdateDTO;
-import com.vibe_guide.services.DailyOfferManagementService;
-import com.vibe_guide.services.DailyOfferQueryService;
+import com.vibe_guide.dtos.OfferInsertDTO;
+import com.vibe_guide.dtos.OfferResponseDTO;
+import com.vibe_guide.dtos.OfferUpdateDTO;
+import com.vibe_guide.services.OfferManagementService;
+import com.vibe_guide.services.OfferQueryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,48 +25,54 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/offers")
 @Validated
-public class DailyOfferController {
-    private final DailyOfferQueryService dailyOfferQueryService;
-    private final DailyOfferManagementService dailyOfferManagementService;
+public class OfferController {
+    private final OfferQueryService offerQueryService;
+    private final OfferManagementService offerManagementService;
 
-    @GetMapping
-    ResponseEntity<List<DailyOfferResponseDTO>> getTodayDailyOffers() {
-        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getDailyOffers();
+    @GetMapping("/daily")
+    ResponseEntity<List<OfferResponseDTO>> getAllDailyOffers() {
+        List<OfferResponseDTO> offers = offerQueryService.getAllDailyOffers();
         return ResponseEntity.ok(offers);
     }
 
     @GetMapping("/place/{placeId}")
-    public ResponseEntity<List<DailyOfferResponseDTO>> getTodayDailyOffersByPlaceId(
+    public ResponseEntity<List<OfferResponseDTO>> getDailyOffersByPlaceId(
             @PathVariable UUID placeId) {
-        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getDailyOffersByPlaceId(placeId);
+        List<OfferResponseDTO> offers = offerQueryService.getDailyOffersByPlaceId(placeId);
+        return ResponseEntity.ok(offers);
+    }
+
+    @GetMapping("/upcoming")
+    public ResponseEntity<List<OfferResponseDTO>> getAllUpcomingOffers() {
+        List<OfferResponseDTO> offers = offerQueryService.getAllUpcomingOffers();
         return ResponseEntity.ok(offers);
     }
 
     @GetMapping("/upcoming/{placeId}")
-    public ResponseEntity<List<DailyOfferResponseDTO>> getUpcomingOffersByPlaceId(
+    public ResponseEntity<List<OfferResponseDTO>> getUpcomingOffersByPlaceId(
             @PathVariable UUID placeId) {
-        List<DailyOfferResponseDTO> offers = dailyOfferQueryService.getUpcomingOffersByPlaceId(placeId);
+        List<OfferResponseDTO> offers = offerQueryService.getUpcomingOffersByPlaceId(placeId);
         return ResponseEntity.ok(offers);
     }
 
     @PostMapping("/insert")
     public ResponseEntity<String> insertDailyOffer(
-            @RequestBody @Valid DailyOfferInsertDTO dto) {
-        String response = dailyOfferManagementService.insertOffer(dto);
+            @RequestBody @Valid OfferInsertDTO dto) {
+        String response = offerManagementService.insertOffer(dto);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/update")
     public ResponseEntity<String> updateDailyOffer(
-            @RequestBody @Valid DailyOfferUpdateDTO dto) {
-        String response = dailyOfferManagementService.updateDailyOffer(dto);
+            @RequestBody @Valid OfferUpdateDTO dto) {
+        String response = offerManagementService.updateDailyOffer(dto);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/delete/{dailyOfferId}")
     public ResponseEntity<String> deleteDailyOffer(
             @PathVariable UUID dailyOfferId) {
-        String msg = dailyOfferManagementService.deleteDailyOffer(dailyOfferId);
+        String msg = offerManagementService.deleteDailyOffer(dailyOfferId);
         return ResponseEntity.ok(msg);
     }
 }

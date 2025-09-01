@@ -20,7 +20,7 @@ public record PlaceResponseDTO(
         List<String> images,
         List<TraitResponseDTO> topTraits,
         List<EventResponseDTO> dailyEvents,
-        List<DailyOfferResponseDTO> dailyOffers,
+        List<OfferResponseDTO> dailyOffers,
         List<EventResponseDTO> monthlyEvents,
         List<TraitCarouselResponseDTO> carouselTraits
 ) {
