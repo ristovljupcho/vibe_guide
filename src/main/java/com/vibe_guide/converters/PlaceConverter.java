@@ -1,21 +1,13 @@
 package com.vibe_guide.converters;
 
-import com.vibe_guide.dtos.DailyOfferResponseDTO;
-import com.vibe_guide.dtos.EventResponseDTO;
 import com.vibe_guide.dtos.PlacePreviewResponseDTO;
 import com.vibe_guide.dtos.PlaceResponseDTO;
-import com.vibe_guide.dtos.TraitCarouselResponseDTO;
-import com.vibe_guide.dtos.TraitResponseDTO;
 import com.vibe_guide.entities.Place;
-import com.vibe_guide.entities.PlaceGallery;
 import com.vibe_guide.entities.views.PlaceTopTraits;
 import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
 import org.springframework.stereotype.Component;
 
-import java.util.Base64;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -28,18 +20,9 @@ import java.util.UUID;
 public class PlaceConverter {
 
     /**
-     * Converts a {@link Place} entity with additional attributes:
-     * <ul>
-     *     <li>List of {@link TraitResponseDTO} as topTraits</li>
-     *     <li>List of {@link EventResponseDTO} as todaysEvents</li>
-     *     <li>List of {@link DailyOfferResponseDTO} as dailyOffers</li>
-     *     <li>List of {@link EventResponseDTO} as dailyEvents</li>
-     *     <li>List of {@link EventResponseDTO} as monthlyEvents</li>
-     *     <li>List of {@link TraitCarouselResponseDTO} as carouselTraits</li>
-     * </ul>
-     * to a {@link PlaceResponseDTO} entity.
+     * Converts a {@link Place} entity to a {@link PlaceResponseDTO} entity.
      *
-     * @param place          {@link Place} entity to convert.
+     * @param place {@link Place} entity to convert.
      * @return {@link PlaceResponseDTO} converted entity.
      */
     public PlaceResponseDTO toPlaceResponseDTO(Place place) {
