@@ -73,11 +73,11 @@ public class EventTestData {
 
         List<String> sampleImages = List.of("img1.jpg", "img2.jpg");
         EventResponseDTO dto1 = new EventResponseDTO(EVENT_NAME, PlaceTestData.PLACE_NAME, EVENT_DESCRIPTION,
-                EVENT_START_DATE, EVENT_END_DATE, sampleImages);
+                EVENT_START_DATE, EVENT_END_DATE, null);
         EventResponseDTO dto2 = new EventResponseDTO(EVENT_NAME, PlaceTestData.PLACE_NAME, EVENT_DESCRIPTION,
-                EVENT_START_DATE, EVENT_END_DATE, sampleImages);
+                EVENT_START_DATE, EVENT_END_DATE, null);
         EventResponseDTO dto3 = new EventResponseDTO(EVENT_NAME, PlaceTestData.PLACE_NAME, EVENT_DESCRIPTION,
-                EVENT_START_DATE, EVENT_END_DATE, sampleImages);
+                EVENT_START_DATE, EVENT_END_DATE, null);
 
         return List.of(dto1, dto2, dto3);
     }
