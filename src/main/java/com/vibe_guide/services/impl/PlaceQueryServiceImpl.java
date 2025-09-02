@@ -11,7 +11,6 @@ import com.vibe_guide.enums.sorting.SortDirection;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.repositories.PlaceRepository;
 import com.vibe_guide.repositories.PlaceTopTraitsRepository;
-import com.vibe_guide.services.PlaceConverterWithAttributes;
 import com.vibe_guide.services.PlaceQueryService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,7 +28,6 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
 
     private final PlaceRepository placeRepository;
     private final PlaceTopTraitsRepository placeTopTraitsRepository;
-    private final PlaceConverterWithAttributes placeConverterWithAttributes;
     private final PlaceConverter placeConverter;
 
     /**
@@ -42,7 +40,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
     public PlaceResponseDTO getPlaceById(UUID placeId) {
         Place place = placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
-        return placeConverterWithAttributes.getPlaceResponseDTO(place);
+        return placeConverter.toPlaceResponseDTO(place);
     }
 
     /**

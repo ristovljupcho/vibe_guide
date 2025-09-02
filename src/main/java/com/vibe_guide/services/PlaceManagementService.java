@@ -9,7 +9,7 @@ public interface PlaceManagementService {
     //todo: implement this method using API calls
     PlaceResponseDTO insertPlace();
 
-    PlaceResponseDTO updatePlace(PlaceRequestDTO placeRequestDTO);
+    String updatePlace(PlaceRequestDTO placeRequestDTO);
 
     String deletePlace(UUID placeId);
 }
