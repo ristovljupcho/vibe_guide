@@ -1,7 +1,7 @@
 package com.vibe_guide.converters;
 
-import com.vibe_guide.dtos.DailyOfferResponseDTO;
 import com.vibe_guide.dtos.EventResponseDTO;
+import com.vibe_guide.dtos.OfferResponseDTO;
 import com.vibe_guide.dtos.PlacePreviewResponseDTO;
 import com.vibe_guide.dtos.PlaceResponseDTO;
 import com.vibe_guide.dtos.TraitCarouselResponseDTO;
@@ -30,7 +30,7 @@ public class PlaceConverter {
      * <ul>
      *     <li>List of {@link TraitResponseDTO} as topTraits</li>
      *     <li>List of {@link EventResponseDTO} as todaysEvents</li>
-     *     <li>List of {@link DailyOfferResponseDTO} as dailyOffers</li>
+     *     <li>List of {@link OfferResponseDTO} as dailyOffers</li>
      *     <li>List of {@link EventResponseDTO} as dailyEvents</li>
      *     <li>List of {@link EventResponseDTO} as monthlyEvents</li>
      *     <li>List of {@link TraitCarouselResponseDTO} as carouselTraits</li>
@@ -40,7 +40,7 @@ public class PlaceConverter {
      * @param place          {@link Place} entity to convert.
      * @param topTraits      List of {@link TraitResponseDTO}.
      * @param todaysEvents   List of {@link EventResponseDTO}.
-     * @param dailyOffers    List of {@link DailyOfferResponseDTO}.
+     * @param dailyOffers    List of {@link OfferResponseDTO}.
      * @param monthlyEvents  List of {@link EventResponseDTO}.
      * @param carouselTraits List of {@link TraitCarouselResponseDTO}.
      * @return {@link PlaceResponseDTO} converted entity.
@@ -48,7 +48,7 @@ public class PlaceConverter {
     public PlaceResponseDTO toPlaceResponseDTO(Place place,
                                                List<TraitResponseDTO> topTraits,
                                                List<EventResponseDTO> todaysEvents,
-                                               List<DailyOfferResponseDTO> dailyOffers,
+                                               List<OfferResponseDTO> dailyOffers,
                                                List<EventResponseDTO> monthlyEvents,
                                                List<TraitCarouselResponseDTO> carouselTraits) {
         UUID placeId = place.getId();

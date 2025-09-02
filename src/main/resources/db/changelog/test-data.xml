@@ -195,8 +195,8 @@
         </insert>
     </changeSet>
 
-    <changeSet id="populate-daily-offer-table" author="ristovljupcho">
-        <insert tableName="daily_offer">
+    <changeSet id="populate-offer-table" author="ristovljupcho">
+        <insert tableName="offer">
             <column name="id" value="323e4567-e89b-12d3-a456-426614174001"/>
             <column name="name" value="Coffee Deal"/>
             <column name="date_created" value="2025-08-22 10:00:00"/>
@@ -205,7 +205,7 @@
             <column name="description" value="Buy one coffee, get one free."/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
         </insert>
-        <insert tableName="daily_offer">
+        <insert tableName="offer">
             <column name="id" value="323e4567-e89b-12d3-a456-426614174002"/>
             <column name="name" value="Burger Special"/>
             <column name="date_created" value="2025-08-22 11:00:00"/>
@@ -214,7 +214,7 @@
             <column name="description" value="20% off all burgers."/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
         </insert>
-        <insert tableName="daily_offer">
+        <insert tableName="offer">
             <column name="id" value="323e4567-e89b-12d3-a456-426614174003"/>
             <column name="name" value="Cocktail Night"/>
             <column name="date_created" value="2025-08-22 12:00:00"/>
@@ -223,7 +223,7 @@
             <column name="description" value="Happy hour cocktails."/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
         </insert>
-        <insert tableName="daily_offer">
+        <insert tableName="offer">
             <column name="id" value="323e4567-e89b-12d3-a456-426614174004"/>
             <column name="name" value="Dance Party"/>
             <column name="date_created" value="2025-08-22 13:00:00"/>
@@ -232,7 +232,7 @@
             <column name="description" value="Free entry before 10 PM."/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
         </insert>
-        <insert tableName="daily_offer">
+        <insert tableName="offer">
             <column name="id" value="323e4567-e89b-12d3-a456-426614174005"/>
             <column name="name" value="Pizza Deal"/>
             <column name="date_created" value="2025-08-22 14:00:00"/>

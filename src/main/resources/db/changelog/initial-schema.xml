@@ -78,13 +78,13 @@
                 constraintName="pk_place_trait"/>
     </changeSet>
 
-    <changeSet id="create-daily-offer" author="negrioska">
+    <changeSet id="create-offer" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="daily_offer"/>
+                <tableExists tableName="offer"/>
             </not>
         </preConditions>
-        <createTable tableName="daily_offer">
+        <createTable tableName="offer">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
@@ -97,13 +97,13 @@
             <column name="place_id" type="UUID NOT NULL"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="daily_offer"
+        <addForeignKeyConstraint baseTableName="offer"
                                  baseColumnNames="place_id"
                                  referencedTableName="place"
                                  referencedColumnNames="id"
                                  onUpdate="CASCADE"
                                  onDelete="CASCADE"
-                                 constraintName="fk_place_daily_offer"/>
+                                 constraintName="fk_place_offer"/>
     </changeSet>
 
     <changeSet id="create-user-table" author="negrioska">
