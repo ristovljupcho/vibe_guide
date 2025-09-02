@@ -7,5 +7,5 @@ public enum TraitType {
     DRESS_CODE,
     ENVIRONMENT,
     FOOD_SERVED,
-    MUSIC_TYPE
+    MUSIC_TYPE,
 }

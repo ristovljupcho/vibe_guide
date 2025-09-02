@@ -3,11 +3,7 @@ package com.vibe_guide.dtos;
 import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
 
-import java.util.List;
-import java.util.UUID;
-
 public record PlaceResponseDTO(
-        UUID placeId,
         String name,
         String description,
         String mapsUri,
@@ -16,12 +12,6 @@ public record PlaceResponseDTO(
         double rating,
         String menuLink,
         PrimaryType primaryType,
-        PriceLevel priceLevel,
-        List<String> images,
-        List<TraitResponseDTO> topTraits,
-        List<EventResponseDTO> dailyEvents,
-        List<OfferResponseDTO> dailyOffers,
-        List<EventResponseDTO> monthlyEvents,
-        List<TraitCarouselResponseDTO> carouselTraits
+        PriceLevel priceLevel
 ) {
 }
