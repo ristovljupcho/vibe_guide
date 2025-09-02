@@ -2,11 +2,11 @@ package com.vibe_guide.converters;
 
 import com.vibe_guide.dtos.EventResponseDTO;
 import com.vibe_guide.entities.Event;
+import com.vibe_guide.entities.EventGallery;
 import com.vibe_guide.entities.Place;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.List;
 
 /**
@@ -25,16 +25,22 @@ public class EventConverter {
      * @return {@link EventResponseDTO} converted entity.
      */
     public EventResponseDTO toEventResponseDTO(Event event) {
-        String eventName = event.getName();
+        String name = event.getName();
         Place place = event.getPlace();
         String placeName = place.getName();
         String description = event.getDescription();
         LocalDateTime startDate = event.getStartDate();
         LocalDateTime endDate = event.getEndDate();
 
-        List<String> base64Images = event.getGalleries().stream()
-                .map(g -> Base64.getEncoder().encodeToString(g.getPhoto()))
-                .toList();
-        return new EventResponseDTO(eventName, placeName, description, startDate, endDate, base64Images);
+        List<EventGallery> gallery = event.getGalleries().stream().toList();
+        byte[] image;
+        if (gallery.isEmpty()) {
+            image = null;
+        } else {
+            EventGallery eventGallery = gallery.getFirst();
+            image = eventGallery.getImage();
+        }
+
+        return new EventResponseDTO(name, placeName, description, startDate, endDate, image);
     }
 }

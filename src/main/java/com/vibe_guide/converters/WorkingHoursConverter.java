@@ -1,6 +1,6 @@
 package com.vibe_guide.converters;
 
-import com.vibe_guide.dtos.DailyOfferResponseDTO;
+import com.vibe_guide.dtos.OfferResponseDTO;
 import com.vibe_guide.dtos.WorkingHoursMissingDaysResponseDTO;
 import com.vibe_guide.dtos.WorkingHoursResponseDTO;
 import com.vibe_guide.entities.WorkingHours;
@@ -21,7 +21,7 @@ public class WorkingHoursConverter {
      * Converts a {@link WorkingHours} entity to a {@link WorkingHoursResponseDTO} entity.
      *
      * @param workingHours {@link WorkingHours} entity to convert.
-     * @return {@link DailyOfferResponseDTO} converted entity.
+     * @return {@link WorkingHoursResponseDTO} converted entity.
      */
     public WorkingHoursResponseDTO toWorkingHoursResponseDTO(WorkingHours workingHours) {
         DayOfWeek dayOfWeek = workingHours.getDayOfWeek();
