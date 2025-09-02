@@ -10,6 +10,7 @@ import com.vibe_guide.services.OfferQueryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -32,10 +33,13 @@ public class OfferQueryServiceImpl implements OfferQueryService {
     public List<OfferResponseDTO> getDailyOffersByPlaceId(UUID placeId) {
         checkIfPlaceExists(placeId);
 
-        LocalDateTime today = LocalDateTime.now();
-        List<Offer> offers = offerRepository.findDailyOffersByPlaceId(today, placeId);
+        LocalDateTime now = LocalDateTime.now();
 
-        return offers.stream().map(offerConverter::toOfferResponseDTO).toList();
+        List<Offer> offers = offerRepository.findDailyOffersByPlaceId(now, placeId);
+
+        return offers.stream()
+                .map(offerConverter::toOfferResponseDTO)
+                .toList();
     }
 
     /**
@@ -46,10 +50,13 @@ public class OfferQueryServiceImpl implements OfferQueryService {
      */
     @Override
     public List<OfferResponseDTO> getAllDailyOffers() {
-        LocalDateTime today = LocalDateTime.now();
-        List<Offer> offers = offerRepository.findAllDailyOffers(today);
+        LocalDateTime now = LocalDateTime.now();
 
-        return offers.stream().map(offerConverter::toOfferResponseDTO).toList();
+        List<Offer> offers = offerRepository.findAllDailyOffers(now);
+
+        return offers.stream()
+                .map(offerConverter::toOfferResponseDTO)
+                .toList();
     }
 
     /**
