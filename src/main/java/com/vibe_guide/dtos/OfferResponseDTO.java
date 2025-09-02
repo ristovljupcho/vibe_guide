@@ -4,9 +4,10 @@ import java.time.LocalDateTime;
 
 public record OfferResponseDTO(
         String name,
+        String placeName,
+        String description,
         LocalDateTime startDate,
         LocalDateTime endDate,
-        String description,
         byte[] image
 ) {
 }

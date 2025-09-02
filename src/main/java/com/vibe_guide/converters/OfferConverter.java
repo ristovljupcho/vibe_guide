@@ -2,6 +2,7 @@ package com.vibe_guide.converters;
 
 import com.vibe_guide.dtos.OfferResponseDTO;
 import com.vibe_guide.entities.Offer;
+import com.vibe_guide.entities.Place;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -22,11 +23,13 @@ public class OfferConverter {
      */
     public OfferResponseDTO toOfferResponseDTO(Offer offer) {
         String name = offer.getName();
+        Place place = offer.getPlace();
+        String placeName = place.getName();
+        String description = offer.getDescription();
         LocalDateTime startDate = offer.getStartDate();
         LocalDateTime endDate = offer.getEndDate();
-        String description = offer.getDescription();
         byte[] image = offer.getImage();
 
-        return new OfferResponseDTO(name, startDate, endDate, description, image);
+        return new OfferResponseDTO(name, placeName, description, startDate, endDate, image);
     }
 }
