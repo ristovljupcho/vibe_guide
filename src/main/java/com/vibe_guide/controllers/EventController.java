@@ -49,16 +49,9 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{placeId}/past")
+    @GetMapping("/past/{placeId}")
     ResponseEntity<List<EventResponseDTO>> getPastEventsByPlaceId(@PathVariable UUID placeId) {
         List<EventResponseDTO> response = eventQueryService.findPastEventsByPlaceId(placeId);
-
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/{placeId}/upcoming")
-    ResponseEntity<List<EventResponseDTO>> getUpcomingEventsByPlaceId(@PathVariable UUID placeId) {
-        List<EventResponseDTO> response = eventQueryService.findUpcomingEventsByPlaceId(placeId);
 
         return ResponseEntity.ok(response);
     }
@@ -70,9 +63,16 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{placeId}/todays")
-    ResponseEntity<List<EventResponseDTO>> getTodaysEventsByPlaceId(@PathVariable UUID placeId) {
-        List<EventResponseDTO> response = eventQueryService.findTodaysEventsByPlaceId(placeId);
+    @GetMapping("/upcoming/{placeId}")
+    ResponseEntity<List<EventResponseDTO>> getUpcomingEventsByPlaceId(@PathVariable UUID placeId) {
+        List<EventResponseDTO> response = eventQueryService.findUpcomingEventsByPlaceId(placeId);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/active/{placeId}")
+    ResponseEntity<List<EventResponseDTO>> getActiveEventsByPlaceId(@PathVariable UUID placeId) {
+        List<EventResponseDTO> response = eventQueryService.findActiveEventsByPlaceId(placeId);
 
         return ResponseEntity.ok(response);
     }

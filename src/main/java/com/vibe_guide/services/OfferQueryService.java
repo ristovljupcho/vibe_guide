@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface OfferQueryService {
-    List<OfferResponseDTO> getDailyOffersByPlaceId(UUID placeId);
+    List<OfferResponseDTO> getActiveOffersByPlaceId(UUID placeId);
 
-    List<OfferResponseDTO> getAllDailyOffers();
+    List<OfferResponseDTO> getAllActiveOffers();
 
     List<OfferResponseDTO> getUpcomingOffersByPlaceId(UUID placeId);
 

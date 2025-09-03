@@ -14,7 +14,7 @@ public interface EventQueryService {
 
     List<EventResponseDTO> findUpcomingEventsByPlaceId(UUID placeId);
 
-    List<EventResponseDTO> findTodaysEventsByPlaceId(UUID placeId);
+    List<EventResponseDTO> findActiveEventsByPlaceId(UUID placeId);
 
     List<EventResponseDTO> findUpcomingEvents();
 }

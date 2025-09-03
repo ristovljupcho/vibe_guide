@@ -97,7 +97,7 @@ public class EventQueryServiceImpl implements EventQueryService {
      * @return A list of {@link EventResponseDTO} containing event details.
      */
     @Override
-    public List<EventResponseDTO> findTodaysEventsByPlaceId(UUID placeId) {
+    public List<EventResponseDTO> findActiveEventsByPlaceId(UUID placeId) {
         checkIfPlaceExists(placeId);
         LocalDateTime today = LocalDateTime.now();
         List<Event> todayEvents = eventRepository.findTodayEventsByPlaceId(placeId, today);

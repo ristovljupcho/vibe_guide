@@ -30,7 +30,7 @@ public class OfferQueryServiceImpl implements OfferQueryService {
      * @return A list of {@link Offer} containing {@link OfferResponseDTO} objects.
      */
     @Override
-    public List<OfferResponseDTO> getDailyOffersByPlaceId(UUID placeId) {
+    public List<OfferResponseDTO> getActiveOffersByPlaceId(UUID placeId) {
         checkIfPlaceExists(placeId);
 
         LocalDateTime now = LocalDateTime.now();
@@ -49,7 +49,7 @@ public class OfferQueryServiceImpl implements OfferQueryService {
      * @return A list of {@link Offer} containing {@link OfferResponseDTO} objects.
      */
     @Override
-    public List<OfferResponseDTO> getAllDailyOffers() {
+    public List<OfferResponseDTO> getAllActiveOffers() {
         LocalDateTime now = LocalDateTime.now();
 
         List<Offer> offers = offerRepository.findAllDailyOffers(now);
