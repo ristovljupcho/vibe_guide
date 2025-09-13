@@ -2,10 +2,10 @@ package com.vibe_guide.enums;
 
 public enum TraitType {
     ATMOSPHERE,
-    BEVERAGES_SERVED,
+    BEVERAGES,
     CROWDS,
     DRESS_CODE,
     ENVIRONMENT,
-    FOOD_SERVED,
+    FOOD,
     MUSIC_TYPE,
 }

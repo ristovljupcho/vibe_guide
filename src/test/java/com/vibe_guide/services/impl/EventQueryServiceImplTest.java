@@ -109,7 +109,7 @@ class EventQueryServiceImplTest {
         // given
         List<EventResponseDTO> dtos = EventTestData.getEventResponseDTOs();
         given(placeRepository.findById(PlaceTestData.PLACE_ID)).willReturn(Optional.of(PlaceTestData.getPlace()));
-        given(eventRepository.findEventsByPlaceId(PlaceTestData.PLACE_ID))
+        given(eventRepository.findUpcomingEventsByPlaceId(PlaceTestData.PLACE_ID))
                 .willReturn(EventTestData.getEvents());
         given(eventConverter.toEventResponseDTO(any())).willReturn(dtos.get(0), dtos.get(1), dtos.get(2));
 
@@ -130,7 +130,7 @@ class EventQueryServiceImplTest {
         assertThatExceptionOfType(PlaceNotFoundException.class)
                 .isThrownBy(() -> eventQueryService.findActiveEventsByPlaceId(PlaceTestData.PLACE_ID))
                 .withMessage("Place with id " + PlaceTestData.PLACE_ID + " not found.");
-        verify(eventRepository, times(0)).findTodayEventsByPlaceId(any(), any());
+        verify(eventRepository, times(0)).findActiveEventsByPlaceId(any(), any());
         verify(eventConverter, times(0)).toEventResponseDTO(any());
     }
 
@@ -139,7 +139,7 @@ class EventQueryServiceImplTest {
         // given
         List<EventResponseDTO> dtos = EventTestData.getEventResponseDTOs();
         given(placeRepository.findById(PlaceTestData.PLACE_ID)).willReturn(Optional.of(PlaceTestData.getPlace()));
-        given(eventRepository.findTodayEventsByPlaceId(any(), any()))
+        given(eventRepository.findActiveEventsByPlaceId(any(), any()))
                 .willReturn(EventTestData.getEvents());
         given(eventConverter.toEventResponseDTO(any())).willReturn(dtos.get(0), dtos.get(1), dtos.get(2));
 
