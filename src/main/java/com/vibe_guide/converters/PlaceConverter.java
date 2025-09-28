@@ -1,19 +1,13 @@
 package com.vibe_guide.converters;
 
-import com.vibe_guide.dtos.DailyOfferResponseDTO;
-import com.vibe_guide.dtos.EventResponseDTO;
 import com.vibe_guide.dtos.PlacePreviewResponseDTO;
 import com.vibe_guide.dtos.PlaceResponseDTO;
-import com.vibe_guide.dtos.TraitCarouselResponseDTO;
-import com.vibe_guide.dtos.TraitResponseDTO;
 import com.vibe_guide.entities.Place;
 import com.vibe_guide.entities.views.PlaceTopTraits;
 import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
 import org.springframework.stereotype.Component;
 
-import java.util.Base64;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -26,32 +20,12 @@ import java.util.UUID;
 public class PlaceConverter {
 
     /**
-     * Converts a {@link Place} entity with additional attributes:
-     * <ul>
-     *     <li>List of {@link TraitResponseDTO} as topTraits</li>
-     *     <li>List of {@link EventResponseDTO} as todaysEvents</li>
-     *     <li>List of {@link DailyOfferResponseDTO} as dailyOffers</li>
-     *     <li>List of {@link EventResponseDTO} as dailyEvents</li>
-     *     <li>List of {@link EventResponseDTO} as monthlyEvents</li>
-     *     <li>List of {@link TraitCarouselResponseDTO} as carouselTraits</li>
-     * </ul>
-     * to a {@link PlaceResponseDTO} entity.
+     * Converts a {@link Place} entity to a {@link PlaceResponseDTO} entity.
      *
-     * @param place          {@link Place} entity to convert.
-     * @param topTraits      List of {@link TraitResponseDTO}.
-     * @param todaysEvents   List of {@link EventResponseDTO}.
-     * @param dailyOffers    List of {@link DailyOfferResponseDTO}.
-     * @param monthlyEvents  List of {@link EventResponseDTO}.
-     * @param carouselTraits List of {@link TraitCarouselResponseDTO}.
+     * @param place {@link Place} entity to convert.
      * @return {@link PlaceResponseDTO} converted entity.
      */
-    public PlaceResponseDTO toPlaceResponseDTO(Place place,
-                                               List<TraitResponseDTO> topTraits,
-                                               List<EventResponseDTO> todaysEvents,
-                                               List<DailyOfferResponseDTO> dailyOffers,
-                                               List<EventResponseDTO> monthlyEvents,
-                                               List<TraitCarouselResponseDTO> carouselTraits) {
-        UUID placeId = place.getId();
+    public PlaceResponseDTO toPlaceResponseDTO(Place place) {
         String name = place.getName();
         String description = place.getDescription();
         String mapsUri = place.getMapsUri();
@@ -62,11 +36,7 @@ public class PlaceConverter {
         PrimaryType primaryType = place.getPrimaryType();
         PriceLevel priceLevel = place.getPriceLevel();
 
-        List<String> gallery = place.getGallery().stream()
-                .map(g -> Base64.getEncoder().encodeToString(g.getPhoto())).toList();
-
         return new PlaceResponseDTO(
-                placeId,
                 name,
                 description,
                 mapsUri,
@@ -75,13 +45,7 @@ public class PlaceConverter {
                 rating,
                 menuLink,
                 primaryType,
-                priceLevel,
-                gallery,
-                topTraits,
-                todaysEvents,
-                dailyOffers,
-                monthlyEvents,
-                carouselTraits
+                priceLevel
         );
     }
 
@@ -92,12 +56,14 @@ public class PlaceConverter {
      * @return {@link PlacePreviewResponseDTO} converted entity.
      */
     public PlacePreviewResponseDTO toPlacePreviewResponseDTO(PlaceTopTraits placeTopTraits) {
-        UUID placeId = placeTopTraits.getId();
+        UUID id = placeTopTraits.getId();
         String name = placeTopTraits.getName();
+        String description = placeTopTraits.getDescription();
         double rating = placeTopTraits.getRating();
         PrimaryType primaryType = placeTopTraits.getPrimaryType();
-        List<String> topTraits = placeTopTraits.getTopTraitsList();
+        PriceLevel priceLevel = placeTopTraits.getPriceLevel();
+        String[] topTraits = placeTopTraits.getTopTraits();
 
-        return new PlacePreviewResponseDTO(placeId, name, rating, primaryType, topTraits);
+        return new PlacePreviewResponseDTO(id, name, description, rating, primaryType, priceLevel, topTraits);
     }
 }

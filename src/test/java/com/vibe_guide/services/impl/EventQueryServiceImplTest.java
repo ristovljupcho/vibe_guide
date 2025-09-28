@@ -44,7 +44,7 @@ class EventQueryServiceImplTest {
     EventQueryServiceImpl eventQueryService;
 
     @Test
-    void findByCriteria__returnsPageOfEventResponseDTO() {
+    void getPaginatedEvents__returnsPageOfEventResponseDTO() {
         // given
         List<EventResponseDTO> dtos = EventTestData.getEventResponseDTOs();
         given(eventRepository.findAll((Specification<Event>) any(), (Pageable) any())).willReturn(
@@ -53,7 +53,7 @@ class EventQueryServiceImplTest {
 
         // when
         Page<EventResponseDTO> actualResult =
-                eventQueryService.findByCriteria(EventTestData.getEventsSearchCriteriaDTO(), SharedTestData.PAGE,
+                eventQueryService.getPaginatedEvents(EventTestData.getEventsSearchCriteriaDTO(), SharedTestData.PAGE,
                         SharedTestData.SIZE);
 
         // then
@@ -62,20 +62,20 @@ class EventQueryServiceImplTest {
 
     @SneakyThrows
     @Test
-    void findPastEvents_placeNotFound_throwsPlaceNotFoundException() {
+    void findPastEventsByPlaceId_placeNotFound_throwsPlaceNotFoundException() {
         // given
         given(placeRepository.findById(any())).willReturn(Optional.empty());
 
         // when & then
         assertThatExceptionOfType(PlaceNotFoundException.class)
-                .isThrownBy(() -> eventQueryService.findPastEvents(PlaceTestData.PLACE_ID))
+                .isThrownBy(() -> eventQueryService.findPastEventsByPlaceId(PlaceTestData.PLACE_ID))
                 .withMessage("Place with id " + PlaceTestData.PLACE_ID + " not found.");
         verify(eventRepository, times(0)).findPastEvents(any(), any(), any());
         verify(eventConverter, times(0)).toEventResponseDTO(any());
     }
 
     @Test
-    void findPastEvents_successfullyFoundProvidedPlaceId_returnsEventResponseDTOs() {
+    void findPastEventsByPlaceId_successfullyFoundProvidedPlaceId_returnsEventResponseDTOs() {
         // given
         List<EventResponseDTO> dtos = EventTestData.getEventResponseDTOs();
         given(placeRepository.findById(any())).willReturn(Optional.of(PlaceTestData.getPlace()));
@@ -84,7 +84,7 @@ class EventQueryServiceImplTest {
         given(eventConverter.toEventResponseDTO(any())).willReturn(dtos.get(0), dtos.get(1), dtos.get(2));
 
         // when
-        List<EventResponseDTO> actualResult = eventQueryService.findPastEvents(PlaceTestData.PLACE_ID);
+        List<EventResponseDTO> actualResult = eventQueryService.findPastEventsByPlaceId(PlaceTestData.PLACE_ID);
 
         // then
         assertThat(actualResult).isEqualTo(dtos);

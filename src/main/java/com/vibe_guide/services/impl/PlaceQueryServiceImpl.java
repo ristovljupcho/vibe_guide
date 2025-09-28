@@ -11,7 +11,6 @@ import com.vibe_guide.enums.sorting.SortDirection;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.repositories.PlaceRepository;
 import com.vibe_guide.repositories.PlaceTopTraitsRepository;
-import com.vibe_guide.services.PlaceConverterWithAttributes;
 import com.vibe_guide.services.PlaceQueryService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,7 +28,6 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
 
     private final PlaceRepository placeRepository;
     private final PlaceTopTraitsRepository placeTopTraitsRepository;
-    private final PlaceConverterWithAttributes placeConverterWithAttributes;
     private final PlaceConverter placeConverter;
 
     /**
@@ -42,7 +40,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
     public PlaceResponseDTO getPlaceById(UUID placeId) {
         Place place = placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
-        return placeConverterWithAttributes.getPlaceResponseDTO(place);
+        return placeConverter.toPlaceResponseDTO(place);
     }
 
     /**
@@ -75,12 +73,19 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
 
         Page<PlaceTopTraits> placePage;
         if (traits == null || traits.isEmpty()) {
-            placePage = placeTopTraitsRepository.findAllPaginated(pageRequest);
+            placePage = placeTopTraitsRepository.findAll(pageRequest);
         } else {
             int traitsSize = traits.size();
             placePage = placeTopTraitsRepository.findAllByTraitsPaginated(traits, traitsSize, pageRequest);
         }
 
         return placePage.map(placeConverter::toPlacePreviewResponseDTO);
+    }
+
+    @Override
+    public List<PlacePreviewResponseDTO> getTopPlaces() {
+        List<PlaceTopTraits> places = placeTopTraitsRepository.findTop10ByOrderByRatingDesc();
+
+        return places.stream().map(placeConverter::toPlacePreviewResponseDTO).toList();
     }
 }

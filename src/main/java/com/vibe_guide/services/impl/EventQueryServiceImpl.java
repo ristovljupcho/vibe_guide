@@ -36,14 +36,9 @@ public class EventQueryServiceImpl implements EventQueryService {
      * @return A {@link Page} containing {@link EventResponseDTO} objects.
      */
     @Override
-    public Page<EventResponseDTO> findByCriteria(EventSearchCriteriaDTO searchCriteria, int page, int size) {
+    public Page<EventResponseDTO> getPaginatedEvents(EventSearchCriteriaDTO searchCriteria, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Specification<Event> spec = Specification.where(null);
-
-        UUID placeId = searchCriteria.placeId();
-        if (placeId != null) {
-            spec = spec.and(EventSpecification.hasPlaceId(placeId));
-        }
 
         String eventName = searchCriteria.eventName();
         if (eventName != null && !eventName.isEmpty()) {
@@ -72,7 +67,7 @@ public class EventQueryServiceImpl implements EventQueryService {
      * @return A list of {@link EventResponseDTO} containing event details.
      */
     @Override
-    public List<EventResponseDTO> findPastEvents(UUID placeId) {
+    public List<EventResponseDTO> findPastEventsByPlaceId(UUID placeId) {
         checkIfPlaceExists(placeId);
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);

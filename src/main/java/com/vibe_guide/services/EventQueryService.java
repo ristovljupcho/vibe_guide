@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface EventQueryService {
-    Page<EventResponseDTO> findByCriteria(EventSearchCriteriaDTO searchCriteria, int page, int size);
+    Page<EventResponseDTO> getPaginatedEvents(EventSearchCriteriaDTO searchCriteria, int page, int size);
 
-    List<EventResponseDTO> findPastEvents(UUID placeId);
+    List<EventResponseDTO> findPastEventsByPlaceId(UUID placeId);
 
     List<EventResponseDTO> findUpcomingEventsByPlaceId(UUID placeId);
 

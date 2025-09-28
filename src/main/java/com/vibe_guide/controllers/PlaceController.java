@@ -46,6 +46,13 @@ public class PlaceController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/top")
+    ResponseEntity<List<PlacePreviewResponseDTO>> getTopPlaces(){
+        List<PlacePreviewResponseDTO> response = placeQueryService.getTopPlaces();
+
+        return  ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{placeId}")
     ResponseEntity<PlaceResponseDTO> getPlace(@PathVariable UUID placeId) {
         PlaceResponseDTO response = placeQueryService.getPlaceById(placeId);
@@ -54,8 +61,8 @@ public class PlaceController {
     }
 
     @PutMapping("/update")
-    ResponseEntity<PlaceResponseDTO> updatePlace(@RequestBody @Valid PlaceRequestDTO dto) {
-        PlaceResponseDTO response = placeManagementService.updatePlace(dto);
+    ResponseEntity<String> updatePlace(@RequestBody @Valid PlaceRequestDTO dto) {
+        String response = placeManagementService.updatePlace(dto);
 
         return ResponseEntity.ok(response);
     }

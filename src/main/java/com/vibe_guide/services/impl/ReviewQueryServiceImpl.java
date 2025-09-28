@@ -1,7 +1,7 @@
 package com.vibe_guide.services.impl;
 
 import com.vibe_guide.converters.ReviewConverter;
-import com.vibe_guide.dtos.ReviewPreviewResponseDTO;
+import com.vibe_guide.dtos.ReviewResponseDTO;
 import com.vibe_guide.dtos.ReviewSearchCriteriaDTO;
 import com.vibe_guide.entities.Review;
 import com.vibe_guide.enums.ReviewSortBy;
@@ -37,13 +37,12 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
      *                      {@link ReviewSortBy}.
      * @param page          page number.
      * @param size          page size.
-     * @return A {@link Page} containing {@link ReviewPreviewResponseDTO} objects.
+     * @return A {@link Page} containing {@link ReviewResponseDTO} objects.
      */
-
     @Override
-    public Page<ReviewPreviewResponseDTO> getPaginatedReviews(UUID placeId, ReviewSortBy sortBy,
-                                                                        SortDirection sortDirection, int page,
-                                                                        int size) {
+    public Page<ReviewResponseDTO> getPaginatedReviews(UUID placeId, ReviewSortBy sortBy,
+                                                       SortDirection sortDirection, int page,
+                                                       int size) {
         Pageable pageable = createPageable(sortBy, sortDirection, page, size);
         Page<Review> reviewPage;
 
@@ -53,36 +52,50 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
             reviewPage = reviewRepository.findByPlaceIdOrderByRatingDesc(placeId, pageable);
         }
 
-        return reviewPage.map(reviewConverter::toReviewPreviewResponseDTO);
+        return reviewPage.map(reviewConverter::toReviewResponseDTO);
     }
 
     /**
-     * Retrieves a paginated list of {@link ReviewPreviewResponseDTO} objects based on the specified search criteria.
-     * Supports filtering by place ID, user ID, and minimum rating. Sorting can be done by rating or UUID (default),
-     * in ascending (ASC) or descending (DESC) order.
-     * @param searchCriteria Contains filtering criteria (such as placeId, userId, and rating).
-
-     * @param sortBy used for sorting, default review sort criteria is <b><i>TYPE</i></b> from enum
-     * {@link ReviewSortBy}.
-     * @param sortDirection sortDirection used for sorting direction, default sort direction is <b><i>ASC</i></b> from enum
-     * {@link SortDirection}.
-     * @param page page number.
-     * @param size page size.
-     * @return A {@link Page} containing {@link ReviewPreviewResponseDTO} objects.
+     * Retrieves list of reviews for a place sorted by dateCreated order in asc order.
+     *
+     * @param placeId The unique identifier of the place for which reviews are being retrieved.
+     * @return List of {@link ReviewResponseDTO}.
      */
     @Override
-    public Page<ReviewPreviewResponseDTO> findByReviewCriteria(ReviewSearchCriteriaDTO searchCriteria,
-                                                               ReviewSortBy sortBy, SortDirection sortDirection,
-                                                               int page, int size) {
+    public List<ReviewResponseDTO> getReviewsForPlace(UUID placeId) {
+        List<Review> reviews = reviewRepository.findAllByPlaceIdOrderByDateCreatedAsc(placeId);
+
+        return reviews.stream().map(reviewConverter::toReviewResponseDTO).toList();
+    }
+
+    /**
+     * Retrieves a paginated list of {@link ReviewResponseDTO} objects based on the specified search criteria.
+     * Supports filtering by place ID, user ID, and minimum rating. Sorting can be done by rating or UUID (default),
+     * in ascending (ASC) or descending (DESC) order.
+     *
+     * @param searchCriteria Contains filtering criteria (such as placeId, userId, and rating).
+     * @param sortBy         used for sorting, default review sort criteria is <b><i>TYPE</i></b> from enum
+     *                       {@link ReviewSortBy}.
+     * @param sortDirection  sortDirection used for sorting direction, default sort direction is <b><i>ASC</i></b>
+     *                       from enum
+     *                       {@link SortDirection}.
+     * @param page           page number.
+     * @param size           page size.
+     * @return A {@link Page} containing {@link ReviewResponseDTO} objects.
+     */
+    @Override
+    public Page<ReviewResponseDTO> findByReviewCriteria(ReviewSearchCriteriaDTO searchCriteria,
+                                                        ReviewSortBy sortBy, SortDirection sortDirection,
+                                                        int page, int size) {
 
         Specification<Review> specification = Specification.where(null);
 
         UUID placeId = searchCriteria.placeId();
-        if(placeId != null) {
+        if (placeId != null) {
             specification = specification.and(ReviewSpecification.hasPlaceId(placeId));
         }
-        UUID userId = searchCriteria.placeId();
-        if(userId != null) {
+        UUID userId = searchCriteria.userId();
+        if (userId != null) {
             specification = specification.and(ReviewSpecification.hasUserId(userId));
         }
         Float rating = searchCriteria.rating();
@@ -93,21 +106,22 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
         Pageable pageable = createPageable(sortBy, sortDirection, page, size);
 
         return this.reviewRepository.findAll(specification, pageable)
-                .map(reviewConverter::toReviewPreviewResponseDTO);
+                .map(reviewConverter::toReviewResponseDTO);
     }
 
     /**
      * Retrieves the top five reviews for a given place, sorted by rating in descending order.
      *
      * @param placeId The UUID of the place for which to fetch the top reviews.
-     * @return A list of up to five {@link ReviewPreviewResponseDTO} objects representing the highest-rated reviews.
+     * @return A list of up to five {@link ReviewResponseDTO} objects representing the highest-rated reviews.
      */
 
     @Override
-    public List<ReviewPreviewResponseDTO> getTopFiveReviews(UUID placeId) {
+    public List<ReviewResponseDTO> getTopFiveReviews(UUID placeId) {
         List<Review> topReviews = reviewRepository.getTopFiveReviewsByPlace(placeId);
+
         return topReviews.stream()
-                .map(reviewConverter::toReviewPreviewResponseDTO)
+                .map(reviewConverter::toReviewResponseDTO)
                 .toList();
     }
 
@@ -116,9 +130,10 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
      * Creates a {@link Pageable} object for pagination and sorting.
      *
      * @param sortBy        sortBy used for sorting, default review sort criteria is <b><i>TYPE</i></b> from enum
-     * {@link ReviewSortBy}.
-     * @param sortDirection sortDirection used for sorting direction, default sort direction is <b><i>ASC</i></b> from enum
-     * {@link SortDirection}.
+     *                      {@link ReviewSortBy}.
+     * @param sortDirection sortDirection used for sorting direction, default sort direction is <b><i>ASC</i></b>
+     *                      from enum
+     *                      {@link SortDirection}.
      * @param page          The page number (zero-based) for pagination.
      * @param size          The number of elements per page.
      * @return A {@link Pageable} instance configured with sorting and pagination settings.

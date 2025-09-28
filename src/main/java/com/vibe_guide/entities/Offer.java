@@ -26,7 +26,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class DailyOffer implements Base64Image {
+public class Offer implements Base64Image {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -52,7 +52,7 @@ public class DailyOffer implements Base64Image {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        DailyOffer that = (DailyOffer) o;
+        Offer that = (Offer) o;
         return Objects.equals(id, that.id);
     }
 
