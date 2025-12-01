@@ -9,17 +9,9 @@ import com.vibe_guide.services.PlaceManagementService;
 import com.vibe_guide.services.PlaceQueryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,23 +26,21 @@ public class PlaceController {
     private final PlaceManagementService placeManagementService;
 
     @GetMapping
-    ResponseEntity<Page<PlacePreviewResponseDTO>> getPaginatedPlaces(
+    ResponseEntity<List<PlacePreviewResponseDTO>> getPlaces(
             @RequestParam(required = false) List<String> traits,
             @RequestParam(required = false) PlaceSortBy sortBy,
-            @RequestParam(required = false) SortDirection sortDirection,
-            @RequestParam Integer page,
-            @RequestParam Integer size) {
-        Page<PlacePreviewResponseDTO> response =
-                placeQueryService.getPaginatedPlaces(traits, sortBy, sortDirection, page, size);
+            @RequestParam(required = false) SortDirection sortDirection) {
+        List<PlacePreviewResponseDTO> response =
+                placeQueryService.getPlaces(traits, sortBy, sortDirection);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/top")
-    ResponseEntity<List<PlacePreviewResponseDTO>> getTopPlaces(){
+    ResponseEntity<List<PlacePreviewResponseDTO>> getTopPlaces() {
         List<PlacePreviewResponseDTO> response = placeQueryService.getTopPlaces();
 
-        return  ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{placeId}")

@@ -12,15 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,16 +41,9 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{placeId}/past")
+    @GetMapping("/past/{placeId}")
     ResponseEntity<List<EventResponseDTO>> getPastEventsByPlaceId(@PathVariable UUID placeId) {
         List<EventResponseDTO> response = eventQueryService.findPastEventsByPlaceId(placeId);
-
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/{placeId}/upcoming")
-    ResponseEntity<List<EventResponseDTO>> getUpcomingEventsByPlaceId(@PathVariable UUID placeId) {
-        List<EventResponseDTO> response = eventQueryService.findUpcomingEventsByPlaceId(placeId);
 
         return ResponseEntity.ok(response);
     }
@@ -70,9 +55,23 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{placeId}/todays")
-    ResponseEntity<List<EventResponseDTO>> getTodaysEventsByPlaceId(@PathVariable UUID placeId) {
-        List<EventResponseDTO> response = eventQueryService.findTodaysEventsByPlaceId(placeId);
+    @GetMapping("/upcoming/{placeId}")
+    ResponseEntity<List<EventResponseDTO>> getUpcomingEventsByPlaceId(@PathVariable UUID placeId) {
+        List<EventResponseDTO> response = eventQueryService.findUpcomingEventsByPlaceId(placeId);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/active")
+    ResponseEntity<List<EventResponseDTO>> getActiveEvents() {
+        List<EventResponseDTO> response = eventQueryService.findActiveEvents();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/active/{placeId}")
+    ResponseEntity<List<EventResponseDTO>> getActiveEventsByPlaceId(@PathVariable UUID placeId) {
+        List<EventResponseDTO> response = eventQueryService.findActiveEventsByPlaceId(placeId);
 
         return ResponseEntity.ok(response);
     }

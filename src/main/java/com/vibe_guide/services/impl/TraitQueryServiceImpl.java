@@ -1,11 +1,12 @@
 package com.vibe_guide.services.impl;
 
 import com.vibe_guide.converters.TraitConverter;
+import com.vibe_guide.dtos.TraitCarouselResponseDTO;
 import com.vibe_guide.dtos.TraitResponseDTO;
 import com.vibe_guide.entities.Trait;
+import com.vibe_guide.enums.TraitType;
 import com.vibe_guide.enums.sorting.SortDirection;
 import com.vibe_guide.enums.sorting.TraitSortBy;
-import com.vibe_guide.enums.TraitType;
 import com.vibe_guide.repositories.TraitRepository;
 import com.vibe_guide.services.TraitQueryService;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -53,5 +56,12 @@ public class TraitQueryServiceImpl implements TraitQueryService {
         else traitPage = traitRepository.findAllByTraitType(traitType, pageRequest);
 
         return traitPage.map(traitConverter::toTraitResponseDTO);
+    }
+
+    @Override
+    public List<TraitCarouselResponseDTO> getAllTraits() {
+        List<Trait> traits = traitRepository.findAll();
+
+        return traits.stream().map(traitConverter::toTraitCarouselResponseDTO).toList();
     }
 }

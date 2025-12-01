@@ -9,17 +9,17 @@
         <insert tableName="trait">
             <column name="id" value="123e4567-e89b-12d3-a456-426614174001"/>
             <column name="name" value="Coffee"/>
-            <column name="trait_type" value="DRINK"/>
+            <column name="trait_type" value="BEVERAGES"/>
         </insert>
         <insert tableName="trait">
             <column name="id" value="123e4567-e89b-12d3-a456-426614174002"/>
             <column name="name" value="Beer"/>
-            <column name="trait_type" value="DRINK"/>
+            <column name="trait_type" value="BEVERAGES"/>
         </insert>
         <insert tableName="trait">
             <column name="id" value="123e4567-e89b-12d3-a456-426614174003"/>
             <column name="name" value="Cocktail"/>
-            <column name="trait_type" value="DRINK"/>
+            <column name="trait_type" value="BEVERAGES"/>
         </insert>
         <insert tableName="trait">
             <column name="id" value="123e4567-e89b-12d3-a456-426614174004"/>
@@ -39,22 +39,22 @@
         <insert tableName="trait">
             <column name="id" value="123e4567-e89b-12d3-a456-426614174007"/>
             <column name="name" value="Chill"/>
-            <column name="trait_type" value="VIBE"/>
+            <column name="trait_type" value="ATMOSPHERE"/>
         </insert>
         <insert tableName="trait">
             <column name="id" value="123e4567-e89b-12d3-a456-426614174008"/>
             <column name="name" value="Live Music"/>
-            <column name="trait_type" value="VIBE"/>
+            <column name="trait_type" value="ATMOSPHERE"/>
         </insert>
         <insert tableName="trait">
             <column name="id" value="123e4567-e89b-12d3-a456-426614174009"/>
             <column name="name" value="Rock Live Music"/>
-            <column name="trait_type" value="VIBE"/>
+            <column name="trait_type" value="ATMOSPHERE"/>
         </insert>
         <insert tableName="trait">
             <column name="id" value="123e4567-e89b-12d3-a456-426614174000"/>
             <column name="name" value="House Music"/>
-            <column name="trait_type" value="VIBE"/>
+            <column name="trait_type" value="ATMOSPHERE"/>
         </insert>
     </changeSet>
 
