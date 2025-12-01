@@ -1,7 +1,6 @@
 package com.vibe_guide.controllers;
 
 import com.vibe_guide.dtos.VisitedPlaceResponseDTO;
-import com.vibe_guide.entities.VisitedPlace;
 import com.vibe_guide.services.VisitedPlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
