@@ -54,9 +54,6 @@ public class User {
             fetch = FetchType.LAZY)
     private Set<PlaceAdmin> places;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<VisitedPlace> visitedPlaces;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
