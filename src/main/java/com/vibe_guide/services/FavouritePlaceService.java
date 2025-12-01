@@ -1,6 +1,8 @@
 package com.vibe_guide.services;
 
 import com.vibe_guide.dtos.FavouritePlaceResponseDTO;
+import com.vibe_guide.exceptions.PlaceNotFoundException;
+import com.vibe_guide.exceptions.UserNotFoundException;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,18 +25,22 @@ public interface FavouritePlaceService {
      *
      * @param userId ID of the user whose favourites are requested
      * @return List of favourite places mapped into {@link FavouritePlaceResponseDTO}
+     * @throws UserNotFoundException if the user with the given ID does not exist
      */
     List<FavouritePlaceResponseDTO> getFavouritePlacesByUserId(UUID userId);
 
     /**
-     * Toggles the favourite status for the given place and user.
-     * <p>
-     * If the user has already favourited the place, it is removed.
-     * Otherwise, it is added as a new favourite.
+     * Toggles favourite status for a given place:
+     * <ul>
+     *     <li>If the place is already in the user's favourites → it is removed.</li>
+     *     <li>If not → it is added.</li>
+     * </ul>
      *
      * @param userId  ID of the user performing the action
      * @param placeId ID of the place being favourited or unfavourited
      * @return Message describing the result (“added” or “removed”)
+     * @throws UserNotFoundException  if the user with the given ID does not exist
+     * @throws PlaceNotFoundException if the place with the given ID does not exist
      */
     String manageFavouritePlace(UUID userId, UUID placeId);
 }
