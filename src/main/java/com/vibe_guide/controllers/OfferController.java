@@ -29,16 +29,16 @@ public class OfferController {
     private final OfferQueryService offerQueryService;
     private final OfferManagementService offerManagementService;
 
-    @GetMapping("/daily")
-    ResponseEntity<List<OfferResponseDTO>> getAllDailyOffers() {
-        List<OfferResponseDTO> offers = offerQueryService.getAllDailyOffers();
+    @GetMapping("/active")
+    ResponseEntity<List<OfferResponseDTO>> getAllActiveOffers() {
+        List<OfferResponseDTO> offers = offerQueryService.getAllActiveOffers();
         return ResponseEntity.ok(offers);
     }
 
-    @GetMapping("/place/{placeId}")
-    public ResponseEntity<List<OfferResponseDTO>> getDailyOffersByPlaceId(
+    @GetMapping("/active/{placeId}")
+    public ResponseEntity<List<OfferResponseDTO>> getActiveOffersByPlaceId(
             @PathVariable UUID placeId) {
-        List<OfferResponseDTO> offers = offerQueryService.getDailyOffersByPlaceId(placeId);
+        List<OfferResponseDTO> offers = offerQueryService.getActiveOffersByPlaceId(placeId);
         return ResponseEntity.ok(offers);
     }
 

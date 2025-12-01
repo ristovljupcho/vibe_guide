@@ -12,9 +12,11 @@ public interface EventQueryService {
 
     List<EventResponseDTO> findPastEventsByPlaceId(UUID placeId);
 
+    List<EventResponseDTO> findUpcomingEvents();
+
     List<EventResponseDTO> findUpcomingEventsByPlaceId(UUID placeId);
 
-    List<EventResponseDTO> findTodaysEventsByPlaceId(UUID placeId);
+    List<EventResponseDTO> findActiveEvents();
 
-    List<EventResponseDTO> findUpcomingEvents();
+    List<EventResponseDTO> findActiveEventsByPlaceId(UUID placeId);
 }

@@ -1,10 +1,13 @@
 package com.vibe_guide.services;
 
+import com.vibe_guide.dtos.TraitCarouselResponseDTO;
 import com.vibe_guide.dtos.TraitResponseDTO;
+import com.vibe_guide.enums.TraitType;
 import com.vibe_guide.enums.sorting.SortDirection;
 import com.vibe_guide.enums.sorting.TraitSortBy;
-import com.vibe_guide.enums.TraitType;
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface TraitQueryService {
 
@@ -12,4 +15,6 @@ public interface TraitQueryService {
                                               SortDirection sortDirection,
                                               int page,
                                               int size);
+
+    List<TraitCarouselResponseDTO> getAllTraits();
 }

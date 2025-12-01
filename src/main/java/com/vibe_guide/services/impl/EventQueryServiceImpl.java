@@ -77,6 +77,19 @@ public class EventQueryServiceImpl implements EventQueryService {
     }
 
     /**
+     * Retrieves a list of upcoming {@link Event} objects
+     *
+     * @return A list of {@link EventResponseDTO} containing event details.
+     */
+    @Override
+    public List<EventResponseDTO> findUpcomingEvents() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Event> upcomingEvents = eventRepository.findUpcomingEvents(now);
+
+        return upcomingEvents.stream().map(eventConverter::toEventResponseDTO).toList();
+    }
+
+    /**
      * Retrieves a list of upcoming {@link Event} objects that are happening in that Place
      *
      * @param placeId uuid of the Place used for filtering
@@ -85,9 +98,17 @@ public class EventQueryServiceImpl implements EventQueryService {
     @Override
     public List<EventResponseDTO> findUpcomingEventsByPlaceId(UUID placeId) {
         checkIfPlaceExists(placeId);
-        List<Event> events = eventRepository.findEventsByPlaceId(placeId);
+        List<Event> upcomingEventsByPlaceId = eventRepository.findUpcomingEventsByPlaceId(placeId);
 
-        return events.stream().map(eventConverter::toEventResponseDTO).toList();
+        return upcomingEventsByPlaceId.stream().map(eventConverter::toEventResponseDTO).toList();
+    }
+
+    @Override
+    public List<EventResponseDTO> findActiveEvents() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Event> activeEvents = eventRepository.findActiveEvents(now);
+
+        return activeEvents.stream().map(eventConverter::toEventResponseDTO).toList();
     }
 
     /**
@@ -97,25 +118,12 @@ public class EventQueryServiceImpl implements EventQueryService {
      * @return A list of {@link EventResponseDTO} containing event details.
      */
     @Override
-    public List<EventResponseDTO> findTodaysEventsByPlaceId(UUID placeId) {
+    public List<EventResponseDTO> findActiveEventsByPlaceId(UUID placeId) {
         checkIfPlaceExists(placeId);
-        LocalDateTime today = LocalDateTime.now();
-        List<Event> todayEvents = eventRepository.findTodayEventsByPlaceId(placeId, today);
+        LocalDateTime now = LocalDateTime.now();
+        List<Event> activeEventsByPlaceId = eventRepository.findActiveEventsByPlaceId(placeId, now);
 
-        return todayEvents.stream().map(eventConverter::toEventResponseDTO).toList();
-    }
-
-    /**
-     * Retrieves a list of upcoming {@link Event} objects
-     *
-     * @return A list of {@link EventResponseDTO} containing event details.
-     */
-    @Override
-    public List<EventResponseDTO> findUpcomingEvents() {
-        LocalDateTime today = LocalDateTime.now();
-        List<Event> upcomingEvents = eventRepository.findUpcomingEvents(today);
-
-        return upcomingEvents.stream().map(eventConverter::toEventResponseDTO).toList();
+        return activeEventsByPlaceId.stream().map(eventConverter::toEventResponseDTO).toList();
     }
 
     private void checkIfPlaceExists(UUID placeId) {

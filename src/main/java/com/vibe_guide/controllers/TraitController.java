@@ -1,5 +1,6 @@
 package com.vibe_guide.controllers;
 
+import com.vibe_guide.dtos.TraitCarouselResponseDTO;
 import com.vibe_guide.dtos.TraitInsertRequestDTO;
 import com.vibe_guide.dtos.TraitResponseDTO;
 import com.vibe_guide.dtos.TraitUpdateRequestDTO;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @Validated
@@ -34,7 +36,7 @@ public class TraitController {
     private final TraitQueryService traitQueryService;
     private final TraitManagementService traitManagementService;
 
-    @GetMapping
+    @GetMapping("/paginated")
     ResponseEntity<Page<TraitResponseDTO>> getPaginatedTraits(@RequestParam(required = false) TraitType traitType,
                                                               @RequestParam(required = false) TraitSortBy sortBy,
                                                               @RequestParam(required = false)
@@ -43,6 +45,14 @@ public class TraitController {
                                                               @RequestParam Integer size) {
         Page<TraitResponseDTO> response =
                 traitQueryService.getPaginatedTraits(traitType, sortBy, sortDirection, page, size);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    ResponseEntity<List<TraitCarouselResponseDTO>> getAllTraits() {
+        List<TraitCarouselResponseDTO> response =
+                traitQueryService.getAllTraits();
 
         return ResponseEntity.ok(response);
     }
