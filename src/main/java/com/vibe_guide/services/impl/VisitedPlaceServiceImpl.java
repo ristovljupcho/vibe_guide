@@ -31,8 +31,15 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
     /**
      * Retrieves all places visited by a given user.
      *
-     * @param userId the ID of the user
-     * @return a list of {@link VisitedPlaceResponseDTO} containing visited place data
+     * <p>This method should:
+     * <ul>
+     *     <li>Validate that the user exists</li>
+     *     <li>Return a list of mapped DTOs representing visited places</li>
+     * </ul>
+     * </p>
+     *
+     * @param userId the ID of the user whose visited places should be fetched
+     * @return a list of {@link VisitedPlaceResponseDTO} entries
      * @throws UserNotFoundException if the user does not exist
      */
     @Override
@@ -45,14 +52,18 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
     }
 
     /**
-     * Toggles the visited state of a place for a user.
+     * Toggles whether a user has marked a specific place as visited.
      *
-     * <p>If the place is already marked as visited, it is removed from the visited list.
-     * If it is not marked as visited, a new entry is created.</p>
+     * <p>Behavior:
+     * <ul>
+     *     <li>If the user already marked the place as visited → remove the record</li>
+     *     <li>If not → create a new visited record</li>
+     * </ul>
+     * </p>
      *
      * @param userId  the ID of the user performing the action
-     * @param placeId the ID of the place being marked/unmarked as visited
-     * @return a confirmation message indicating the result of the operation
+     * @param placeId the ID of the place to toggle
+     * @return a human-readable confirmation message
      * @throws UserNotFoundException  if the user does not exist
      * @throws PlaceNotFoundException if the place does not exist
      */
