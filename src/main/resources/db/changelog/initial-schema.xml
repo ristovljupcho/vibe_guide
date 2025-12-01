@@ -165,6 +165,51 @@
                                  constraintName="fk_visited_place_place"/>
     </changeSet>
 
+    <changeSet id="create-wishlist_place-table" author="ristovljupcho">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="wishlist_place"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="wishlist_place">
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="place_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="date_added" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey
+                tableName="wishlist_place"
+                columnNames="user_id, place_id"
+                constraintName="pk_wishlist_place"/>
+
+        <addForeignKeyConstraint
+                baseTableName="wishlist_place"
+                baseColumnNames="user_id"
+                referencedTableName="user_table"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+                constraintName="fk_wishlist_place_user"/>
+
+        <addForeignKeyConstraint
+                baseTableName="wishlist_place"
+                baseColumnNames="place_id"
+                referencedTableName="place"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+                constraintName="fk_wishlist_place_place"/>
+    </changeSet>
+
     <changeSet id="create-favourite-place-table" author="ristovljupcho">
         <preConditions onFail="MARK_RAN">
             <not>
