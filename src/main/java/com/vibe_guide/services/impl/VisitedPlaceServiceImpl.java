@@ -23,10 +23,18 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class VisitedPlaceServiceImpl implements VisitedPlaceService {
+
     private final VisitedPlaceRepository visitedPlaceRepository;
     private final UserRepository userRepository;
     private final PlaceRepository placeRepository;
 
+    /**
+     * Retrieves all places visited by a given user.
+     *
+     * @param userId the ID of the user
+     * @return a list of {@link VisitedPlaceResponseDTO} containing visited place data
+     * @throws UserNotFoundException if the user does not exist
+     */
     @Override
     public List<VisitedPlaceResponseDTO> getVisitedPlacesByUserId(UUID userId) {
         if (userRepository.findById(userId).isEmpty()) {
@@ -36,6 +44,18 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
         return visitedPlaceRepository.findVisitedPlacesByUser(userId);
     }
 
+    /**
+     * Toggles the visited state of a place for a user.
+     *
+     * <p>If the place is already marked as visited, it is removed from the visited list.
+     * If it is not marked as visited, a new entry is created.</p>
+     *
+     * @param userId  the ID of the user performing the action
+     * @param placeId the ID of the place being marked/unmarked as visited
+     * @return a confirmation message indicating the result of the operation
+     * @throws UserNotFoundException  if the user does not exist
+     * @throws PlaceNotFoundException if the place does not exist
+     */
     @Override
     @Transactional
     public String manageVisitedPlace(UUID userId, UUID placeId) {
