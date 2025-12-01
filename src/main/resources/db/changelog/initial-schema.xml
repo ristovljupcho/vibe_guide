@@ -126,6 +126,45 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="create-visited-place-table" author="ristovljupcho">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="visited_place"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="visited_place">
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="place_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_visited" type="TIMESTAMP"/>
+            <column name="note" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addPrimaryKey tableName="visited_place"
+                       columnNames="user_id, place_id"
+                       constraintName="pk_visited_place"/>
+
+        <addForeignKeyConstraint baseTableName="visited_place"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="user_table"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 constraintName="fk_visited_place_user"/>
+
+        <addForeignKeyConstraint baseTableName="visited_place"
+                                 baseColumnNames="place_id"
+                                 referencedTableName="place"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 constraintName="fk_visited_place_place"/>
+    </changeSet>
+
     <changeSet id="create-review-table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
