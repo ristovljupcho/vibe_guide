@@ -21,13 +21,17 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Service implementation responsible for managing {@link PlaceTrait} associations.
+ * Handles insertion, batch insertion, updating, and deletion of traits for a specific {@link Place}.
+ *
+ * <p>All methods modifying data are transactional to ensure atomicity.</p>
+ */
 @Service
 @AllArgsConstructor
 public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementService {
@@ -36,29 +40,31 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
     private final PlaceTraitRepository placeTraitRepository;
 
     /**
-     * Inserts a single {@link Trait} for {@link Place} with provided ID into the db.
+     * Inserts a single {@link Trait} for a specific {@link Place}.
      *
-     * @param placeId                    ID of {@link Place}.
-     * @param placeTraitInsertRequestDTO Request DTO containing needed data.
-     * @return Response message of type {@link PlaceTraitResponseMessages}.
+     * @param placeId ID of the place where the trait will be added
+     * @param dto     the payload containing trait ID, additional information, and priority flag
+     * @return success message defined in {@link PlaceTraitResponseMessages}
+     * @throws PlaceNotFoundException               if the place does not exist
+     * @throws TraitNotFoundException               if the trait does not exist
+     * @throws TraitAlreadyPresentForPlaceException if the trait is already assigned to this place
      */
     @Transactional
     @Override
-    public String insertSingleTraitInPlace(UUID placeId, PlaceTraitRequestDTO placeTraitInsertRequestDTO) {
+    public String insertSingleTraitInPlace(UUID placeId, PlaceTraitRequestDTO dto) {
+
         Place place = getPlace(placeId);
-        UUID traitId = placeTraitInsertRequestDTO.traitId();
-        Trait trait = getTrait(traitId);
-        if (placeTraitRepository.findByPlaceIdAndTraitId(placeId, traitId).isPresent()) {
-            throw new TraitAlreadyPresentForPlaceException(placeId, traitId);
+        Trait trait = getTrait(dto.traitId());
+
+        if (placeTraitRepository.findByPlaceIdAndTraitId(placeId, dto.traitId()).isEmpty()) {
+            throw new TraitAlreadyPresentForPlaceException(placeId, dto.traitId());
         }
-        String additionalInformation = placeTraitInsertRequestDTO.additionalInformation();
-        boolean priority = placeTraitInsertRequestDTO.priority();
 
         PlaceTrait placeTrait = new PlaceTrait();
         placeTrait.setPlace(place);
         placeTrait.setTrait(trait);
-        placeTrait.setAdditionalInformation(additionalInformation);
-        placeTrait.setPriority(priority);
+        placeTrait.setAdditionalInformation(dto.additionalInformation());
+        placeTrait.setPriority(dto.priority());
 
         placeTraitRepository.save(placeTrait);
 
@@ -66,81 +72,84 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
     }
 
     /**
-     * Multiple insertion of {@link Trait}s for {@link Place} with provided ID into the db.
+     * Inserts multiple traits for a specific {@link Place}.
+     * Performs validation to ensure:
+     * <ul>
+     *     <li>All trait IDs exist</li>
+     *     <li>No trait is already assigned to the place</li>
+     * </ul>
      *
-     * @param placeId                  ID of {@link Place}.
-     * @param batchInsertTraitsInPlace Request DTO containing needed data.
-     * @return Response message of type {@link PlaceTraitResponseMessages}.
+     * @param placeId the ID of the place
+     * @param request wrapper containing list of {@link PlaceTraitRequestDTO}
+     * @return success message
+     * @throws PlaceNotFoundException                if the place does not exist
+     * @throws TraitsNotFoundException               if one or more trait IDs do not exist
+     * @throws TraitsAlreadyPresentForPlaceException if one or more traits already exist for this place
+     * @throws IllegalArgumentException              if request list is empty
      */
     @Transactional
     @Override
-    public String batchInsertTraitsInPlace(UUID placeId, BatchInsertTraitsInPlace batchInsertTraitsInPlace) {
+    public String batchInsertTraitsInPlace(UUID placeId, BatchInsertTraitsInPlace request) {
+
         Place place = getPlace(placeId);
-        List<PlaceTraitRequestDTO> placeTraitRequestDTOs = batchInsertTraitsInPlace.placeTraitRequestDTOs();
-        List<UUID> requestedTraitIdsForPlace = placeTraitRequestDTOs.stream()
+        List<PlaceTraitRequestDTO> dtos = request.placeTraitRequestDTOs();
+
+        if (dtos.isEmpty()) {
+            throw new IllegalArgumentException("Trait list cannot be empty.");
+        }
+
+        List<UUID> traitIds = dtos.stream()
                 .map(PlaceTraitRequestDTO::traitId)
                 .toList();
 
-        List<UUID> allTraits = traitRepository.findAll().stream()
-                .map(Trait::getId)
-                .toList();
-        List<UUID> missingTraits = requestedTraitIdsForPlace.stream().filter(t -> !allTraits.contains(t)).toList();
-        if (!missingTraits.isEmpty()) {
-            throw new TraitsNotFoundException(convertTraitIdsToString(missingTraits));
-        }
+        validateTraitExistence(traitIds);
 
-        List<Trait> requestedTraitsForPlace = traitRepository.findAllById(requestedTraitIdsForPlace);
-        Map<UUID, Trait> requestedTraitsMap = requestedTraitsForPlace.stream()
-                .collect(Collectors.toMap(Trait::getId, t -> t));
-
-        List<UUID> allTraitIdsByPlace = placeTraitRepository.findAllTraitIdsByPlaceId(placeId);
-        List<UUID> conflictingTraitIdsForPlace = requestedTraitIdsForPlace.stream()
-                .filter(allTraitIdsByPlace::contains)
+        List<UUID> existingTraitIds = placeTraitRepository.findAllTraitIdsByPlaceId(placeId);
+        List<UUID> duplicates = traitIds.stream()
+                .filter(existingTraitIds::contains)
                 .toList();
-        if (!conflictingTraitIdsForPlace.isEmpty()) {
+
+        if (!duplicates.isEmpty()) {
             throw new TraitsAlreadyPresentForPlaceException(
-                    placeId, convertTraitIdsToString(conflictingTraitIdsForPlace)
+                    placeId, convertTraitIdsToString(duplicates)
             );
         }
 
-        List<PlaceTrait> newPlaceTraits = new ArrayList<>();
-        for (PlaceTraitRequestDTO dto : placeTraitRequestDTOs) {
-            UUID traitId = dto.traitId();
-            Trait trait = requestedTraitsMap.get(traitId);
-            String additionalInformation = dto.additionalInformation();
-            boolean priority = dto.priority();
+        Map<UUID, Trait> traitMap = traitRepository.findAllById(traitIds).stream()
+                .collect(Collectors.toMap(Trait::getId, t -> t));
 
-            PlaceTrait placeTrait = new PlaceTrait();
-            placeTrait.setPlace(place);
-            placeTrait.setTrait(trait);
-            placeTrait.setAdditionalInformation(additionalInformation);
-            placeTrait.setPriority(priority);
+        List<PlaceTrait> entities = dtos.stream()
+                .map(dto -> {
+                    PlaceTrait pt = new PlaceTrait();
+                    pt.setPlace(place);
+                    pt.setTrait(traitMap.get(dto.traitId()));
+                    pt.setPriority(dto.priority());
+                    pt.setAdditionalInformation(dto.additionalInformation());
+                    return pt;
+                })
+                .toList();
 
-            newPlaceTraits.add(placeTrait);
-        }
-
-        placeTraitRepository.saveAll(newPlaceTraits);
+        placeTraitRepository.saveAll(entities);
 
         return String.format(PlaceTraitResponseMessages.PLACE_TRAIT_BATCH_INSERT_MESSAGE, placeId);
     }
 
     /**
-     * Update a single {@link Trait} for {@link Place} with provided ID into the db.
+     * Updates a single {@link PlaceTrait} entry for a given place and trait.
      *
-     * @param placeId                    ID of {@link Place}.
-     * @param placeTraitUpdateRequestDTO Request DTO containing needed data.
-     * @return Response message of type {@link PlaceTraitResponseMessages}.
+     * @param placeId the ID of the place
+     * @param dto     update content including additional info and priority
+     * @return success message
+     * @throws TraitForPlaceNotFound if the trait is not assigned to the place
      */
     @Transactional
     @Override
-    public String updateTraitForPlace(UUID placeId, PlaceTraitRequestDTO placeTraitUpdateRequestDTO) {
-        UUID traitId = placeTraitUpdateRequestDTO.traitId();
-        PlaceTrait placeTrait = getPlaceTrait(placeId, traitId);
+    public String updateTraitForPlace(UUID placeId, PlaceTraitRequestDTO dto) {
 
-        String additionalInformation = placeTraitUpdateRequestDTO.additionalInformation();
-        placeTrait.setAdditionalInformation(additionalInformation);
-        boolean priority = placeTraitUpdateRequestDTO.priority();
-        placeTrait.setPriority(priority);
+        PlaceTrait placeTrait = getPlaceTrait(placeId, dto.traitId());
+
+        placeTrait.setAdditionalInformation(dto.additionalInformation());
+        placeTrait.setPriority(dto.priority());
 
         placeTraitRepository.save(placeTrait);
 
@@ -148,78 +157,114 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
     }
 
     /**
-     * Delete a single {@link Trait} for {@link Place} with provided ID of both {@link Trait} and {@link Place}.
+     * Deletes a single trait assigned to a place.
      *
-     * @param placeId ID of {@link Place}.
-     * @param traitId ID of {@link Trait}.
-     * @return Response message of type {@link PlaceTraitResponseMessages}.
+     * @param placeId ID of the place
+     * @param traitId ID of the trait to remove
+     * @return success message
+     * @throws TraitForPlaceNotFound if the trait is not assigned to the place
      */
     @Transactional
     @Override
     public String deleteSingleTraitInPlace(UUID placeId, UUID traitId) {
         PlaceTrait placeTrait = getPlaceTrait(placeId, traitId);
-
         placeTraitRepository.delete(placeTrait);
 
         return String.format(PlaceTraitResponseMessages.PLACE_TRAIT_DELETE_MESSAGE, placeId);
     }
 
     /**
-     * Multiple deletion of {@link Trait}s for {@link Place} with provided ID of both {@link Trait}s and {@link Place}.
+     * Deletes multiple traits from a specific place.
+     * Ensures that all trait IDs exist for that place before deletion.
      *
-     * @param placeId                  ID of {@link Place}.
-     * @param batchDeleteTraitsInPlace Request DTO containing needed data.
-     * @return Response message of type {@link PlaceTraitResponseMessages}.
+     * @param placeId ID of the place
+     * @param request wrapper containing list of trait IDs
+     * @return success message
+     * @throws PlaceNotFoundException  if the place does not exist
+     * @throws TraitsNotFoundException if one or more trait IDs are not assigned to the place
      */
     @Transactional
     @Override
-    public String batchDeleteTraitsInPlace(UUID placeId, BatchDeleteTraitsInPlace batchDeleteTraitsInPlace) {
+    public String batchDeleteTraitsInPlace(UUID placeId, BatchDeleteTraitsInPlace request) {
+
         if (!placeRepository.existsById(placeId)) {
             throw new PlaceNotFoundException(placeId);
         }
 
-        List<UUID> traitsToDelete = batchDeleteTraitsInPlace.traitIds();
-        Map<UUID, PlaceTrait> placeTraitMap = placeTraitRepository.findAllByPlaceId(placeId).stream()
+        List<UUID> traitIdsToDelete = request.traitIds();
+
+        Map<UUID, PlaceTrait> placeTraitsMap = placeTraitRepository.findAllByPlaceId(placeId)
+                .stream()
                 .collect(Collectors.toMap(pt -> pt.getTrait().getId(), pt -> pt));
 
-        Set<UUID> existingTraitIdsForPlace = placeTraitMap.keySet();
-        List<UUID> invalidTraits = traitsToDelete.stream()
-                .filter(t -> !existingTraitIdsForPlace.contains(t))
+        List<UUID> invalidIds = traitIdsToDelete.stream()
+                .filter(id -> !placeTraitsMap.containsKey(id))
                 .toList();
-        if (!invalidTraits.isEmpty()) {
-            throw new TraitsNotFoundException(convertTraitIdsToString(invalidTraits));
+
+        if (!invalidIds.isEmpty()) {
+            throw new TraitsNotFoundException(convertTraitIdsToString(invalidIds));
         }
 
-        List<PlaceTrait> toDelete = traitsToDelete.stream()
-                .map(placeTraitMap::get)
-                .toList();
+        List<PlaceTrait> entitiesToDelete =
+                traitIdsToDelete.stream().map(placeTraitsMap::get).toList();
 
-        placeTraitRepository.deleteAll(toDelete);
+        placeTraitRepository.deleteAll(entitiesToDelete);
 
-        return String.format(PlaceTraitResponseMessages.PLACE_TRAIT_BATCH_DELETE_MESSAGE, toDelete.size(), placeId);
+        return String.format(
+                PlaceTraitResponseMessages.PLACE_TRAIT_BATCH_DELETE_MESSAGE,
+                entitiesToDelete.size(),
+                placeId
+        );
     }
-
 
     /**
-     * Converts a list of {@link UUID} of {@link Trait}s into a single {@link String}.
-     *
-     * @param traitIds List of IDs of {@link Trait}s.
-     * @return String of IDs joined by ', '.
+     * Retrieves a {@link Place} by ID or throws exception.
      */
-    private String convertTraitIdsToString(List<UUID> traitIds) {
-        return traitIds.stream().map(UUID::toString).collect(Collectors.joining(", "));
-    }
-
     private Place getPlace(UUID placeId) {
-        return placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
+        return placeRepository.findById(placeId)
+                .orElseThrow(() -> new PlaceNotFoundException(placeId));
     }
 
+    /**
+     * Retrieves a {@link Trait} by ID or throws exception.
+     */
     private Trait getTrait(UUID traitId) {
-        return traitRepository.findById(traitId).orElseThrow(() -> new TraitNotFoundException(traitId));
+        return traitRepository.findById(traitId)
+                .orElseThrow(() -> new TraitNotFoundException(traitId));
     }
 
+    /**
+     * Retrieves a {@link PlaceTrait} based on place ID and trait ID.
+     */
     private PlaceTrait getPlaceTrait(UUID placeId, UUID traitId) {
         return placeTraitRepository.findByPlaceIdAndTraitId(placeId, traitId)
                 .orElseThrow(() -> new TraitForPlaceNotFound(placeId, traitId));
+    }
+
+    /**
+     * Validates that all provided trait IDs exist.
+     *
+     * @throws TraitsNotFoundException if any trait ID does not exist
+     */
+    private void validateTraitExistence(List<UUID> traitIds) {
+        List<UUID> existing = traitRepository.findAllById(traitIds)
+                .stream()
+                .map(Trait::getId)
+                .toList();
+
+        List<UUID> missing = traitIds.stream()
+                .filter(id -> !existing.contains(id))
+                .toList();
+
+        if (!missing.isEmpty()) {
+            throw new TraitsNotFoundException(convertTraitIdsToString(missing));
+        }
+    }
+
+    /**
+     * Converts a list of UUIDs into a comma-separated string.
+     */
+    private String convertTraitIdsToString(List<UUID> traitIds) {
+        return String.join(", ", traitIds.stream().map(UUID::toString).toList());
     }
 }
