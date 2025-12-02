@@ -291,6 +291,71 @@
         </insert>
     </changeSet>
 
+    <changeSet id="populate-wishlist-place-table" author="ristovljupcho">
+        <insert tableName="wishlist_place">
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174001"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+            <column name="date_added" value="2025-08-27 10:15:00"/>
+        </insert>
+
+        <insert tableName="wishlist_place">
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174001"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+            <column name="date_added" value="2025-08-27 12:40:00"/>
+        </insert>
+
+        <insert tableName="wishlist_place">
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174002"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+            <column name="date_added" value="2025-08-28 09:20:00"/>
+        </insert>
+
+        <insert tableName="wishlist_place">
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174004"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
+            <column name="date_added" value="2025-08-28 14:05:00"/>
+        </insert>
+
+        <insert tableName="wishlist_place">
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174005"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
+            <column name="date_added" value="2025-08-29 18:30:00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-visited-place-table" author="ristovljupcho">
+        <insert tableName="visited_place">
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174001"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+            <column name="date_visited" value="2025-08-23 14:00:00"/>
+            <column name="note" value="Weekend coffee visit"/>
+        </insert>
+        <insert tableName="visited_place">
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174002"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
+            <column name="date_visited" value="2025-08-23 20:00:00"/>
+            <column name="note" value="Visited during beer night"/>
+        </insert>
+        <insert tableName="visited_place">
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174003"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+            <column name="date_visited" value="2025-08-24 18:30:00"/>
+            <column name="note" value="Checked the venue for events"/>
+        </insert>
+        <insert tableName="visited_place">
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174004"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
+            <column name="date_visited" value="2025-08-25 23:00:00"/>
+            <column name="note" value="DJ night visit"/>
+        </insert>
+        <insert tableName="visited_place">
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174005"/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
+            <column name="date_visited" value="2025-08-26 19:45:00"/>
+            <column name="note" value="Dinner with friends"/>
+        </insert>
+    </changeSet>
+
     <changeSet id="populate-review-table" author="ristovljupcho">
         <insert tableName="review">
             <column name="id" value="523e4567-e89b-12d3-a456-426614174001"/>
