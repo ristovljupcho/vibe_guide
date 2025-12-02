@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public record PlaceTraitRequestDTO(
         @NotNull
+        UUID placeId,
+        @NotNull
         UUID traitId,
         @NotBlank
         String additionalInformation,

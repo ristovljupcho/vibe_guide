@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface PlaceTraitRepository extends JpaRepository<PlaceTrait, PlaceTraitId> {
+public interface PlaceTraitRepository extends JpaRepository<PlaceTrait, UUID> {
 
     @Query("SELECT pt.trait " +
             "FROM PlaceTrait AS pt " +

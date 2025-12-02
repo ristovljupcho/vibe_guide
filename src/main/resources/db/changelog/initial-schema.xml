@@ -48,34 +48,59 @@
                 <tableExists tableName="place_trait"/>
             </not>
         </preConditions>
+
         <createTable tableName="place_trait">
-            <column name="place_id" type="uuid"/>
-            <column name="trait_id" type="uuid"/>
-            <column name="like_counter" type="INT"/>
-            <column name="priority" type="BOOL"/>
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="place_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="trait_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="like_counter" type="INT" defaultValueNumeric="0"/>
+            <column name="priority" type="BOOL" defaultValueBoolean="false"/>
             <column name="additional_information" type="VARCHAR(100)"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="place_trait"
-                                 baseColumnNames="place_id"
-                                 referencedTableName="place"
-                                 referencedColumnNames="id"
-                                 onUpdate="CASCADE"
-                                 onDelete="CASCADE"
-                                 constraintName="fk_place"/>
+        <addForeignKeyConstraint
+                baseTableName="place_trait"
+                baseColumnNames="place_id"
+                referencedTableName="place"
+                referencedColumnNames="id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                constraintName="fk_place_trait_place"/>
 
-        <addForeignKeyConstraint baseTableName="place_trait"
-                                 baseColumnNames="trait_id"
-                                 referencedTableName="trait"
-                                 referencedColumnNames="id"
-                                 onUpdate="CASCADE"
-                                 onDelete="CASCADE"
-                                 constraintName="fk_trait"/>
+        <addForeignKeyConstraint
+                baseTableName="place_trait"
+                baseColumnNames="trait_id"
+                referencedTableName="trait"
+                referencedColumnNames="id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                constraintName="fk_place_trait_trait"/>
 
-        <addPrimaryKey
+        <addUniqueConstraint
                 tableName="place_trait"
                 columnNames="place_id, trait_id"
-                constraintName="pk_place_trait"/>
+                constraintName="uk_place_trait_unique_pair"/>
+
+        <createIndex
+                indexName="idx_place_trait_place_id"
+                tableName="place_trait">
+            <column name="place_id"/>
+        </createIndex>
+
+        <createIndex
+                indexName="idx_place_trait_trait_id"
+                tableName="place_trait">
+            <column name="trait_id"/>
+        </createIndex>
     </changeSet>
 
     <changeSet id="create-offer" author="negrioska">
