@@ -124,122 +124,84 @@
 
     <changeSet id="populate-place-trait-table" author="ristovljupcho">
         <insert tableName="place_trait">
+            <column name="id" value="a23e4567-e89b-12d3-a456-426614174001"/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
             <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174001"/>
             <column name="like_counter" value="10"/>
-            <column name="priority" value="true"/>
+            <column name="priority" value="FAVOURITE"/>
             <column name="additional_information" value="Specialty coffee"/>
         </insert>
         <insert tableName="place_trait">
+            <column name="id" value="a23e4567-e89b-12d3-a456-426614174002"/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
             <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174002"/>
             <column name="like_counter" value="10"/>
-            <column name="priority" value="true"/>
+            <column name="priority" value="DEFAULT"/>
             <column name="additional_information" value="Craft Beer"/>
         </insert>
         <insert tableName="place_trait">
+            <column name="id" value="a23e4567-e89b-12d3-a456-426614174003"/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
             <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174003"/>
             <column name="like_counter" value="10"/>
-            <column name="priority" value="true"/>
+            <column name="priority" value="DEFAULT"/>
             <column name="additional_information" value="Summer Cocktails"/>
         </insert>
         <insert tableName="place_trait">
+            <column name="id" value="a23e4567-e89b-12d3-a456-426614174004"/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
             <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174000"/>
             <column name="like_counter" value="10"/>
-            <column name="priority" value="true"/>
+            <column name="priority" value="DEFAULT"/>
             <column name="additional_information" value="90s House Hits"/>
         </insert>
         <insert tableName="place_trait">
+            <column name="id" value="a23e4567-e89b-12d3-a456-426614174005"/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
             <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174002"/>
             <column name="like_counter" value="15"/>
-            <column name="priority" value="false"/>
+            <column name="priority" value="DEFAULT"/>
             <column name="additional_information" value="Broad Choice of Craft Beer"/>
         </insert>
         <insert tableName="place_trait">
+            <column name="id" value="a23e4567-e89b-12d3-a456-426614174006"/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
             <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174003"/>
             <column name="like_counter" value="20"/>
-            <column name="priority" value="true"/>
+            <column name="priority" value="PAID_PROMOTION"/>
             <column name="additional_information" value="Signature cocktails"/>
         </insert>
         <insert tableName="place_trait">
+            <column name="id" value="a23e4567-e89b-12d3-a456-426614174007"/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
             <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174000"/>
             <column name="like_counter" value="25"/>
-            <column name="priority" value="true"/>
+            <column name="priority" value="PAID_PROMOTION"/>
             <column name="additional_information" value="Weekly DJ sets"/>
         </insert>
         <insert tableName="place_trait">
+            <column name="id" value="a23e4567-e89b-12d3-a456-426614174008"/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
             <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174004"/>
             <column name="like_counter" value="12"/>
-            <column name="priority" value="false"/>
+            <column name="priority" value="PAID_PROMOTION"/>
             <column name="additional_information" value="Wood-fired pizza"/>
         </insert>
         <insert tableName="place_trait">
+            <column name="id" value="a23e4567-e89b-12d3-a456-426614174009"/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
             <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174005"/>
             <column name="like_counter" value="12"/>
-            <column name="priority" value="false"/>
+            <column name="priority" value="PAID_PROMOTION"/>
             <column name="additional_information" value="Smash burger"/>
         </insert>
         <insert tableName="place_trait">
+            <column name="id" value="a23e4567-e89b-12d3-a456-426614174010"/>
             <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
             <column name="trait_id" value="123e4567-e89b-12d3-a456-426614174006"/>
             <column name="like_counter" value="12"/>
-            <column name="priority" value="false"/>
+            <column name="priority" value="TRENDING"/>
             <column name="additional_information" value="Italian pasta"/>
-        </insert>
-    </changeSet>
-
-    <changeSet id="populate-offer-table" author="ristovljupcho">
-        <insert tableName="offer">
-            <column name="id" value="323e4567-e89b-12d3-a456-426614174001"/>
-            <column name="name" value="Coffee Deal"/>
-            <column name="date_created" value="2025-08-22 10:00:00"/>
-            <column name="start_date" value="2025-08-22 10:00:00"/>
-            <column name="end_date" value="2025-08-22 23:59:59"/>
-            <column name="description" value="Buy one coffee, get one free."/>
-            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
-        </insert>
-        <insert tableName="offer">
-            <column name="id" value="323e4567-e89b-12d3-a456-426614174002"/>
-            <column name="name" value="Burger Special"/>
-            <column name="date_created" value="2025-08-22 11:00:00"/>
-            <column name="start_date" value="2025-08-22 11:00:00"/>
-            <column name="end_date" value="2025-08-22 23:59:59"/>
-            <column name="description" value="20% off all burgers."/>
-            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
-        </insert>
-        <insert tableName="offer">
-            <column name="id" value="323e4567-e89b-12d3-a456-426614174003"/>
-            <column name="name" value="Cocktail Night"/>
-            <column name="date_created" value="2025-08-22 12:00:00"/>
-            <column name="start_date" value="2025-08-22 12:00:00"/>
-            <column name="end_date" value="2025-08-22 23:59:59"/>
-            <column name="description" value="Happy hour cocktails."/>
-            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
-        </insert>
-        <insert tableName="offer">
-            <column name="id" value="323e4567-e89b-12d3-a456-426614174004"/>
-            <column name="name" value="Dance Party"/>
-            <column name="date_created" value="2025-08-22 13:00:00"/>
-            <column name="start_date" value="2025-08-22 13:00:00"/>
-            <column name="end_date" value="2025-08-22 23:59:59"/>
-            <column name="description" value="Free entry before 10 PM."/>
-            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
-        </insert>
-        <insert tableName="offer">
-            <column name="id" value="323e4567-e89b-12d3-a456-426614174005"/>
-            <column name="name" value="Pizza Deal"/>
-            <column name="date_created" value="2025-08-22 14:00:00"/>
-            <column name="start_date" value="2025-08-22 14:00:00"/>
-            <column name="end_date" value="2025-08-22 23:59:59"/>
-            <column name="description" value="Free dessert with pizza."/>
-            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
         </insert>
     </changeSet>
 
@@ -288,6 +250,87 @@
             <column name="role" value="USER"/>
             <column name="password" value="hashed_password5"/>
             <column name="created_at" value="2025-08-22 09:00:00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-trait-like-table" author="ristovljupcho">
+        <insert tableName="trait_like">
+            <column name="id" value="b23e4567-e89b-12d3-a456-426614174001"/>
+            <column name="place_trait_id" value="a23e4567-e89b-12d3-a456-426614174001"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174001"/>
+            <column name="created_at" value="2025-08-27 12:00:00"/>
+        </insert>
+        <insert tableName="trait_like">
+            <column name="id" value="b23e4567-e89b-12d3-a456-426614174002"/>
+            <column name="place_trait_id" value="a23e4567-e89b-12d3-a456-426614174002"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174001"/>
+            <column name="created_at" value="2025-08-27 12:05:00"/>
+        </insert>
+        <insert tableName="trait_like">
+            <column name="id" value="b23e4567-e89b-12d3-a456-426614174003"/>
+            <column name="place_trait_id" value="a23e4567-e89b-12d3-a456-426614174006"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174002"/>
+            <column name="created_at" value="2025-08-28 15:00:00"/>
+        </insert>
+        <insert tableName="trait_like">
+            <column name="id" value="b23e4567-e89b-12d3-a456-426614174004"/>
+            <column name="place_trait_id" value="a23e4567-e89b-12d3-a456-426614174007"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174004"/>
+            <column name="created_at" value="2025-08-29 19:10:00"/>
+        </insert>
+        <insert tableName="trait_like">
+            <column name="id" value="b23e4567-e89b-12d3-a456-426614174005"/>
+            <column name="place_trait_id" value="a23e4567-e89b-12d3-a456-426614174008"/>
+            <column name="user_id" value="423e4567-e89b-12d3-a456-426614174005"/>
+            <column name="created_at" value="2025-08-30 13:40:00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="populate-offer-table" author="ristovljupcho">
+        <insert tableName="offer">
+            <column name="id" value="323e4567-e89b-12d3-a456-426614174001"/>
+            <column name="name" value="Coffee Deal"/>
+            <column name="date_created" value="2025-08-22 10:00:00"/>
+            <column name="start_date" value="2025-08-22 10:00:00"/>
+            <column name="end_date" value="2025-08-22 23:59:59"/>
+            <column name="description" value="Buy one coffee, get one free."/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174001"/>
+        </insert>
+        <insert tableName="offer">
+            <column name="id" value="323e4567-e89b-12d3-a456-426614174002"/>
+            <column name="name" value="Burger Special"/>
+            <column name="date_created" value="2025-08-22 11:00:00"/>
+            <column name="start_date" value="2025-08-22 11:00:00"/>
+            <column name="end_date" value="2025-08-22 23:59:59"/>
+            <column name="description" value="20% off all burgers."/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174002"/>
+        </insert>
+        <insert tableName="offer">
+            <column name="id" value="323e4567-e89b-12d3-a456-426614174003"/>
+            <column name="name" value="Cocktail Night"/>
+            <column name="date_created" value="2025-08-22 12:00:00"/>
+            <column name="start_date" value="2025-08-22 12:00:00"/>
+            <column name="end_date" value="2025-08-22 23:59:59"/>
+            <column name="description" value="Happy hour cocktails."/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174003"/>
+        </insert>
+        <insert tableName="offer">
+            <column name="id" value="323e4567-e89b-12d3-a456-426614174004"/>
+            <column name="name" value="Dance Party"/>
+            <column name="date_created" value="2025-08-22 13:00:00"/>
+            <column name="start_date" value="2025-08-22 13:00:00"/>
+            <column name="end_date" value="2025-08-22 23:59:59"/>
+            <column name="description" value="Free entry before 10 PM."/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174004"/>
+        </insert>
+        <insert tableName="offer">
+            <column name="id" value="323e4567-e89b-12d3-a456-426614174005"/>
+            <column name="name" value="Pizza Deal"/>
+            <column name="date_created" value="2025-08-22 14:00:00"/>
+            <column name="start_date" value="2025-08-22 14:00:00"/>
+            <column name="end_date" value="2025-08-22 23:59:59"/>
+            <column name="description" value="Free dessert with pizza."/>
+            <column name="place_id" value="223e4567-e89b-12d3-a456-426614174005"/>
         </insert>
     </changeSet>
 
