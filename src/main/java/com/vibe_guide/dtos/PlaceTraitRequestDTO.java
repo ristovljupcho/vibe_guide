@@ -1,5 +1,6 @@
 package com.vibe_guide.dtos;
 
+import com.vibe_guide.enums.TraitPriority;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,6 +14,6 @@ public record PlaceTraitRequestDTO(
         @NotBlank
         String additionalInformation,
         @NotNull
-        boolean priority
+        TraitPriority priority
 ) {
 }
