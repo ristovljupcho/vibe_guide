@@ -63,7 +63,7 @@
             </column>
 
             <column name="like_counter" type="INT" defaultValueNumeric="0"/>
-            <column name="priority" type="BOOL" defaultValueBoolean="false"/>
+            <column name="priority" type="VARCHAR(30)" defaultValue="DEFAULT"/>
             <column name="additional_information" type="VARCHAR(100)"/>
         </createTable>
 
@@ -149,6 +149,63 @@
             <column name="created_at" type="TIMESTAMP NOT NULL"/>
             <column name="updated_at" type="TIMESTAMP"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="create-trait-like-table" author="ristovljupcho">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="trait_like"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="trait_like">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="place_trait_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="trait_like"
+                baseColumnNames="place_trait_id"
+                referencedTableName="place_trait"
+                referencedColumnNames="id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                constraintName="fk_trait_like_place_trait"/>
+
+        <addForeignKeyConstraint
+                baseTableName="trait_like"
+                baseColumnNames="user_id"
+                referencedTableName="user_table"
+                referencedColumnNames="id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                constraintName="fk_trait_like_user"/>
+
+        <addUniqueConstraint
+                tableName="trait_like"
+                columnNames="place_trait_id, user_id"
+                constraintName="uk_trait_like_unique_user_like"/>
+
+        <createIndex tableName="trait_like" indexName="idx_trait_like_place_trait_id">
+            <column name="place_trait_id"/>
+        </createIndex>
+
+        <createIndex tableName="trait_like" indexName="idx_trait_like_user_id">
+            <column name="user_id"/>
+        </createIndex>
     </changeSet>
 
     <changeSet id="create-visited-place-table" author="ristovljupcho">
