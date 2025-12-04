@@ -523,7 +523,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="create-trait-likes-summary-view" author="ristovljupcho">
+    <changeSet id="create-trait-likes-summary-view" runOnChange="true" author="ristovljupcho">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="trait_likes_summary"/>
@@ -541,7 +541,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="create-place-top-traits-view" author="ristovljupcho">
+    <changeSet id="create-place-top-traits-view" runOnChange="true" author="ristovljupcho">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="place_top_traits"/>
@@ -561,7 +561,17 @@
                     t.name AS trait_name,
                     ROW_NUMBER() OVER (
                         PARTITION BY p.id
-                        ORDER BY pt.priority DESC, pt.like_counter DESC, t.name ASC
+                        ORDER BY
+                            CASE pt.priority
+                                WHEN 'PAID_PROMOTION' THEN 100
+                                WHEN 'FAVOURITE' THEN 80
+                                WHEN 'TRENDING' THEN 60
+                                WHEN 'DEFAULT' THEN 20
+                                WHEN 'LOW' THEN 0
+                                ELSE 0
+                            END DESC,
+                            pt.like_counter DESC,
+                            t.name ASC
                     ) AS rn
                 FROM place p
                 LEFT JOIN place_trait pt ON pt.place_id = p.id
@@ -578,5 +588,10 @@
             WHERE rn &lt;= 5
             GROUP BY id, name, description, rating, primary_type, price_level;
         </sql>
+    </changeSet>
+
+    <changeSet id="refresh-all-views" author="system" runAlways="true">
+        <sql>REFRESH MATERIALIZED VIEW trait_likes_summary;</sql>
+        <sql>REFRESH MATERIALIZED VIEW place_top_traits;</sql>
     </changeSet>
 </databaseChangeLog>
