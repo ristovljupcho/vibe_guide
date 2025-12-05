@@ -24,28 +24,28 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/places/{placeId}")
+@RequestMapping("/places")
 @Validated
 public class PlaceTraitController {
 
     private final PlaceTraitQueryService placeTraitQueryService;
     private final PlaceTraitManagementService placeTraitManagementService;
 
-    @GetMapping("/traits/carousel")
+    @GetMapping("/{placeId}/traits/carousel")
     public ResponseEntity<List<TraitCarouselResponseDTO>> getTraitsForCarousel(@PathVariable UUID placeId) {
         List<TraitCarouselResponseDTO> response = placeTraitQueryService.getTraitsForDisplayInPlaceCarousel(placeId);
 
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/top-traits")
+    @GetMapping("/{placeId}/top-traits")
     public ResponseEntity<List<TraitResponseDTO>> getTopTraitsForPlace(@PathVariable UUID placeId) {
         List<TraitResponseDTO> response = placeTraitQueryService.getTopTraitsForPlace(placeId);
 
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/missing-traits")
+    @GetMapping("/{placeId}/missing-traits")
     public ResponseEntity<List<TraitResponseDTO>> getMissingTraitsForPlace(@PathVariable UUID placeId) {
         List<TraitResponseDTO> response = placeTraitQueryService.getMissingTraitsForPlace(placeId);
 
@@ -53,40 +53,36 @@ public class PlaceTraitController {
     }
 
     @PostMapping("/insert-trait")
-    public ResponseEntity<String> insertTraitForPlace(@PathVariable UUID placeId,
-                                                      @RequestBody @Validated PlaceTraitRequestDTO dto) {
-        String response = placeTraitManagementService.insertSingleTraitInPlace(placeId, dto);
+    public ResponseEntity<String> insertTraitForPlace(@RequestBody @Validated PlaceTraitRequestDTO dto) {
+        String response = placeTraitManagementService.insertSingleTraitInPlace(dto);
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/batch-insert-traits")
-    public ResponseEntity<String> batchInsertTraitForPlace(@PathVariable UUID placeId,
-                                                           @RequestBody @Validated BatchInsertTraitsInPlace dto) {
-        String response = placeTraitManagementService.batchInsertTraitsInPlace(placeId, dto);
+    public ResponseEntity<String> batchInsertTraitForPlace(@RequestBody @Validated BatchInsertTraitsInPlace dto) {
+        String response = placeTraitManagementService.batchInsertTraitsInPlace(dto);
 
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/traits/update")
-    public ResponseEntity<String> updateTraitForPlace(@PathVariable UUID placeId,
-                                                     @RequestBody @Validated PlaceTraitRequestDTO dto) {
-        String response = placeTraitManagementService.updateTraitForPlace(placeId, dto);
+    public ResponseEntity<String> updateTraitForPlace(@RequestBody @Validated PlaceTraitRequestDTO dto) {
+        String response = placeTraitManagementService.updateTraitForPlace(dto);
 
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/traits/delete/{traitId}")
-    public ResponseEntity<String> deleteTraitForPlace(@PathVariable UUID placeId, @PathVariable UUID traitId) {
-        String response = placeTraitManagementService.deleteSingleTraitInPlace(placeId, traitId);
+    @DeleteMapping("/traits/delete/{placeTraitId}")
+    public ResponseEntity<String> deleteTraitForPlace(@PathVariable UUID placeTraitId) {
+        String response = placeTraitManagementService.deleteSingleTraitInPlace(placeTraitId);
 
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/batch-delete-traits")
-    public ResponseEntity<String> deleteTraitForPlace(@PathVariable UUID placeId,
-                                                      @RequestBody @Validated BatchDeleteTraitsInPlace dto) {
-        String response = placeTraitManagementService.batchDeleteTraitsInPlace(placeId, dto);
+    public ResponseEntity<String> deleteTraitForPlace(@RequestBody @Validated BatchDeleteTraitsInPlace dto) {
+        String response = placeTraitManagementService.batchDeleteTraitsInPlace(dto);
 
         return ResponseEntity.ok(response);
     }

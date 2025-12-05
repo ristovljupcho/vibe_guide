@@ -48,34 +48,59 @@
                 <tableExists tableName="place_trait"/>
             </not>
         </preConditions>
+
         <createTable tableName="place_trait">
-            <column name="place_id" type="uuid"/>
-            <column name="trait_id" type="uuid"/>
-            <column name="like_counter" type="INT"/>
-            <column name="priority" type="BOOL"/>
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="place_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="trait_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="like_counter" type="INT" defaultValueNumeric="0"/>
+            <column name="priority" type="VARCHAR(30)" defaultValue="DEFAULT"/>
             <column name="additional_information" type="VARCHAR(100)"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="place_trait"
-                                 baseColumnNames="place_id"
-                                 referencedTableName="place"
-                                 referencedColumnNames="id"
-                                 onUpdate="CASCADE"
-                                 onDelete="CASCADE"
-                                 constraintName="fk_place"/>
+        <addForeignKeyConstraint
+                baseTableName="place_trait"
+                baseColumnNames="place_id"
+                referencedTableName="place"
+                referencedColumnNames="id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                constraintName="fk_place_trait_place"/>
 
-        <addForeignKeyConstraint baseTableName="place_trait"
-                                 baseColumnNames="trait_id"
-                                 referencedTableName="trait"
-                                 referencedColumnNames="id"
-                                 onUpdate="CASCADE"
-                                 onDelete="CASCADE"
-                                 constraintName="fk_trait"/>
+        <addForeignKeyConstraint
+                baseTableName="place_trait"
+                baseColumnNames="trait_id"
+                referencedTableName="trait"
+                referencedColumnNames="id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                constraintName="fk_place_trait_trait"/>
 
-        <addPrimaryKey
+        <addUniqueConstraint
                 tableName="place_trait"
                 columnNames="place_id, trait_id"
-                constraintName="pk_place_trait"/>
+                constraintName="uk_place_trait_unique_pair"/>
+
+        <createIndex
+                indexName="idx_place_trait_place_id"
+                tableName="place_trait">
+            <column name="place_id"/>
+        </createIndex>
+
+        <createIndex
+                indexName="idx_place_trait_trait_id"
+                tableName="place_trait">
+            <column name="trait_id"/>
+        </createIndex>
     </changeSet>
 
     <changeSet id="create-offer" author="negrioska">
@@ -124,6 +149,63 @@
             <column name="created_at" type="TIMESTAMP NOT NULL"/>
             <column name="updated_at" type="TIMESTAMP"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="create-trait-like-table" author="ristovljupcho">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="trait_like"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="trait_like">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="place_trait_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="trait_like"
+                baseColumnNames="place_trait_id"
+                referencedTableName="place_trait"
+                referencedColumnNames="id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                constraintName="fk_trait_like_place_trait"/>
+
+        <addForeignKeyConstraint
+                baseTableName="trait_like"
+                baseColumnNames="user_id"
+                referencedTableName="user_table"
+                referencedColumnNames="id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                constraintName="fk_trait_like_user"/>
+
+        <addUniqueConstraint
+                tableName="trait_like"
+                columnNames="place_trait_id, user_id"
+                constraintName="uk_trait_like_unique_user_like"/>
+
+        <createIndex tableName="trait_like" indexName="idx_trait_like_place_trait_id">
+            <column name="place_trait_id"/>
+        </createIndex>
+
+        <createIndex tableName="trait_like" indexName="idx_trait_like_user_id">
+            <column name="user_id"/>
+        </createIndex>
     </changeSet>
 
     <changeSet id="create-visited-place-table" author="ristovljupcho">
@@ -441,7 +523,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="create-trait-likes-summary-view" author="ristovljupcho">
+    <changeSet id="create-trait-likes-summary-view" runOnChange="true" author="ristovljupcho">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="trait_likes_summary"/>
@@ -459,7 +541,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="create-place-top-traits-view" author="ristovljupcho">
+    <changeSet id="create-place-top-traits-view" runOnChange="true" author="ristovljupcho">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="place_top_traits"/>
@@ -479,7 +561,17 @@
                     t.name AS trait_name,
                     ROW_NUMBER() OVER (
                         PARTITION BY p.id
-                        ORDER BY pt.priority DESC, pt.like_counter DESC, t.name ASC
+                        ORDER BY
+                            CASE pt.priority
+                                WHEN 'PAID_PROMOTION' THEN 100
+                                WHEN 'FAVOURITE' THEN 80
+                                WHEN 'TRENDING' THEN 60
+                                WHEN 'DEFAULT' THEN 20
+                                WHEN 'LOW' THEN 0
+                                ELSE 0
+                            END DESC,
+                            pt.like_counter DESC,
+                            t.name ASC
                     ) AS rn
                 FROM place p
                 LEFT JOIN place_trait pt ON pt.place_id = p.id
@@ -496,5 +588,10 @@
             WHERE rn &lt;= 5
             GROUP BY id, name, description, rating, primary_type, price_level;
         </sql>
+    </changeSet>
+
+    <changeSet id="refresh-all-views" author="system" runAlways="true">
+        <sql>REFRESH MATERIALIZED VIEW trait_likes_summary;</sql>
+        <sql>REFRESH MATERIALIZED VIEW place_top_traits;</sql>
     </changeSet>
 </databaseChangeLog>

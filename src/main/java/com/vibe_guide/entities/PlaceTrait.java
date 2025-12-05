@@ -1,9 +1,13 @@
 package com.vibe_guide.entities;
 
-import com.vibe_guide.entities.composite_keys.PlaceTraitId;
+import com.vibe_guide.enums.TraitPriority;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -13,44 +17,51 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Getter
 @Setter
 @Entity
-@IdClass(PlaceTraitId.class)
+@ToString
 public class PlaceTrait {
     @Id
-    @ManyToOne
-    @JoinColumn(name = "place_id")
-    @ToString.Exclude
-    private Place place;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "trait_id")
-    @ToString.Exclude
-    private Trait trait;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String additionalInformation;
 
-    private Integer likeCounter = 0;
+    private int likeCounter = 0;
 
-    private Boolean priority = false;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TraitPriority priority = TraitPriority.DEFAULT;
+
+    //todo: Maybe improvement in code and db design
+    // Add a boolean named likable distinguish traits that should be liked vs traits that dont need rating like parking etc.
+    // This will help design on front end by not displaying all possible traits for a place.
+
+    @ManyToOne
+    @JoinColumn(name = "place_id", nullable = false)
+    @ToString.Exclude
+    private Place place;
+
+    @ManyToOne
+    @JoinColumn(name = "trait_id", nullable = false)
+    @ToString.Exclude
+    private Trait trait;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PlaceTrait that = (PlaceTrait) o;
-        return Objects.equals(place, that.place) &&
-                Objects.equals(trait, that.trait);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(place, trait);
+        return Objects.hash(id);
     }
 }
