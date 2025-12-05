@@ -2,7 +2,6 @@ package com.vibe_guide.repositories;
 
 import com.vibe_guide.entities.PlaceTrait;
 import com.vibe_guide.entities.Trait;
-import com.vibe_guide.entities.composite_keys.PlaceTraitId;
 import com.vibe_guide.entities.views.TraitLikesSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -44,4 +43,6 @@ public interface PlaceTraitRepository extends JpaRepository<PlaceTrait, UUID> {
             "LEFT JOIN PlaceTrait pt ON t.id = pt.trait.id AND pt.place.id = :placeId " +
             "WHERE pt.trait.id IS NULL")
     List<Trait> getMissingTraitsForPlace(UUID placeId);
+
+    List<PlaceTrait> findAllByPlaceIdAndTraitIdIn(UUID placeId, List<UUID> traitIds);
 }
