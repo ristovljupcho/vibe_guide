@@ -1,7 +1,10 @@
 package com.vibe_guide.entities;
 
 import com.vibe_guide.enums.TraitPriority;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,6 +34,8 @@ public class PlaceTrait {
 
     private int likeCounter = 0;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TraitPriority priority = TraitPriority.DEFAULT;
 
     //todo: Maybe improvement in code and db design
