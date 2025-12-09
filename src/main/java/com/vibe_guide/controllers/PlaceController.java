@@ -9,6 +9,7 @@ import com.vibe_guide.services.PlaceManagementService;
 import com.vibe_guide.services.PlaceQueryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +49,13 @@ public class PlaceController {
         PlaceResponseDTO response = placeQueryService.getPlaceById(placeId);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping
+    ResponseEntity<PlaceResponseDTO> insertPlace(@RequestBody @Valid PlaceRequestDTO dto) {
+        PlaceResponseDTO response = placeManagementService.insertPlace(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/update")

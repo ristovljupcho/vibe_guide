@@ -1,10 +1,12 @@
 package com.vibe_guide.services.impl;
 
+import com.vibe_guide.converters.PlaceConverter;
 import com.vibe_guide.dtos.PlaceRequestDTO;
 import com.vibe_guide.dtos.PlaceResponseDTO;
 import com.vibe_guide.entities.Place;
 import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
+import com.vibe_guide.exceptions.PlaceAlreadyExistsException;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.repositories.PlaceRepository;
 import com.vibe_guide.services.PlaceManagementService;
@@ -18,11 +20,27 @@ import java.util.UUID;
 @AllArgsConstructor
 @Service
 public class PlaceManagementServiceImpl implements PlaceManagementService {
-    private PlaceRepository placeRepository;
+    private final PlaceRepository placeRepository;
+    private final PlaceConverter placeConverter;
 
+    /**
+     * Creates a {@link Place} based on supplied DTO data.
+     *
+     * @param placeRequestDTO DTO carrying place attributes.
+     * @return DTO of type {@link PlaceResponseDTO} representing persisted place.
+     */
+    @Transactional
     @Override
-    public PlaceResponseDTO insertPlace() {
-        return null;
+    public PlaceResponseDTO insertPlace(PlaceRequestDTO placeRequestDTO) {
+        UUID placeId = placeRequestDTO.placeId();
+        if (placeRepository.existsById(placeId)) {
+            throw new PlaceAlreadyExistsException(placeId);
+        }
+
+        Place place = buildPlace(placeRequestDTO);
+        Place savedPlace = placeRepository.save(place);
+
+        return placeConverter.toPlaceResponseDTO(savedPlace);
     }
 
     /**
@@ -79,5 +97,21 @@ public class PlaceManagementServiceImpl implements PlaceManagementService {
 
     private Place getPlace(UUID placeId) {
         return placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
+    }
+
+    private Place buildPlace(PlaceRequestDTO placeRequestDTO) {
+        Place place = new Place();
+        place.setId(placeRequestDTO.placeId());
+        place.setName(placeRequestDTO.name());
+        place.setDescription(placeRequestDTO.description());
+        place.setMapsUri(placeRequestDTO.mapsUri());
+        place.setPhoneNumber(placeRequestDTO.phoneNumber());
+        place.setAddress(placeRequestDTO.address());
+        place.setRating(0.0);
+        place.setMenuLink(placeRequestDTO.menuLink());
+        place.setPrimaryType(placeRequestDTO.primaryType());
+        place.setPriceLevel(placeRequestDTO.priceLevel());
+
+        return place;
     }
 }

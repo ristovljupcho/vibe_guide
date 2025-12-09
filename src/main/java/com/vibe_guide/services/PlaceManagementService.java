@@ -6,8 +6,14 @@ import com.vibe_guide.dtos.PlaceResponseDTO;
 import java.util.UUID;
 
 public interface PlaceManagementService {
-    //todo: implement this method using API calls
-    PlaceResponseDTO insertPlace();
+
+    /**
+     * Creates a new {@link com.vibe_guide.entities.Place} using provided data.
+     *
+     * @param placeRequestDTO DTO containing details for the place insertion.
+     * @return DTO representing the newly created place.
+     */
+    PlaceResponseDTO insertPlace(PlaceRequestDTO placeRequestDTO);
 
     String updatePlace(PlaceRequestDTO placeRequestDTO);
 
