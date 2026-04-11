@@ -9,23 +9,8 @@ import com.vibe_guide.place.entities.PlaceTopTraits;
 import java.util.UUID;
 import org.springframework.stereotype.Component;
 
-/**
- *
- *
- * <ul>
- *   <li>This class is responsible for providing conversion methods from {@link Place} entity to
- *       Data Transfer Objects and vice versa.
- * </ul>
- */
 @Component
 public class PlaceMapper {
-
-  /**
-   * Converts a {@link Place} entity to a {@link PlaceResponseDTO} entity.
-   *
-   * @param place {@link Place} entity to convert.
-   * @return {@link PlaceResponseDTO} converted entity.
-   */
   public PlaceResponseDTO toPlaceResponseDTO(Place place) {
     String name = place.getName();
     String description = place.getDescription();
@@ -49,12 +34,6 @@ public class PlaceMapper {
         priceLevel);
   }
 
-  /**
-   * Converts a {@link PlaceTopTraits} to a {@link PlacePreviewResponseDTO} entity.
-   *
-   * @param placeTopTraits {@link PlaceTopTraits} entity to convert.
-   * @return {@link PlacePreviewResponseDTO} converted entity.
-   */
   public PlacePreviewResponseDTO toPlacePreviewResponseDTO(PlaceTopTraits placeTopTraits) {
     UUID id = placeTopTraits.getId();
     String name = placeTopTraits.getName();

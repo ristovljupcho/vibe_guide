@@ -22,20 +22,6 @@ public class TraitQueryServiceImpl implements TraitQueryService {
   private final TraitRepository traitRepository;
   private final TraitMapper traitMapper;
 
-  /**
-   * Retrieves {@link Trait} objects using pagination. Filtering is enabled using {@link TraitType}
-   * which will display {@link Trait} objects with a certain type. Sorting by name or default
-   * (UUID), in ASC or DESC order.
-   *
-   * @param traitType can be <u><i>null</i></u>, used for filtering {@link Trait} objects.
-   * @param sortBy used for sorting, default trait sort criteria is <b><i>TYPE</i></b> from enum
-   *     {@link TraitSortBy}.
-   * @param sortDirection used for sorting direction, default sort direction is <b><i>ASC</i></b>
-   *     from enum {@link SortDirection}.
-   * @param page page number.
-   * @param size size of the page to be returned.
-   * @return A {@link Page} containing {@link TraitResponseDTO} objects.
-   */
   @Override
   public Page<TraitResponseDTO> getPaginatedTraits(
       TraitType traitType, TraitSortBy sortBy, SortDirection sortDirection, int page, int size) {

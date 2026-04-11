@@ -8,23 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
-/**
- *
- *
- * <ul>
- *   <li>This class is responsible for providing conversion methods from {@link Event} entity to
- *       Data Transfer Objects and vice versa.
- * </ul>
- */
 @Component
 public class EventMapper {
-
-  /**
-   * Converts a {@link Event} entity to a {@link EventResponseDTO} entity.
-   *
-   * @param event {@link Event} entity to convert.
-   * @return {@link EventResponseDTO} converted entity.
-   */
   public EventResponseDTO toEventResponseDTO(Event event) {
     String name = event.getName();
     Place place = event.getPlace();

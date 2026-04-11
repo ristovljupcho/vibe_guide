@@ -24,15 +24,6 @@ public class EventQueryServiceImpl implements EventQueryService {
   private final PlaceRepository placeRepository;
   private final EventMapper eventMapper;
 
-  /**
-   * Retrieves {@link Event} objects using pagination. Filtering is enabled using {@link
-   * EventSpecification} which will display {@link Event} using dynamic queries.
-   *
-   * @param searchCriteria dto used for the attributes in {@link EventSpecification}
-   * @param page page number
-   * @param size page size
-   * @return A {@link Page} containing {@link EventResponseDTO} objects.
-   */
   @Override
   public Page<EventResponseDTO> getPaginatedEvents(
       EventSearchCriteriaDTO searchCriteria, int page, int size) {
@@ -59,13 +50,6 @@ public class EventQueryServiceImpl implements EventQueryService {
     return pageOfEvents.map(eventMapper::toEventResponseDTO);
   }
 
-  /**
-   * Retrieves a list of past {@link Event} objects that took place in the last month at a certain
-   * place.
-   *
-   * @param placeId uuid of the Place used for filtering
-   * @return A list of {@link EventResponseDTO} containing event details.
-   */
   @Override
   public List<EventResponseDTO> findPastEventsByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
@@ -76,11 +60,6 @@ public class EventQueryServiceImpl implements EventQueryService {
     return pastEvents.stream().map(eventMapper::toEventResponseDTO).toList();
   }
 
-  /**
-   * Retrieves a list of upcoming {@link Event} objects
-   *
-   * @return A list of {@link EventResponseDTO} containing event details.
-   */
   @Override
   public List<EventResponseDTO> findUpcomingEvents() {
     LocalDateTime now = LocalDateTime.now();
@@ -89,12 +68,6 @@ public class EventQueryServiceImpl implements EventQueryService {
     return upcomingEvents.stream().map(eventMapper::toEventResponseDTO).toList();
   }
 
-  /**
-   * Retrieves a list of upcoming {@link Event} objects that are happening in that Place
-   *
-   * @param placeId uuid of the Place used for filtering
-   * @return A list of {@link EventResponseDTO} containing event details.
-   */
   @Override
   public List<EventResponseDTO> findUpcomingEventsByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
@@ -111,12 +84,6 @@ public class EventQueryServiceImpl implements EventQueryService {
     return activeEvents.stream().map(eventMapper::toEventResponseDTO).toList();
   }
 
-  /**
-   * Retrieves a list of today {@link Event} objects that are happening in that Place
-   *
-   * @param placeId uuid of the Place used for filtering
-   * @return A list of {@link EventResponseDTO} containing event details.
-   */
   @Override
   public List<EventResponseDTO> findActiveEventsByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);

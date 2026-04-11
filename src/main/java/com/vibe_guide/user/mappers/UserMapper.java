@@ -7,22 +7,8 @@ import com.vibe_guide.user.entities.User;
 import java.util.UUID;
 import org.springframework.stereotype.Component;
 
-/**
- *
- *
- * <ul>
- *   <li>This class is responsible for providing conversion methods from {@link User} entity to Data
- *       Transfer Objects and vice versa.
- * </ul>
- */
 @Component
 public class UserMapper {
-  /**
-   * * Converts a {@link User} entity to a {@link UserPreviewResponseDTO} entity.
-   *
-   * @param user {@link User} entity to convert.
-   * @return The converted {@link UserPreviewResponseDTO} entity.
-   */
   public UserPreviewResponseDTO toUserPreviewResponseDTO(User user) {
     UUID userId = user.getId();
     String username = user.getUsername();
@@ -33,12 +19,6 @@ public class UserMapper {
     return new UserPreviewResponseDTO(userId, username, name, email, role);
   }
 
-  /**
-   * * Converts a {@link User} entity to a {@link PlaceAdminResponseDTO} entity.
-   *
-   * @param user {@link User} entity to convert.
-   * @return The converted {@link PlaceAdminResponseDTO} entity.
-   */
   public PlaceAdminResponseDTO toPlaceAdminResponseDTO(User user) {
     UUID userId = user.getId();
     String email = user.getEmail();

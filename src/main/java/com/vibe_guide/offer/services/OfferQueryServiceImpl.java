@@ -19,13 +19,6 @@ public class OfferQueryServiceImpl implements OfferQueryService {
   private final OfferMapper offerMapper;
   private final PlaceRepository placeRepository;
 
-  /**
-   * Retrieves {@link Offer} objects. Filtering is enabled using placeId and today's date, which
-   * will display {@link Offer} objects with a certain type.
-   *
-   * @param placeId uuid of the place where the offer is valid, for filtering
-   * @return A list of {@link Offer} containing {@link OfferResponseDTO} objects.
-   */
   @Override
   public List<OfferResponseDTO> getActiveOffersByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
@@ -37,12 +30,6 @@ public class OfferQueryServiceImpl implements OfferQueryService {
     return offers.stream().map(offerMapper::toOfferResponseDTO).toList();
   }
 
-  /**
-   * Retrieves {@link Offer} objects. Filtering is enabled using today's date, which will display
-   * {@link Offer} objects with a certain type.
-   *
-   * @return A list of {@link Offer} containing {@link OfferResponseDTO} objects.
-   */
   @Override
   public List<OfferResponseDTO> getAllActiveOffers() {
     LocalDateTime now = LocalDateTime.now();
@@ -52,11 +39,6 @@ public class OfferQueryServiceImpl implements OfferQueryService {
     return offers.stream().map(offerMapper::toOfferResponseDTO).toList();
   }
 
-  /**
-   * Retrieves {@link Offer} objects. Method retrieves all upcoming offers.
-   *
-   * @return A list of {@link Offer} containing {@link OfferResponseDTO} objects.
-   */
   @Override
   public List<OfferResponseDTO> getAllUpcomingOffers() {
     LocalDateTime today = LocalDateTime.now();
@@ -65,12 +47,6 @@ public class OfferQueryServiceImpl implements OfferQueryService {
     return offers.stream().map(offerMapper::toOfferResponseDTO).toList();
   }
 
-  /**
-   * Retrieves {@link Offer} objects. Method retrieves all upcoming offers for a certain place.
-   *
-   * @param placeId uuid of the place where the offer is valid, for filtering
-   * @return A list of {@link Offer} containing {@link OfferResponseDTO} objects.
-   */
   @Override
   public List<OfferResponseDTO> getUpcomingOffersByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);

@@ -23,12 +23,6 @@ public class PlaceManagementServiceImpl implements PlaceManagementService {
     return null;
   }
 
-  /**
-   * Updates a {@link Place} with data provided by DTO named {@link PlaceRequestDTO}.
-   *
-   * @param placeRequestDTO DTO of type {@link PlaceRequestDTO} containing data.
-   * @return DTO of type {@link PlaceResponseDTO}.
-   */
   @Transactional
   @Override
   public String updatePlace(PlaceRequestDTO placeRequestDTO) {
@@ -58,12 +52,6 @@ public class PlaceManagementServiceImpl implements PlaceManagementService {
     return String.format(PlaceResponseMessages.PLACE_UPDATE_MESSAGE, name);
   }
 
-  /**
-   * Deletes a {@link Place} with provided ID.
-   *
-   * @param placeId ID of the {@link Place}.
-   * @return Message of type {@link PlaceResponseMessages}.
-   */
   @Transactional
   @Override
   public String deletePlace(UUID placeId) {

@@ -25,13 +25,6 @@ public class EventManagementServiceImpl implements EventManagementService {
   private final PlaceRepository placeRepository;
   private final EventGalleryManagementService eventGalleryManagementService;
 
-  /**
-   * Inserts a new {@link Event} with provided {@link EventInsertRequestDTO}.
-   *
-   * @param eventInsertRequestDTO DTO used to insert new {@link Event} by providing: String name,
-   *     String description,LocalDateTime startDate, LocalDateTime endDate and UUID placeId
-   * @return Response message of type {@link EventResponseMessages}
-   */
   @Override
   @Transactional
   public String insertEvent(EventInsertRequestDTO eventInsertRequestDTO) {
@@ -60,14 +53,6 @@ public class EventManagementServiceImpl implements EventManagementService {
     return EventResponseMessages.EVENT_INSERT_MESSAGE;
   }
 
-  /**
-   * Updates a {@link Event} object with provided {@link EventUpdateRequestDTO}
-   *
-   * @param eventUpdateRequestDTO DTO used to update {@link Event} object by providing UUID eventId,
-   *     String name, String description,LocalDateTime startDate, LocalDateTime endDate and UUID
-   *     placeId
-   * @return Response message of type {@link EventResponseMessages}
-   */
   @Override
   @Transactional
   public String updateEvent(EventUpdateRequestDTO eventUpdateRequestDTO) {
@@ -94,12 +79,6 @@ public class EventManagementServiceImpl implements EventManagementService {
     return EventResponseMessages.EVENT_UPDATE_MESSAGE;
   }
 
-  /**
-   * Deletes a {@link Event} object with provided <b><i>UUID eventId</i></b>.
-   *
-   * @param eventId UUID of the {@link Event} object that needs to be deleted.
-   * @return Response message of type {@link EventResponseMessages}
-   */
   @Override
   @Transactional
   public String deleteEvent(UUID eventId) {

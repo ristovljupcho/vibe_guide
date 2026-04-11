@@ -20,13 +20,6 @@ public class TraitManagementServiceImpl implements TraitManagementService {
 
   private final TraitRepository traitRepository;
 
-  /**
-   * Inserts a new {@link Trait} with provided {@link TraitInsertRequestDTO}.
-   *
-   * @param traitInsertRequestDTO DTO used to insert new {@link Trait} by providing TraitType
-   *     traitType and String name.
-   * @return Response message of type {@link TraitResponseMessages}.
-   */
   @Override
   @Transactional
   public String insertTrait(TraitInsertRequestDTO traitInsertRequestDTO) {
@@ -42,13 +35,6 @@ public class TraitManagementServiceImpl implements TraitManagementService {
     return String.format(TraitResponseMessages.TRAIT_INSERT_MESSAGE, traitType, name);
   }
 
-  /**
-   * Updates a {@link Trait} object with provided {@link TraitUpdateRequestDTO}.
-   *
-   * @param traitUpdateRequestDTO DTO used to update {@link Trait} object by providing UUID traitId,
-   *     TraitType traitType and String name.
-   * @return Response message of type {@link TraitResponseMessages}.
-   */
   @Override
   @Transactional
   public String updateTrait(TraitUpdateRequestDTO traitUpdateRequestDTO) {
@@ -66,12 +52,6 @@ public class TraitManagementServiceImpl implements TraitManagementService {
     return String.format(TraitResponseMessages.TRAIT_UPDATE_MESSAGE, traitId);
   }
 
-  /**
-   * Deletes a {@link Trait} object with provided <b><i>UUID traitId</i></b>.
-   *
-   * @param traitId UUID of the {@link Trait} object that needs to be deleted.
-   * @return Response message of type {@link TraitResponseMessages}.
-   */
   @Override
   @Transactional
   public String deleteTrait(UUID traitId) {
@@ -83,13 +63,6 @@ public class TraitManagementServiceImpl implements TraitManagementService {
     return String.format(TraitResponseMessages.TRAIT_DELETE_MESSAGE, traitId);
   }
 
-  /**
-   * Checks if provided TraitType traitType and String name matches any other {@link Trait} in
-   * database.
-   *
-   * @param traitType {@link TraitType} type of {@link Trait} object.
-   * @param name Name of {@link Trait} object.
-   */
   private void checkIfTraitExistsByTraitTypeAndName(TraitType traitType, String name) {
     Optional<Trait> traitOptional = traitRepository.getTraitByTraitTypeAndName(traitType, name);
     if (traitOptional.isPresent()) throw new TraitAlreadyPresentException(traitType, name);

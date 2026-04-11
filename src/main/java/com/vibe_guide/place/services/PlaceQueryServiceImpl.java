@@ -24,12 +24,6 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
   private final PlaceTopTraitsRepository placeTopTraitsRepository;
   private final PlaceMapper placeMapper;
 
-  /**
-   * Retrieves {@link Place} with provided ID.
-   *
-   * @param placeId ID of the targeted {@link Place}.
-   * @return DTO with type {@link PlaceResponseDTO}.
-   */
   @Override
   public PlaceResponseDTO getPlaceById(UUID placeId) {
     Place place =
@@ -59,12 +53,6 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
     return places.stream().map(placeMapper::toPlacePreviewResponseDTO).toList();
   }
 
-  /**
-   * Loads places from the aggregated view, optionally filtered by trait names.
-   *
-   * @param traits optional list of trait names used for filtering
-   * @return matching place projections ready for sorting and mapping
-   */
   private List<PlaceTopTraits> loadPlaces(List<String> traits) {
     if (traits == null || traits.isEmpty()) {
       return placeTopTraitsRepository.findAll();
@@ -73,13 +61,6 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
     return placeTopTraitsRepository.findAllByTraits(traits, traits.size());
   }
 
-  /**
-   * Builds a comparator for place preview sorting while keeping direction handling consistent.
-   *
-   * @param sortBy selected sort field
-   * @param sortDirection selected sort direction
-   * @return comparator configured for the requested sort
-   */
   private Comparator<PlaceTopTraits> buildComparator(
       PlaceSortBy sortBy, SortDirection sortDirection) {
     Comparator<PlaceTopTraits> comparator =

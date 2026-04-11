@@ -25,13 +25,6 @@ public class ReviewManagementServiceImpl implements ReviewManagementService {
   private final ReviewRepository reviewRepository;
   private final PlaceRepository placeRepository;
 
-  /**
-   * Inserts a new {@link Review} with provided {@link ReviewInsertRequestDTO}
-   *
-   * @param reviewInsertRequestDTO DTO used for inserting new {@link Review} for a certain place by
-   *     existing User
-   * @return Response message of type {@link ReviewResponseMessage}
-   */
   @Transactional
   @Override
   public String insertReview(ReviewInsertRequestDTO reviewInsertRequestDTO) {
@@ -55,14 +48,6 @@ public class ReviewManagementServiceImpl implements ReviewManagementService {
     return ReviewResponseMessage.REVIEW_INSERT_MESSAGE;
   }
 
-  /**
-   * Updates an existing {@link Review} with new rating and description.
-   *
-   * @param reviewUpdateRequestDTO the DTO containing the updated review details, including the
-   *     review ID, new rating, and new description.
-   * @return a response message of type {@link ReviewResponseMessage} confirming the review update.
-   * @throws ReviewNotFoundException if no review with the specified ID is found.
-   */
   @Transactional
   @Override
   public String updateReview(ReviewUpdateRequestDTO reviewUpdateRequestDTO) {
@@ -79,12 +64,6 @@ public class ReviewManagementServiceImpl implements ReviewManagementService {
     return ReviewResponseMessage.REVIEW_UPDATE_MESSAGE;
   }
 
-  /**
-   * Deletes a {@link Review} object with provided <b><i>UUID reviewId </i></b>
-   *
-   * @param reviewId id of the {@link Review} object that needs to be deleted
-   * @return a response message of type {@link ReviewResponseMessage} confirming the deletion.
-   */
   @Transactional
   @Override
   public String deleteReview(UUID reviewId) {

@@ -28,13 +28,6 @@ public class WorkingHoursManagementServiceImpl implements WorkingHoursManagement
   private final WorkingHoursRepository workingHoursRepository;
   private final PlaceRepository placeRepository;
 
-  /**
-   * Inserts multiple {@link WorkingHours} objects for {@link Place} with provided ID.
-   *
-   * @param placeId ID of the {@link Place}.
-   * @param workingHoursRequestDTOs List of {@link WorkingHoursRequestDTO}.
-   * @return Response message of type {@link WorkingHoursResponseMessages}.
-   */
   @Transactional
   @Override
   public String insertWorkingHoursForPlace(
@@ -79,14 +72,6 @@ public class WorkingHoursManagementServiceImpl implements WorkingHoursManagement
         placeId);
   }
 
-  /**
-   * Editing {@link WorkingHours} data based on certain {@link DayOfWeek} and {@link Place}.
-   *
-   * @param placeId ID of the {@link Place}.
-   * @param workingHoursRequestDTO DTO with type {@link WorkingHoursRequestDTO} used for storing
-   *     start and end time.
-   * @return Response message of type {@link WorkingHoursResponseMessages}.
-   */
   @Transactional
   @Override
   public String updateDailyWorkingHoursForPlace(

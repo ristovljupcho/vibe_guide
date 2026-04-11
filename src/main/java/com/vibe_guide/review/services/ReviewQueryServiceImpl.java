@@ -25,19 +25,6 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
   private final ReviewRepository reviewRepository;
   private final ReviewMapper reviewMapper;
 
-  /**
-   * Retrieves {@link Review} objects using pagination. Sorting by RATING or DEFAULT (UUID), in ASC
-   * or DESC order.
-   *
-   * @param sortDirection used for sorting direction, default sort direction is <b><i>ASC</i></b>
-   *     from enum {@link SortDirection}.
-   * @param placeId The unique identifier of the place for which reviews are being retrieved.
-   * @param sortBy used for sorting, default review sort criteria is <b><i>TYPE</i></b> from enum
-   *     {@link ReviewSortBy}.
-   * @param page page number.
-   * @param size page size.
-   * @return A {@link Page} containing {@link ReviewResponseDTO} objects.
-   */
   @Override
   public Page<ReviewResponseDTO> getPaginatedReviews(
       UUID placeId, ReviewSortBy sortBy, SortDirection sortDirection, int page, int size) {
@@ -55,12 +42,6 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
     return reviewPage.map(reviewMapper::toReviewResponseDTO);
   }
 
-  /**
-   * Retrieves list of reviews for a place sorted by dateCreated order in asc order.
-   *
-   * @param placeId The unique identifier of the place for which reviews are being retrieved.
-   * @return List of {@link ReviewResponseDTO}.
-   */
   @Override
   public List<ReviewResponseDTO> getReviewsForPlace(UUID placeId) {
     List<Review> reviews = reviewRepository.findAllByPlaceIdOrderByDateCreatedAsc(placeId);
@@ -68,20 +49,6 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
     return reviews.stream().map(reviewMapper::toReviewResponseDTO).toList();
   }
 
-  /**
-   * Retrieves a paginated list of {@link ReviewResponseDTO} objects based on the specified search
-   * criteria. Supports filtering by place ID, user ID, and minimum rating. Sorting can be done by
-   * rating or UUID (default), in ascending (ASC) or descending (DESC) order.
-   *
-   * @param searchCriteria Contains filtering criteria (such as placeId, userId, and rating).
-   * @param sortBy used for sorting, default review sort criteria is <b><i>TYPE</i></b> from enum
-   *     {@link ReviewSortBy}.
-   * @param sortDirection sortDirection used for sorting direction, default sort direction is
-   *     <b><i>ASC</i></b> from enum {@link SortDirection}.
-   * @param page page number.
-   * @param size page size.
-   * @return A {@link Page} containing {@link ReviewResponseDTO} objects.
-   */
   @Override
   public Page<ReviewResponseDTO> findByReviewCriteria(
       ReviewSearchCriteriaDTO searchCriteria,
@@ -112,13 +79,6 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
         .map(reviewMapper::toReviewResponseDTO);
   }
 
-  /**
-   * Retrieves the top five reviews for a given place, sorted by rating in descending order.
-   *
-   * @param placeId The UUID of the place for which to fetch the top reviews.
-   * @return A list of up to five {@link ReviewResponseDTO} objects representing the highest-rated
-   *     reviews.
-   */
   @Override
   public List<ReviewResponseDTO> getTopFiveReviews(UUID placeId) {
     List<Review> topReviews = reviewRepository.getTopFiveReviewsByPlace(placeId);
@@ -126,17 +86,6 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
     return topReviews.stream().map(reviewMapper::toReviewResponseDTO).toList();
   }
 
-  /**
-   * Creates a {@link Pageable} object for pagination and sorting.
-   *
-   * @param sortBy sortBy used for sorting, default review sort criteria is <b><i>TYPE</i></b> from
-   *     enum {@link ReviewSortBy}.
-   * @param sortDirection sortDirection used for sorting direction, default sort direction is
-   *     <b><i>ASC</i></b> from enum {@link SortDirection}.
-   * @param page The page number (zero-based) for pagination.
-   * @param size The number of elements per page.
-   * @return A {@link Pageable} instance configured with sorting and pagination settings.
-   */
   private Pageable createPageable(
       ReviewSortBy sortBy, SortDirection sortDirection, int page, int size) {
     String sortField =

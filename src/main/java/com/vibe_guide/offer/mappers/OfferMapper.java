@@ -6,22 +6,8 @@ import com.vibe_guide.place.entities.Place;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
-/**
- *
- *
- * <ul>
- *   <li>This class is responsible for providing conversion methods from {@link Offer} entity to
- *       Data Transfer Objects and vice versa.
- * </ul>
- */
 @Component
 public class OfferMapper {
-  /**
-   * Converts a {@link Offer} entity to a {@link OfferResponseDTO} entity.
-   *
-   * @param offer {@link Offer} entity to convert.
-   * @return {@link OfferResponseDTO} converted entity.
-   */
   public OfferResponseDTO toOfferResponseDTO(Offer offer) {
     String name = offer.getName();
     Place place = offer.getPlace();

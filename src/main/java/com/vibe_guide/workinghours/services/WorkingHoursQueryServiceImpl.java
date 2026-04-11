@@ -2,7 +2,6 @@ package com.vibe_guide.workinghours.services;
 
 import com.vibe_guide.enums.DayOfWeek;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
-import com.vibe_guide.place.entities.Place;
 import com.vibe_guide.place.repositories.PlaceRepository;
 import com.vibe_guide.workinghours.dtos.WorkingHoursMissingDaysResponseDTO;
 import com.vibe_guide.workinghours.dtos.WorkingHoursResponseDTO;
@@ -26,12 +25,6 @@ public class WorkingHoursQueryServiceImpl implements WorkingHoursQueryService {
   PlaceRepository placeRepository;
   WorkingHoursMapper workingHoursMapper;
 
-  /**
-   * Retrieves all 7 tuples/weekly {@link WorkingHours} for a {@link Place} with provided ID.
-   *
-   * @param placeId ID of the targeted {@link Place}.
-   * @return List of {@link WorkingHoursResponseDTO}.
-   */
   @Override
   public List<WorkingHoursResponseDTO> getWeeklyWorkingHoursForPlace(UUID placeId) {
     checkIfPlaceExists(placeId);
@@ -41,13 +34,6 @@ public class WorkingHoursQueryServiceImpl implements WorkingHoursQueryService {
     return weeklyWorkingHours.stream().map(workingHoursMapper::toWorkingHoursResponseDTO).toList();
   }
 
-  /**
-   * Retrieves all {@link DayOfWeek} days for which {@link Place} doesn't have {@link WorkingHours}
-   * defined.
-   *
-   * @param placeId ID of the targeted {@link Place}.
-   * @return List of {@link WorkingHoursMissingDaysResponseDTO} for missing days.
-   */
   @Override
   public List<WorkingHoursMissingDaysResponseDTO> getMissingWorkingHoursDaysForPlace(UUID placeId) {
     checkIfPlaceExists(placeId);
