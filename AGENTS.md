@@ -50,3 +50,24 @@ The following directories are shared and MUST remain outside model-specific dire
    - expected responsibility
 3. New service and controller methods SHOULD align with the existing CRUD pattern used across the project.
 4. Avoid introducing custom naming or ordering patterns when a standard CRUD approach already applies.
+5. When creating new CRUD-style methods, use generic CRUD names instead of model-specific names.
+6. Prefer the following naming conventions for new service and controller methods:
+   - `insert`
+   - `update`
+   - `delete`
+   - `getById`
+   - `getAll`
+   - `getAllBy...`
+   - `getPaginated...`
+   - `getTop...`
+   - `insertAll`
+   - `deleteAll`
+   - `deleteById`
+   - `toggle` for state-switching or save/unsave style flows when CRUD naming does not fit cleanly
+7. Do NOT introduce model-prefixed method names such as:
+   - `insertCar`
+   - `updatePlace`
+   - `deleteReview`
+   - `getOfferById`
+   when the method already lives inside the corresponding model service or controller.
+8. Repository method names MAY stay more descriptive when required by Spring Data query derivation or query intent, but service and controller methods MUST keep the standard CRUD naming style.
