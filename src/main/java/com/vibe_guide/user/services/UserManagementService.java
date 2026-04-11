@@ -20,5 +20,5 @@ public interface UserManagementService {
 
   String changePassword(UserChangePasswordRequestDTO changePasswordRequestDTO);
 
-  String deleteUser(UUID userId, String password);
+  String delete(UUID userId, String password);
 }
