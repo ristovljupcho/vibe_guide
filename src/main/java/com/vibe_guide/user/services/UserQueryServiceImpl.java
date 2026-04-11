@@ -1,0 +1,70 @@
+package com.vibe_guide.user.services;
+
+import com.vibe_guide.enums.Role;
+import com.vibe_guide.enums.sorting.SortDirection;
+import com.vibe_guide.enums.sorting.UserSortBy;
+import com.vibe_guide.exceptions.UserNotFoundException;
+import com.vibe_guide.user.dtos.UserPreviewResponseDTO;
+import com.vibe_guide.user.entities.User;
+import com.vibe_guide.user.mappers.UserMapper;
+import com.vibe_guide.user.repositories.UserRepository;
+import java.util.UUID;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+@Service
+@AllArgsConstructor
+public class UserQueryServiceImpl implements UserQueryService {
+
+  private final UserRepository userRepository;
+  private final UserMapper userMapper;
+
+  @Override
+  public Page<UserPreviewResponseDTO> getPaginated(
+      Role role, UserSortBy sortBy, SortDirection sortDirection, int page, int size) {
+
+    Pageable pageable = createPageable(sortBy, sortDirection, page, size);
+
+    Page<User> userPage = userRepository.findAll(pageable);
+
+    return userPage.map(userMapper::toUserPreviewResponseDTO);
+  }
+
+  @Override
+  public UserPreviewResponseDTO getById(UUID userId) {
+    User user =
+        userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
+    return userMapper.toUserPreviewResponseDTO(user);
+  }
+
+  @Override
+  public UserPreviewResponseDTO getByUsername(String username, String sortBy, String direction) {
+    User user =
+        userRepository
+            .findByUsername(username)
+            .orElseThrow(() -> new UserNotFoundException(username));
+
+    return userMapper.toUserPreviewResponseDTO(user);
+  }
+
+  private Pageable createPageable(
+      UserSortBy sortBy, SortDirection sortDirection, int page, int size) {
+    String sortField =
+        switch (sortBy) {
+          case DEFAULT -> "id";
+          case USERNAME -> "username";
+        };
+
+    Sort sort =
+        Sort.by(
+            sortDirection == SortDirection.DESC
+                ? Sort.Order.desc(sortField)
+                : Sort.Order.asc(sortField));
+    return PageRequest.of(page, size, sort);
+  }
+}

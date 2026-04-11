@@ -1,0 +1,22 @@
+package com.vibe_guide.offer.mappers;
+
+import com.vibe_guide.offer.dtos.OfferResponseDTO;
+import com.vibe_guide.offer.entities.Offer;
+import com.vibe_guide.place.entities.Place;
+import java.time.LocalDateTime;
+import org.springframework.stereotype.Component;
+
+@Component
+public class OfferMapper {
+  public OfferResponseDTO toOfferResponseDTO(Offer offer) {
+    String name = offer.getName();
+    Place place = offer.getPlace();
+    String placeName = place.getName();
+    String description = offer.getDescription();
+    LocalDateTime startDate = offer.getStartDate();
+    LocalDateTime endDate = offer.getEndDate();
+    byte[] image = offer.getImage();
+
+    return new OfferResponseDTO(name, placeName, description, startDate, endDate, image);
+  }
+}
