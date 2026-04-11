@@ -29,46 +29,44 @@ public class OfferController {
   private final OfferManagementService offerManagementService;
 
   @GetMapping("/active")
-  ResponseEntity<List<OfferResponseDTO>> getAllActiveOffers() {
-    List<OfferResponseDTO> offers = offerQueryService.getAllActiveOffers();
+  ResponseEntity<List<OfferResponseDTO>> getActive() {
+    List<OfferResponseDTO> offers = offerQueryService.getActive();
     return ResponseEntity.ok(offers);
   }
 
   @GetMapping("/active/{placeId}")
-  public ResponseEntity<List<OfferResponseDTO>> getActiveOffersByPlaceId(
-      @PathVariable UUID placeId) {
-    List<OfferResponseDTO> offers = offerQueryService.getActiveOffersByPlaceId(placeId);
+  public ResponseEntity<List<OfferResponseDTO>> getActiveByPlaceId(@PathVariable UUID placeId) {
+    List<OfferResponseDTO> offers = offerQueryService.getActiveByPlaceId(placeId);
     return ResponseEntity.ok(offers);
   }
 
   @GetMapping("/upcoming")
-  public ResponseEntity<List<OfferResponseDTO>> getAllUpcomingOffers() {
-    List<OfferResponseDTO> offers = offerQueryService.getAllUpcomingOffers();
+  public ResponseEntity<List<OfferResponseDTO>> getUpcoming() {
+    List<OfferResponseDTO> offers = offerQueryService.getUpcoming();
     return ResponseEntity.ok(offers);
   }
 
   @GetMapping("/upcoming/{placeId}")
-  public ResponseEntity<List<OfferResponseDTO>> getUpcomingOffersByPlaceId(
-      @PathVariable UUID placeId) {
-    List<OfferResponseDTO> offers = offerQueryService.getUpcomingOffersByPlaceId(placeId);
+  public ResponseEntity<List<OfferResponseDTO>> getUpcomingByPlaceId(@PathVariable UUID placeId) {
+    List<OfferResponseDTO> offers = offerQueryService.getUpcomingByPlaceId(placeId);
     return ResponseEntity.ok(offers);
   }
 
   @PostMapping("/insert")
-  public ResponseEntity<String> insertDailyOffer(@RequestBody @Valid OfferInsertDTO dto) {
-    String response = offerManagementService.insertOffer(dto);
+  public ResponseEntity<String> insert(@RequestBody @Valid OfferInsertDTO dto) {
+    String response = offerManagementService.insert(dto);
     return ResponseEntity.ok(response);
   }
 
   @PutMapping("/update")
-  public ResponseEntity<String> updateDailyOffer(@RequestBody @Valid OfferUpdateDTO dto) {
-    String response = offerManagementService.updateDailyOffer(dto);
+  public ResponseEntity<String> update(@RequestBody @Valid OfferUpdateDTO dto) {
+    String response = offerManagementService.update(dto);
     return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/delete/{dailyOfferId}")
-  public ResponseEntity<String> deleteDailyOffer(@PathVariable UUID dailyOfferId) {
-    String msg = offerManagementService.deleteDailyOffer(dailyOfferId);
+  public ResponseEntity<String> delete(@PathVariable UUID dailyOfferId) {
+    String msg = offerManagementService.delete(dailyOfferId);
     return ResponseEntity.ok(msg);
   }
 }

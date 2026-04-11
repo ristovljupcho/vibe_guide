@@ -30,7 +30,7 @@ public interface EventRepository
 
   @EntityGraph(attributePaths = {"place", "galleries"})
   @Query("SELECT e " + "FROM Event AS e " + "WHERE e.startDate >= :now ")
-  List<Event> findUpcomingEvents(LocalDateTime now);
+  List<Event> getUpcoming(LocalDateTime now);
 
   @EntityGraph(attributePaths = {"place", "galleries"})
   @Query(
@@ -38,11 +38,11 @@ public interface EventRepository
           + "FROM Event AS e "
           + "WHERE e.place.id = :placeId "
           + "ORDER BY e.startDate DESC")
-  List<Event> findUpcomingEventsByPlaceId(UUID placeId);
+  List<Event> getUpcomingByPlaceId(UUID placeId);
 
   @EntityGraph(attributePaths = {"place", "galleries"})
   @Query("SELECT e " + "FROM Event AS e " + "WHERE e.startDate <= :now " + "AND e.endDate >= :now")
-  List<Event> findActiveEvents(LocalDateTime now);
+  List<Event> getActive(LocalDateTime now);
 
   @EntityGraph(attributePaths = {"place", "galleries"})
   @Query(
@@ -51,5 +51,5 @@ public interface EventRepository
           + "WHERE e.place.id = :placeId "
           + "AND e.startDate <= :now "
           + "AND e.endDate >= :now")
-  List<Event> findActiveEventsByPlaceId(UUID placeId, LocalDateTime now);
+  List<Event> getActiveByPlaceId(UUID placeId, LocalDateTime now);
 }

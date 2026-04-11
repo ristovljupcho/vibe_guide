@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface WorkingHoursQueryService {
-  List<WorkingHoursResponseDTO> getWeeklyWorkingHoursForPlace(UUID placeId);
+  List<WorkingHoursResponseDTO> getAllByPlaceId(UUID placeId);
 
-  List<WorkingHoursMissingDaysResponseDTO> getMissingWorkingHoursDaysForPlace(UUID placeId);
+  List<WorkingHoursMissingDaysResponseDTO> getMissingDaysByPlaceId(UUID placeId);
 }

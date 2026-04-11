@@ -22,7 +22,7 @@ public class TraitManagementServiceImpl implements TraitManagementService {
 
   @Override
   @Transactional
-  public String insertTrait(TraitInsertRequestDTO traitInsertRequestDTO) {
+  public String insert(TraitInsertRequestDTO traitInsertRequestDTO) {
     TraitType traitType = traitInsertRequestDTO.traitType();
     String name = traitInsertRequestDTO.name();
     checkIfTraitExistsByTraitTypeAndName(traitType, name);
@@ -37,7 +37,7 @@ public class TraitManagementServiceImpl implements TraitManagementService {
 
   @Override
   @Transactional
-  public String updateTrait(TraitUpdateRequestDTO traitUpdateRequestDTO) {
+  public String update(TraitUpdateRequestDTO traitUpdateRequestDTO) {
     TraitType traitType = traitUpdateRequestDTO.traitType();
     String name = traitUpdateRequestDTO.name();
     checkIfTraitExistsByTraitTypeAndName(traitType, name);
@@ -54,7 +54,7 @@ public class TraitManagementServiceImpl implements TraitManagementService {
 
   @Override
   @Transactional
-  public String deleteTrait(UUID traitId) {
+  public String delete(UUID traitId) {
     Optional<Trait> traitOptional = traitRepository.findById(traitId);
     if (traitOptional.isEmpty()) throw new TraitNotFoundException(traitId);
 

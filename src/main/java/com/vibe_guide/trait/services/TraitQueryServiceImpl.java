@@ -23,7 +23,7 @@ public class TraitQueryServiceImpl implements TraitQueryService {
   private final TraitMapper traitMapper;
 
   @Override
-  public Page<TraitResponseDTO> getPaginatedTraits(
+  public Page<TraitResponseDTO> getPaginated(
       TraitType traitType, TraitSortBy sortBy, SortDirection sortDirection, int page, int size) {
     TraitSortBy actualSortBy = (sortBy != null) ? sortBy : TraitSortBy.DEFAULT;
 
@@ -47,7 +47,7 @@ public class TraitQueryServiceImpl implements TraitQueryService {
   }
 
   @Override
-  public List<TraitCarouselResponseDTO> getAllTraits() {
+  public List<TraitCarouselResponseDTO> getAll() {
     List<Trait> traits = traitRepository.findAll();
 
     return traits.stream().map(traitMapper::toTraitCarouselResponseDTO).toList();

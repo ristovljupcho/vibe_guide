@@ -34,44 +34,42 @@ public class ReviewController {
   private final ReviewManagementService reviewManagementService;
 
   @GetMapping("/{placeId}")
-  ResponseEntity<Page<ReviewResponseDTO>> getPaginatedReviewsForPlace(
+  ResponseEntity<Page<ReviewResponseDTO>> getPaginatedByPlaceId(
       @PathVariable UUID placeId,
       @RequestParam(required = false) ReviewSortBy sortBy,
       @RequestParam(required = false) SortDirection sortDirection,
       @RequestParam Integer page,
       @RequestParam Integer size) {
     Page<ReviewResponseDTO> response =
-        reviewQueryService.getPaginatedReviews(placeId, sortBy, sortDirection, page, size);
+        reviewQueryService.getPaginatedByPlaceId(placeId, sortBy, sortDirection, page, size);
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/{placeId}/top")
-  ResponseEntity<List<ReviewResponseDTO>> getTopReviews(@PathVariable UUID placeId) {
-    List<ReviewResponseDTO> response = reviewQueryService.getTopFiveReviews(placeId);
+  ResponseEntity<List<ReviewResponseDTO>> getTopFiveByPlaceId(@PathVariable UUID placeId) {
+    List<ReviewResponseDTO> response = reviewQueryService.getTopFiveByPlaceId(placeId);
 
     return ResponseEntity.ok(response);
   }
 
   @PostMapping("/insert")
-  ResponseEntity<String> insertReview(
-      @RequestBody @Valid ReviewInsertRequestDTO reviewInsertRequestDTO) {
-    String response = reviewManagementService.insertReview(reviewInsertRequestDTO);
+  ResponseEntity<String> insert(@RequestBody @Valid ReviewInsertRequestDTO reviewInsertRequestDTO) {
+    String response = reviewManagementService.insert(reviewInsertRequestDTO);
 
     return ResponseEntity.ok(response);
   }
 
   @PutMapping("/update")
-  ResponseEntity<String> updateReview(
-      @RequestBody @Valid ReviewUpdateRequestDTO reviewUpdateRequestDTO) {
-    String response = reviewManagementService.updateReview(reviewUpdateRequestDTO);
+  ResponseEntity<String> update(@RequestBody @Valid ReviewUpdateRequestDTO reviewUpdateRequestDTO) {
+    String response = reviewManagementService.update(reviewUpdateRequestDTO);
 
     return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/{reviewId}/delete")
-  ResponseEntity<String> deleteReview(@PathVariable UUID reviewId) {
-    String response = reviewManagementService.deleteReview(reviewId);
+  ResponseEntity<String> delete(@PathVariable UUID reviewId) {
+    String response = reviewManagementService.delete(reviewId);
 
     return ResponseEntity.ok(response);
   }

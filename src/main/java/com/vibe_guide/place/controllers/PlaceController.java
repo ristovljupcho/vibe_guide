@@ -25,40 +25,40 @@ public class PlaceController {
   private final PlaceManagementService placeManagementService;
 
   @GetMapping
-  ResponseEntity<List<PlacePreviewResponseDTO>> getPlaces(
+  ResponseEntity<List<PlacePreviewResponseDTO>> getAll(
       @RequestParam(required = false) List<String> traits,
       @RequestParam(required = false) PlaceSortBy sortBy,
       @RequestParam(required = false) SortDirection sortDirection) {
     List<PlacePreviewResponseDTO> response =
-        placeQueryService.getPlaces(traits, sortBy, sortDirection);
+        placeQueryService.getAll(traits, sortBy, sortDirection);
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/top")
-  ResponseEntity<List<PlacePreviewResponseDTO>> getTopPlaces() {
-    List<PlacePreviewResponseDTO> response = placeQueryService.getTopPlaces();
+  ResponseEntity<List<PlacePreviewResponseDTO>> getTop() {
+    List<PlacePreviewResponseDTO> response = placeQueryService.getTop();
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/{placeId}")
-  ResponseEntity<PlaceResponseDTO> getPlace(@PathVariable UUID placeId) {
-    PlaceResponseDTO response = placeQueryService.getPlaceById(placeId);
+  ResponseEntity<PlaceResponseDTO> getById(@PathVariable UUID placeId) {
+    PlaceResponseDTO response = placeQueryService.getById(placeId);
 
     return ResponseEntity.ok(response);
   }
 
   @PutMapping("/update")
-  ResponseEntity<String> updatePlace(@RequestBody @Valid PlaceRequestDTO dto) {
-    String response = placeManagementService.updatePlace(dto);
+  ResponseEntity<String> update(@RequestBody @Valid PlaceRequestDTO dto) {
+    String response = placeManagementService.update(dto);
 
     return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/delete/{placeId}")
-  ResponseEntity<String> deletePlace(@PathVariable UUID placeId) {
-    String response = placeManagementService.deletePlace(placeId);
+  ResponseEntity<String> delete(@PathVariable UUID placeId) {
+    String response = placeManagementService.delete(placeId);
 
     return ResponseEntity.ok(response);
   }

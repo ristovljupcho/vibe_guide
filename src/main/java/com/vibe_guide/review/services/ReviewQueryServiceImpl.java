@@ -26,7 +26,7 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
   private final ReviewMapper reviewMapper;
 
   @Override
-  public Page<ReviewResponseDTO> getPaginatedReviews(
+  public Page<ReviewResponseDTO> getPaginatedByPlaceId(
       UUID placeId, ReviewSortBy sortBy, SortDirection sortDirection, int page, int size) {
     Pageable pageable = createPageable(sortBy, sortDirection, page, size);
     Page<Review> reviewPage;
@@ -43,14 +43,14 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
   }
 
   @Override
-  public List<ReviewResponseDTO> getReviewsForPlace(UUID placeId) {
+  public List<ReviewResponseDTO> getAllByPlaceId(UUID placeId) {
     List<Review> reviews = reviewRepository.findAllByPlaceIdOrderByDateCreatedAsc(placeId);
 
     return reviews.stream().map(reviewMapper::toReviewResponseDTO).toList();
   }
 
   @Override
-  public Page<ReviewResponseDTO> findByReviewCriteria(
+  public Page<ReviewResponseDTO> getByCriteria(
       ReviewSearchCriteriaDTO searchCriteria,
       ReviewSortBy sortBy,
       SortDirection sortDirection,
@@ -80,8 +80,8 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
   }
 
   @Override
-  public List<ReviewResponseDTO> getTopFiveReviews(UUID placeId) {
-    List<Review> topReviews = reviewRepository.getTopFiveReviewsByPlace(placeId);
+  public List<ReviewResponseDTO> getTopFiveByPlaceId(UUID placeId) {
+    List<Review> topReviews = reviewRepository.getTopFiveByPlaceId(placeId);
 
     return topReviews.stream().map(reviewMapper::toReviewResponseDTO).toList();
   }

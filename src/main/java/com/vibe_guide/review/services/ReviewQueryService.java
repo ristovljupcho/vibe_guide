@@ -10,17 +10,17 @@ import org.springframework.data.domain.Page;
 
 public interface ReviewQueryService {
 
-  Page<ReviewResponseDTO> getPaginatedReviews(
+  Page<ReviewResponseDTO> getPaginatedByPlaceId(
       UUID placeId, ReviewSortBy sortBy, SortDirection sortDirection, int page, int size);
 
-  List<ReviewResponseDTO> getReviewsForPlace(UUID placeId);
+  List<ReviewResponseDTO> getAllByPlaceId(UUID placeId);
 
-  Page<ReviewResponseDTO> findByReviewCriteria(
+  Page<ReviewResponseDTO> getByCriteria(
       ReviewSearchCriteriaDTO searchCriteria,
       ReviewSortBy sortBy,
       SortDirection sortDirection,
       int page,
       int size);
 
-  List<ReviewResponseDTO> getTopFiveReviews(UUID placeId);
+  List<ReviewResponseDTO> getTopFiveByPlaceId(UUID placeId);
 }

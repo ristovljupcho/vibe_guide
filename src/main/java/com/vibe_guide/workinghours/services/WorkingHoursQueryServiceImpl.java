@@ -26,7 +26,7 @@ public class WorkingHoursQueryServiceImpl implements WorkingHoursQueryService {
   WorkingHoursMapper workingHoursMapper;
 
   @Override
-  public List<WorkingHoursResponseDTO> getWeeklyWorkingHoursForPlace(UUID placeId) {
+  public List<WorkingHoursResponseDTO> getAllByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
 
     List<WorkingHours> weeklyWorkingHours = workingHoursRepository.findAllByPlaceId(placeId);
@@ -35,7 +35,7 @@ public class WorkingHoursQueryServiceImpl implements WorkingHoursQueryService {
   }
 
   @Override
-  public List<WorkingHoursMissingDaysResponseDTO> getMissingWorkingHoursDaysForPlace(UUID placeId) {
+  public List<WorkingHoursMissingDaysResponseDTO> getMissingDaysByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
 
     Set<DayOfWeek> existingDays =

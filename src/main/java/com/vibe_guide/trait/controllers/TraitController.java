@@ -36,42 +36,42 @@ public class TraitController {
   private final TraitManagementService traitManagementService;
 
   @GetMapping("/paginated")
-  ResponseEntity<Page<TraitResponseDTO>> getPaginatedTraits(
+  ResponseEntity<Page<TraitResponseDTO>> getPaginated(
       @RequestParam(required = false) TraitType traitType,
       @RequestParam(required = false) TraitSortBy sortBy,
       @RequestParam(required = false) SortDirection sortDirection,
       @RequestParam Integer page,
       @RequestParam Integer size) {
     Page<TraitResponseDTO> response =
-        traitQueryService.getPaginatedTraits(traitType, sortBy, sortDirection, page, size);
+        traitQueryService.getPaginated(traitType, sortBy, sortDirection, page, size);
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping
-  ResponseEntity<List<TraitCarouselResponseDTO>> getAllTraits() {
-    List<TraitCarouselResponseDTO> response = traitQueryService.getAllTraits();
+  ResponseEntity<List<TraitCarouselResponseDTO>> getAll() {
+    List<TraitCarouselResponseDTO> response = traitQueryService.getAll();
 
     return ResponseEntity.ok(response);
   }
 
   @PostMapping("/insert")
-  ResponseEntity<String> insertTrait(@Valid @RequestBody TraitInsertRequestDTO dto) {
-    String response = traitManagementService.insertTrait(dto);
+  ResponseEntity<String> insert(@Valid @RequestBody TraitInsertRequestDTO dto) {
+    String response = traitManagementService.insert(dto);
 
     return ResponseEntity.ok(response);
   }
 
   @PutMapping("/update")
-  ResponseEntity<String> updateTrait(@Valid @RequestBody TraitUpdateRequestDTO dto) {
-    String response = traitManagementService.updateTrait(dto);
+  ResponseEntity<String> update(@Valid @RequestBody TraitUpdateRequestDTO dto) {
+    String response = traitManagementService.update(dto);
 
     return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/delete/{traitId}")
-  ResponseEntity<String> deleteTrait(@PathVariable UUID traitId) {
-    String response = traitManagementService.deleteTrait(traitId);
+  ResponseEntity<String> delete(@PathVariable UUID traitId) {
+    String response = traitManagementService.delete(traitId);
 
     return ResponseEntity.ok(response);
   }

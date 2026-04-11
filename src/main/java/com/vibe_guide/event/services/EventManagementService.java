@@ -5,9 +5,9 @@ import com.vibe_guide.event.dtos.EventUpdateRequestDTO;
 import java.util.UUID;
 
 public interface EventManagementService {
-  String insertEvent(EventInsertRequestDTO eventInsertRequestDTO);
+  String insert(EventInsertRequestDTO eventInsertRequestDTO);
 
-  String updateEvent(EventUpdateRequestDTO eventUpdateRequestDTO);
+  String update(EventUpdateRequestDTO eventUpdateRequestDTO);
 
-  String deleteEvent(UUID eventId);
+  String delete(UUID eventId);
 }

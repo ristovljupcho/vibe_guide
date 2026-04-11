@@ -6,9 +6,9 @@ import java.util.UUID;
 
 public interface TraitManagementService {
 
-  String insertTrait(TraitInsertRequestDTO traitInsertRequestDTO);
+  String insert(TraitInsertRequestDTO traitInsertRequestDTO);
 
-  String updateTrait(TraitUpdateRequestDTO traitUpdateRequestDTO);
+  String update(TraitUpdateRequestDTO traitUpdateRequestDTO);
 
-  String deleteTrait(UUID traitId);
+  String delete(UUID traitId);
 }

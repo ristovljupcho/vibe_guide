@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PlaceQueryService {
-  PlaceResponseDTO getPlaceById(UUID placeId);
+  PlaceResponseDTO getById(UUID placeId);
 
-  List<PlacePreviewResponseDTO> getPlaces(
+  List<PlacePreviewResponseDTO> getAll(
       List<String> traits, PlaceSortBy sortBy, SortDirection sortDirection);
 
-  List<PlacePreviewResponseDTO> getTopPlaces();
+  List<PlacePreviewResponseDTO> getTop();
 }

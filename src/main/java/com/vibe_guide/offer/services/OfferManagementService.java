@@ -5,9 +5,9 @@ import com.vibe_guide.offer.dtos.OfferUpdateDTO;
 import java.util.UUID;
 
 public interface OfferManagementService {
-  String insertOffer(OfferInsertDTO dto);
+  String insert(OfferInsertDTO dto);
 
-  String updateDailyOffer(OfferUpdateDTO dto);
+  String update(OfferUpdateDTO dto);
 
-  String deleteDailyOffer(UUID offerId);
+  String delete(UUID offerId);
 }

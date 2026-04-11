@@ -23,7 +23,7 @@ public class OfferManagementServiceImpl implements OfferManagementService {
 
   @Override
   @Transactional
-  public String insertOffer(OfferInsertDTO offerInsertDTO) {
+  public String insert(OfferInsertDTO offerInsertDTO) {
     UUID placeId = offerInsertDTO.placeId();
     Place place =
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
@@ -46,7 +46,7 @@ public class OfferManagementServiceImpl implements OfferManagementService {
 
   @Override
   @Transactional
-  public String updateDailyOffer(OfferUpdateDTO offerUpdateDTO) {
+  public String update(OfferUpdateDTO offerUpdateDTO) {
     UUID placeId = offerUpdateDTO.placeId();
     UUID offerId = offerUpdateDTO.dailyOfferId();
     placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
@@ -68,7 +68,7 @@ public class OfferManagementServiceImpl implements OfferManagementService {
 
   @Override
   @Transactional
-  public String deleteDailyOffer(UUID offerId) {
+  public String delete(UUID offerId) {
     Offer offer =
         offerRepository.findById(offerId).orElseThrow(() -> new OfferNotFoundException(offerId));
 

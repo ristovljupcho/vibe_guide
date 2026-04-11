@@ -29,34 +29,32 @@ public class WorkingHoursController {
   private final WorkingHoursManagementService workingHoursManagementService;
 
   @GetMapping("/working-hours")
-  public ResponseEntity<List<WorkingHoursResponseDTO>> getWeeklyWorkingHoursForPlace(
-      @PathVariable UUID placeId) {
-    List<WorkingHoursResponseDTO> response =
-        workingHoursQueryService.getWeeklyWorkingHoursForPlace(placeId);
+  public ResponseEntity<List<WorkingHoursResponseDTO>> getAllByPlaceId(@PathVariable UUID placeId) {
+    List<WorkingHoursResponseDTO> response = workingHoursQueryService.getAllByPlaceId(placeId);
 
     return ResponseEntity.ok(response);
   }
 
   @PostMapping("/working-hours/insert")
-  public ResponseEntity<String> insertWorkingHoursForPlace(
+  public ResponseEntity<String> insert(
       @PathVariable UUID placeId, @RequestBody @Validated List<WorkingHoursRequestDTO> dtos) {
-    String response = workingHoursManagementService.insertWorkingHoursForPlace(placeId, dtos);
+    String response = workingHoursManagementService.insert(placeId, dtos);
 
     return ResponseEntity.ok(response);
   }
 
   @PutMapping("/working-hours/update")
-  public ResponseEntity<String> updateDailyWorkingHoursForPlace(
+  public ResponseEntity<String> update(
       @PathVariable UUID placeId, @RequestBody @Validated WorkingHoursRequestDTO dto) {
-    String response = workingHoursManagementService.updateDailyWorkingHoursForPlace(placeId, dto);
+    String response = workingHoursManagementService.update(placeId, dto);
 
     return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/working-hours/delete")
-  public ResponseEntity<String> deleteWorkingHoursForPlace(
+  public ResponseEntity<String> delete(
       @PathVariable UUID placeId, @RequestBody @Validated WorkingHoursDeleteRequestDTO dto) {
-    String response = workingHoursManagementService.deleteWorkingHoursForPlace(placeId, dto);
+    String response = workingHoursManagementService.delete(placeId, dto);
 
     return ResponseEntity.ok(response);
   }

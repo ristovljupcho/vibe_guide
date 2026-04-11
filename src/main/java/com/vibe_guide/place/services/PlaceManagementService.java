@@ -6,9 +6,9 @@ import java.util.UUID;
 
 public interface PlaceManagementService {
   // todo: implement this method using API calls
-  PlaceResponseDTO insertPlace();
+  PlaceResponseDTO insert();
 
-  String updatePlace(PlaceRequestDTO placeRequestDTO);
+  String update(PlaceRequestDTO placeRequestDTO);
 
-  String deletePlace(UUID placeId);
+  String delete(UUID placeId);
 }

@@ -27,7 +27,7 @@ public class ReviewManagementServiceImpl implements ReviewManagementService {
 
   @Transactional
   @Override
-  public String insertReview(ReviewInsertRequestDTO reviewInsertRequestDTO) {
+  public String insert(ReviewInsertRequestDTO reviewInsertRequestDTO) {
 
     User user =
         userRepository
@@ -50,7 +50,7 @@ public class ReviewManagementServiceImpl implements ReviewManagementService {
 
   @Transactional
   @Override
-  public String updateReview(ReviewUpdateRequestDTO reviewUpdateRequestDTO) {
+  public String update(ReviewUpdateRequestDTO reviewUpdateRequestDTO) {
     UUID reviewId = reviewUpdateRequestDTO.reviewId();
 
     Review review =
@@ -66,7 +66,7 @@ public class ReviewManagementServiceImpl implements ReviewManagementService {
 
   @Transactional
   @Override
-  public String deleteReview(UUID reviewId) {
+  public String delete(UUID reviewId) {
     Review review =
         reviewRepository
             .findById(reviewId)

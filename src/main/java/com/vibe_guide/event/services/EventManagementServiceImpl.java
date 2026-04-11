@@ -27,7 +27,7 @@ public class EventManagementServiceImpl implements EventManagementService {
 
   @Override
   @Transactional
-  public String insertEvent(EventInsertRequestDTO eventInsertRequestDTO) {
+  public String insert(EventInsertRequestDTO eventInsertRequestDTO) {
     String name = eventInsertRequestDTO.name();
     String description = eventInsertRequestDTO.description();
     LocalDateTime startDate = eventInsertRequestDTO.startDate();
@@ -47,7 +47,7 @@ public class EventManagementServiceImpl implements EventManagementService {
 
     List<MultipartFile> images = eventInsertRequestDTO.images();
     if (images != null && !images.isEmpty()) {
-      eventGalleryManagementService.addImagesToEvent(event.getId(), images);
+      eventGalleryManagementService.insertAll(event.getId(), images);
     }
 
     return EventResponseMessages.EVENT_INSERT_MESSAGE;
@@ -55,7 +55,7 @@ public class EventManagementServiceImpl implements EventManagementService {
 
   @Override
   @Transactional
-  public String updateEvent(EventUpdateRequestDTO eventUpdateRequestDTO) {
+  public String update(EventUpdateRequestDTO eventUpdateRequestDTO) {
     String name = eventUpdateRequestDTO.name();
     String description = eventUpdateRequestDTO.description();
     LocalDateTime startDate = eventUpdateRequestDTO.startDate();
@@ -81,7 +81,7 @@ public class EventManagementServiceImpl implements EventManagementService {
 
   @Override
   @Transactional
-  public String deleteEvent(UUID eventId) {
+  public String delete(UUID eventId) {
     eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
     eventRepository.deleteById(eventId);
 

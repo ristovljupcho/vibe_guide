@@ -26,7 +26,7 @@ public class EventController {
   private final EventManagementService eventManagementService;
 
   @GetMapping("/paginated")
-  ResponseEntity<Page<EventResponseDTO>> getPaginatedEvents(
+  ResponseEntity<Page<EventResponseDTO>> getPaginated(
       @RequestParam(required = false) String placeName,
       @RequestParam(required = false) LocalDateTime startDate,
       @RequestParam(required = false) LocalDateTime endDate,
@@ -34,64 +34,63 @@ public class EventController {
       @RequestParam Integer size) {
     EventSearchCriteriaDTO searchCriteria =
         new EventSearchCriteriaDTO(placeName, startDate, endDate);
-    Page<EventResponseDTO> response =
-        eventQueryService.getPaginatedEvents(searchCriteria, page, size);
+    Page<EventResponseDTO> response = eventQueryService.getPaginated(searchCriteria, page, size);
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/past/{placeId}")
-  ResponseEntity<List<EventResponseDTO>> getPastEventsByPlaceId(@PathVariable UUID placeId) {
-    List<EventResponseDTO> response = eventQueryService.findPastEventsByPlaceId(placeId);
+  ResponseEntity<List<EventResponseDTO>> getPastByPlaceId(@PathVariable UUID placeId) {
+    List<EventResponseDTO> response = eventQueryService.getPastByPlaceId(placeId);
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/upcoming")
-  ResponseEntity<List<EventResponseDTO>> getUpcomingEvents() {
-    List<EventResponseDTO> response = eventQueryService.findUpcomingEvents();
+  ResponseEntity<List<EventResponseDTO>> getUpcoming() {
+    List<EventResponseDTO> response = eventQueryService.getUpcoming();
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/upcoming/{placeId}")
-  ResponseEntity<List<EventResponseDTO>> getUpcomingEventsByPlaceId(@PathVariable UUID placeId) {
-    List<EventResponseDTO> response = eventQueryService.findUpcomingEventsByPlaceId(placeId);
+  ResponseEntity<List<EventResponseDTO>> getUpcomingByPlaceId(@PathVariable UUID placeId) {
+    List<EventResponseDTO> response = eventQueryService.getUpcomingByPlaceId(placeId);
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/active")
-  ResponseEntity<List<EventResponseDTO>> getActiveEvents() {
-    List<EventResponseDTO> response = eventQueryService.findActiveEvents();
+  ResponseEntity<List<EventResponseDTO>> getActive() {
+    List<EventResponseDTO> response = eventQueryService.getActive();
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/active/{placeId}")
-  ResponseEntity<List<EventResponseDTO>> getActiveEventsByPlaceId(@PathVariable UUID placeId) {
-    List<EventResponseDTO> response = eventQueryService.findActiveEventsByPlaceId(placeId);
+  ResponseEntity<List<EventResponseDTO>> getActiveByPlaceId(@PathVariable UUID placeId) {
+    List<EventResponseDTO> response = eventQueryService.getActiveByPlaceId(placeId);
 
     return ResponseEntity.ok(response);
   }
 
   @PostMapping("/insert")
-  ResponseEntity<String> insertEvent(@RequestBody @Valid EventInsertRequestDTO dto) {
-    String response = eventManagementService.insertEvent(dto);
+  ResponseEntity<String> insert(@RequestBody @Valid EventInsertRequestDTO dto) {
+    String response = eventManagementService.insert(dto);
 
     return ResponseEntity.ok(response);
   }
 
   @PutMapping("/update")
-  ResponseEntity<String> updateEvent(@RequestBody @Valid EventUpdateRequestDTO dto) {
-    String response = eventManagementService.updateEvent(dto);
+  ResponseEntity<String> update(@RequestBody @Valid EventUpdateRequestDTO dto) {
+    String response = eventManagementService.update(dto);
 
     return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/{eventId}/delete")
-  ResponseEntity<String> deleteEvent(@PathVariable UUID eventId) {
-    String response = eventManagementService.deleteEvent(eventId);
+  ResponseEntity<String> delete(@PathVariable UUID eventId) {
+    String response = eventManagementService.delete(eventId);
 
     return ResponseEntity.ok(response);
   }

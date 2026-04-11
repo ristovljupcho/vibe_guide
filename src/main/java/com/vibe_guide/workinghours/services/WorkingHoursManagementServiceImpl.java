@@ -30,8 +30,7 @@ public class WorkingHoursManagementServiceImpl implements WorkingHoursManagement
 
   @Transactional
   @Override
-  public String insertWorkingHoursForPlace(
-      UUID placeId, List<WorkingHoursRequestDTO> workingHoursRequestDTOs) {
+  public String insert(UUID placeId, List<WorkingHoursRequestDTO> workingHoursRequestDTOs) {
     Place place =
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
     List<DayOfWeek> alreadyInsertedWorkingHours =
@@ -74,8 +73,7 @@ public class WorkingHoursManagementServiceImpl implements WorkingHoursManagement
 
   @Transactional
   @Override
-  public String updateDailyWorkingHoursForPlace(
-      UUID placeId, WorkingHoursRequestDTO workingHoursRequestDTO) {
+  public String update(UUID placeId, WorkingHoursRequestDTO workingHoursRequestDTO) {
     checkIfPlaceExists(placeId);
     DayOfWeek dayOfWeek = workingHoursRequestDTO.dayOfWeek();
     WorkingHours workingHours =
@@ -95,8 +93,7 @@ public class WorkingHoursManagementServiceImpl implements WorkingHoursManagement
   }
 
   @Override
-  public String deleteWorkingHoursForPlace(
-      UUID placeId, WorkingHoursDeleteRequestDTO workingHoursDeleteRequestDTO) {
+  public String delete(UUID placeId, WorkingHoursDeleteRequestDTO workingHoursDeleteRequestDTO) {
     checkIfPlaceExists(placeId);
     List<DayOfWeek> daysToDelete = workingHoursDeleteRequestDTO.daysToDelete();
     List<DayOfWeek> currentWorkingDays =

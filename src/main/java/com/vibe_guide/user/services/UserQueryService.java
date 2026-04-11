@@ -9,10 +9,10 @@ import org.springframework.data.domain.Page;
 
 public interface UserQueryService {
 
-  Page<UserPreviewResponseDTO> getPaginatedUsers(
+  Page<UserPreviewResponseDTO> getPaginated(
       Role role, UserSortBy sortBy, SortDirection sortDirection, int page, int size);
 
-  UserPreviewResponseDTO getUserById(UUID userId);
+  UserPreviewResponseDTO getById(UUID userId);
 
-  UserPreviewResponseDTO getUserByUsername(String username, String sortBy, String direction);
+  UserPreviewResponseDTO getByUsername(String username, String sortBy, String direction);
 }

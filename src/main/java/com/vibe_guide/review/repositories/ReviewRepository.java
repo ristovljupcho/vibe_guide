@@ -39,5 +39,5 @@ public interface ReviewRepository
           + "WHERE place.id = :placeId "
           + "ORDER BY review.rating DESC"
           + " LIMIT 5 ")
-  List<Review> getTopFiveReviewsByPlace(@Param("placeId") UUID placeId);
+  List<Review> getTopFiveByPlaceId(@Param("placeId") UUID placeId);
 }

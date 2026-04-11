@@ -19,15 +19,15 @@ public class PlaceManagementServiceImpl implements PlaceManagementService {
   private PlaceRepository placeRepository;
 
   @Override
-  public PlaceResponseDTO insertPlace() {
+  public PlaceResponseDTO insert() {
     return null;
   }
 
   @Transactional
   @Override
-  public String updatePlace(PlaceRequestDTO placeRequestDTO) {
+  public String update(PlaceRequestDTO placeRequestDTO) {
     UUID placeId = placeRequestDTO.placeId();
-    Place place = getPlace(placeId);
+    Place place = getById(placeId);
 
     String name = placeRequestDTO.name();
     String description = placeRequestDTO.description();
@@ -54,8 +54,8 @@ public class PlaceManagementServiceImpl implements PlaceManagementService {
 
   @Transactional
   @Override
-  public String deletePlace(UUID placeId) {
-    Place place = getPlace(placeId);
+  public String delete(UUID placeId) {
+    Place place = getById(placeId);
 
     placeRepository.deleteById(placeId);
 
@@ -63,7 +63,7 @@ public class PlaceManagementServiceImpl implements PlaceManagementService {
     return String.format(PlaceResponseMessages.PLACE_DELETE_MESSAGE, placeId, placeName);
   }
 
-  private Place getPlace(UUID placeId) {
+  private Place getById(UUID placeId) {
     return placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
   }
 }

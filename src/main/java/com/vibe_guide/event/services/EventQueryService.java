@@ -7,16 +7,15 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 
 public interface EventQueryService {
-  Page<EventResponseDTO> getPaginatedEvents(
-      EventSearchCriteriaDTO searchCriteria, int page, int size);
+  Page<EventResponseDTO> getPaginated(EventSearchCriteriaDTO searchCriteria, int page, int size);
 
-  List<EventResponseDTO> findPastEventsByPlaceId(UUID placeId);
+  List<EventResponseDTO> getPastByPlaceId(UUID placeId);
 
-  List<EventResponseDTO> findUpcomingEvents();
+  List<EventResponseDTO> getUpcoming();
 
-  List<EventResponseDTO> findUpcomingEventsByPlaceId(UUID placeId);
+  List<EventResponseDTO> getUpcomingByPlaceId(UUID placeId);
 
-  List<EventResponseDTO> findActiveEvents();
+  List<EventResponseDTO> getActive();
 
-  List<EventResponseDTO> findActiveEventsByPlaceId(UUID placeId);
+  List<EventResponseDTO> getActiveByPlaceId(UUID placeId);
 }

@@ -25,7 +25,7 @@ public class EventQueryServiceImpl implements EventQueryService {
   private final EventMapper eventMapper;
 
   @Override
-  public Page<EventResponseDTO> getPaginatedEvents(
+  public Page<EventResponseDTO> getPaginated(
       EventSearchCriteriaDTO searchCriteria, int page, int size) {
     PageRequest pageRequest = PageRequest.of(page, size);
     Specification<Event> spec = Specification.where(null);
@@ -51,7 +51,7 @@ public class EventQueryServiceImpl implements EventQueryService {
   }
 
   @Override
-  public List<EventResponseDTO> findPastEventsByPlaceId(UUID placeId) {
+  public List<EventResponseDTO> getPastByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
     LocalDateTime now = LocalDateTime.now();
     LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
@@ -61,34 +61,34 @@ public class EventQueryServiceImpl implements EventQueryService {
   }
 
   @Override
-  public List<EventResponseDTO> findUpcomingEvents() {
+  public List<EventResponseDTO> getUpcoming() {
     LocalDateTime now = LocalDateTime.now();
-    List<Event> upcomingEvents = eventRepository.findUpcomingEvents(now);
+    List<Event> upcomingEvents = eventRepository.getUpcoming(now);
 
     return upcomingEvents.stream().map(eventMapper::toEventResponseDTO).toList();
   }
 
   @Override
-  public List<EventResponseDTO> findUpcomingEventsByPlaceId(UUID placeId) {
+  public List<EventResponseDTO> getUpcomingByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
-    List<Event> upcomingEventsByPlaceId = eventRepository.findUpcomingEventsByPlaceId(placeId);
+    List<Event> upcomingEventsByPlaceId = eventRepository.getUpcomingByPlaceId(placeId);
 
     return upcomingEventsByPlaceId.stream().map(eventMapper::toEventResponseDTO).toList();
   }
 
   @Override
-  public List<EventResponseDTO> findActiveEvents() {
+  public List<EventResponseDTO> getActive() {
     LocalDateTime now = LocalDateTime.now();
-    List<Event> activeEvents = eventRepository.findActiveEvents(now);
+    List<Event> activeEvents = eventRepository.getActive(now);
 
     return activeEvents.stream().map(eventMapper::toEventResponseDTO).toList();
   }
 
   @Override
-  public List<EventResponseDTO> findActiveEventsByPlaceId(UUID placeId) {
+  public List<EventResponseDTO> getActiveByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
     LocalDateTime now = LocalDateTime.now();
-    List<Event> activeEventsByPlaceId = eventRepository.findActiveEventsByPlaceId(placeId, now);
+    List<Event> activeEventsByPlaceId = eventRepository.getActiveByPlaceId(placeId, now);
 
     return activeEventsByPlaceId.stream().map(eventMapper::toEventResponseDTO).toList();
   }

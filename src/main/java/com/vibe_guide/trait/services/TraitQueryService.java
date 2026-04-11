@@ -10,8 +10,8 @@ import org.springframework.data.domain.Page;
 
 public interface TraitQueryService {
 
-  Page<TraitResponseDTO> getPaginatedTraits(
+  Page<TraitResponseDTO> getPaginated(
       TraitType traitType, TraitSortBy sortBy, SortDirection sortDirection, int page, int size);
 
-  List<TraitCarouselResponseDTO> getAllTraits();
+  List<TraitCarouselResponseDTO> getAll();
 }

@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface OfferQueryService {
-  List<OfferResponseDTO> getActiveOffersByPlaceId(UUID placeId);
+  List<OfferResponseDTO> getActiveByPlaceId(UUID placeId);
 
-  List<OfferResponseDTO> getAllActiveOffers();
+  List<OfferResponseDTO> getActive();
 
-  List<OfferResponseDTO> getUpcomingOffersByPlaceId(UUID placeId);
+  List<OfferResponseDTO> getUpcomingByPlaceId(UUID placeId);
 
-  List<OfferResponseDTO> getAllUpcomingOffers();
+  List<OfferResponseDTO> getUpcoming();
 }

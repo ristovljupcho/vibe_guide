@@ -6,12 +6,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface WorkingHoursManagementService {
-  String insertWorkingHoursForPlace(
-      UUID placeId, List<WorkingHoursRequestDTO> workingHoursRequestDTOs);
+  String insert(UUID placeId, List<WorkingHoursRequestDTO> workingHoursRequestDTOs);
 
-  String updateDailyWorkingHoursForPlace(
-      UUID placeId, WorkingHoursRequestDTO workingHoursRequestDTO);
+  String update(UUID placeId, WorkingHoursRequestDTO workingHoursRequestDTO);
 
-  String deleteWorkingHoursForPlace(
-      UUID placeId, WorkingHoursDeleteRequestDTO workingHoursDeleteRequestDTO);
+  String delete(UUID placeId, WorkingHoursDeleteRequestDTO workingHoursDeleteRequestDTO);
 }

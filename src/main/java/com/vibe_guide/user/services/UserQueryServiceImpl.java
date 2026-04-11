@@ -24,7 +24,7 @@ public class UserQueryServiceImpl implements UserQueryService {
   private final UserMapper userMapper;
 
   @Override
-  public Page<UserPreviewResponseDTO> getPaginatedUsers(
+  public Page<UserPreviewResponseDTO> getPaginated(
       Role role, UserSortBy sortBy, SortDirection sortDirection, int page, int size) {
 
     Pageable pageable = createPageable(sortBy, sortDirection, page, size);
@@ -35,7 +35,7 @@ public class UserQueryServiceImpl implements UserQueryService {
   }
 
   @Override
-  public UserPreviewResponseDTO getUserById(UUID userId) {
+  public UserPreviewResponseDTO getById(UUID userId) {
     User user =
         userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
@@ -43,8 +43,7 @@ public class UserQueryServiceImpl implements UserQueryService {
   }
 
   @Override
-  public UserPreviewResponseDTO getUserByUsername(
-      String username, String sortBy, String direction) {
+  public UserPreviewResponseDTO getByUsername(String username, String sortBy, String direction) {
     User user =
         userRepository
             .findByUsername(username)

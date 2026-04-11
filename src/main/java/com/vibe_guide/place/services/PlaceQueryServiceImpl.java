@@ -25,7 +25,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
   private final PlaceMapper placeMapper;
 
   @Override
-  public PlaceResponseDTO getPlaceById(UUID placeId) {
+  public PlaceResponseDTO getById(UUID placeId) {
     Place place =
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
@@ -33,7 +33,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
   }
 
   @Override
-  public List<PlacePreviewResponseDTO> getPlaces(
+  public List<PlacePreviewResponseDTO> getAll(
       List<String> traits, PlaceSortBy sortBy, SortDirection sortDirection) {
     PlaceSortBy actualSortBy = (sortBy != null) ? sortBy : PlaceSortBy.DEFAULT;
     SortDirection actualSortDirection =
@@ -47,7 +47,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
   }
 
   @Override
-  public List<PlacePreviewResponseDTO> getTopPlaces() {
+  public List<PlacePreviewResponseDTO> getTop() {
     List<PlaceTopTraits> places = placeTopTraitsRepository.findTop10ByOrderByRatingDesc();
 
     return places.stream().map(placeMapper::toPlacePreviewResponseDTO).toList();
