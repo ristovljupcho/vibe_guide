@@ -26,14 +26,6 @@ public class PlaceAdminManagementServiceImpl implements PlaceAdminManagementServ
   private final PlaceRepository placeRepository;
   private final UserRepository userRepository;
 
-  /**
-   * Inserts {@link User} with role admin for a {@link Place} with provided ID.
-   *
-   * @param placeId ID of {@link Place}.
-   * @param placeAdminRequestDTO DTO of type {@link PlaceAdminRequestDTO} containing ID of the
-   *     {@link User}.
-   * @return Response message of type {@link PlaceAdminResponseMessages}.
-   */
   @Transactional
   @Override
   public String insertPlaceAdmin(UUID placeId, PlaceAdminRequestDTO placeAdminRequestDTO) {
@@ -59,13 +51,6 @@ public class PlaceAdminManagementServiceImpl implements PlaceAdminManagementServ
     return String.format(PlaceAdminResponseMessages.PLACE_ADMIN_INSERT_MESSAGE, userId, placeId);
   }
 
-  /**
-   * Deletes {@link User} for a {@link Place} with provided ID.
-   *
-   * @param placeId ID of {@link Place}.
-   * @param userId ID of {@link User}.
-   * @return Response message of type {@link PlaceAdminResponseMessages}.
-   */
   public String deletePlaceAdmin(UUID placeId, UUID userId) {
     PlaceAdminId placeAdminId = new PlaceAdminId(placeId, userId);
     if (!placeAdminRepository.existsById(placeAdminId)) {

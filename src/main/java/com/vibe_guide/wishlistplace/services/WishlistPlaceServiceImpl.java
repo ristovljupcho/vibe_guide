@@ -25,14 +25,6 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
   private final UserRepository userRepository;
   private final PlaceRepository placeRepository;
 
-  /**
-   * Retrieves all wishlist places for the specified user.
-   *
-   * @param userId the ID of the user whose wishlist should be retrieved
-   * @return a list of {@link WishlistPlaceResponseDTO}, each representing a place the user has
-   *     added to their wishlist
-   * @throws UserNotFoundException if the user with the given ID does not exist
-   */
   @Override
   public List<WishlistPlaceResponseDTO> getWishlistPlacesByUserId(UUID userId) {
 
@@ -43,21 +35,6 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
     return wishlistRepository.getWishlistByUserId(userId);
   }
 
-  /**
-   * Toggles wishlist status for a given place:
-   *
-   * <ul>
-   *   <li>If the place is already in the user's wishlist ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ it is removed.
-   *   <li>If not ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ it is added.
-   * </ul>
-   *
-   * @param userId the ID of the user modifying their wishlist
-   * @param placeId the ID of the place to add or remove
-   * @return Message describing the result (ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œaddedÃƒÂ¢Ã¢â€šÂ¬Ã‚Â or
-   *     ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œremovedÃƒÂ¢Ã¢â€šÂ¬Ã‚Â)
-   * @throws UserNotFoundException if the user with the given ID does not exist
-   * @throws PlaceNotFoundException if the place with the given ID does not exist
-   */
   @Override
   @Transactional
   public String manageWishlistPlace(UUID userId, UUID placeId) {

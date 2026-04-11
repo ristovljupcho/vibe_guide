@@ -25,12 +25,6 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
   private final UserRepository userRepository;
   private final PlaceRepository placeRepository;
 
-  /**
-   * Retrieves all favourite places for a given user.
-   *
-   * @param userId ID of the user whose favourites are requested
-   * @return List of favourite places mapped into {@link FavouritePlaceResponseDTO}
-   */
   public List<FavouritePlaceResponseDTO> getFavouritePlacesByUserId(UUID userId) {
     if (userRepository.findById(userId).isEmpty()) {
       throw new UserNotFoundException(userId);
@@ -39,17 +33,6 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
     return favouritePlaceRepository.getFavouritePlacesByUserId(userId);
   }
 
-  /**
-   * Toggles the favourite status for the given place and user.
-   *
-   * <p>If the user has already favourited the place, it is removed. Otherwise, it is added as a new
-   * favourite.
-   *
-   * @param userId ID of the user performing the action
-   * @param placeId ID of the place being favourited or unfavourited
-   * @return Message describing the result (ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œaddedÃƒÂ¢Ã¢â€šÂ¬Ã‚Â or
-   *     ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œremovedÃƒÂ¢Ã¢â€šÂ¬Ã‚Â)
-   */
   @Override
   @Transactional
   public String manageFavouritePlace(UUID userId, UUID placeId) {

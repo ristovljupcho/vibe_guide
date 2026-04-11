@@ -23,12 +23,6 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
   private final EventRepository eventRepository;
   private final EventGalleryRepository eventGalleryRepository;
 
-  /**
-   * Inserts {@link EventGallery} objects with provided<b><i>UUID eventId</i></b>.
-   *
-   * @param eventId UUID of the {@link Event} object, for which the images need to be inserted.
-   * @param images list of MultipartFile images
-   */
   @Override
   @Transactional
   public void addImagesToEvent(UUID eventId, List<MultipartFile> images) {
@@ -54,11 +48,6 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
     eventGalleryRepository.saveAll(eventGallery);
   }
 
-  /**
-   * Deletes a {@link EventGallery} objects with provided <b><i>UUID eventId</i></b>.
-   *
-   * @param eventId UUID of the {@link Event} objects, for which images need to be deleted.
-   */
   @Override
   public void deleteAllImagesFromEvent(UUID eventId) {
     eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
@@ -66,11 +55,6 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
     eventGalleryRepository.deleteAll(existingGalleries);
   }
 
-  /**
-   * Deletes a {@link EventGallery} object with provided <b><i>UUID imageId</i></b>.
-   *
-   * @param imageId UUID of the {@link EventGallery} object that needs to be deleted.
-   */
   @Override
   public void deleteImageFromEvent(UUID imageId) {
     if (!eventGalleryRepository.existsById(imageId)) throw new ImageNotFoundException(imageId);

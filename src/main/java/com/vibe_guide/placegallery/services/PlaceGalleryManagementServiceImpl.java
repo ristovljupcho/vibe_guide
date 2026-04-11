@@ -21,12 +21,6 @@ public class PlaceGalleryManagementServiceImpl implements PlaceGalleryManagement
   private final PlaceRepository placeRepository;
   private final PlaceGalleryRepository placeGalleryRepository;
 
-  /**
-   * Inserts {@link PlaceGallery} objects with provided<b><i>UUID placeId</i></b>.
-   *
-   * @param placeId UUID of the {@link Place} object, for which the images need to be inserted.
-   * @param images list of MultipartFile images
-   */
   @Override
   @Transactional
   public void addImagesToPlace(UUID placeId, List<MultipartFile> images) {
@@ -52,11 +46,6 @@ public class PlaceGalleryManagementServiceImpl implements PlaceGalleryManagement
     placeGalleryRepository.saveAll(placeGallery);
   }
 
-  /**
-   * Deletes a {@link PlaceGallery} objects with provided <b><i>UUID placeId</i></b>.
-   *
-   * @param placeId UUID of the {@link Place} objects, for which all the images need to be deleted.
-   */
   @Override
   public void deleteALlImagesFromPlace(UUID placeId) {
     placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
@@ -64,11 +53,6 @@ public class PlaceGalleryManagementServiceImpl implements PlaceGalleryManagement
     placeGalleryRepository.deleteAll(existingGallery);
   }
 
-  /**
-   * Deletes a {@link PlaceGallery} object with provided <b><i>UUID imageId</i></b>.
-   *
-   * @param imageId UUID of the {@link PlaceGallery} object that needs to be deleted.
-   */
   @Override
   public void deleteImageFromPlace(UUID imageId) {
     if (!placeGalleryRepository.existsById(imageId)) {

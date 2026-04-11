@@ -1,7 +1,6 @@
 package com.vibe_guide.placeadmin.services;
 
 import com.vibe_guide.exceptions.PlaceNotFoundException;
-import com.vibe_guide.place.entities.Place;
 import com.vibe_guide.place.repositories.PlaceRepository;
 import com.vibe_guide.placeadmin.dtos.PlaceAdminResponseDTO;
 import com.vibe_guide.placeadmin.repositories.PlaceAdminRepository;
@@ -20,12 +19,6 @@ public class PlaceAdminQueryServiceImpl implements PlaceAdminQueryService {
   private final PlaceRepository placeRepository;
   private final UserMapper userMapper;
 
-  /**
-   * Retrieves all admins/{@link User} for a {@link Place}.
-   *
-   * @param placeId ID of the {@link Place} that we retrieve admins for.
-   * @return List of {@link PlaceAdminResponseDTO}.
-   */
   @Override
   public List<PlaceAdminResponseDTO> getAllAdminsForPlace(UUID placeId) {
     if (!placeRepository.existsById(placeId)) {
