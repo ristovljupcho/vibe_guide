@@ -1,6 +1,6 @@
 package com.vibe_guide.review.services;
 
-import com.vibe_guide.review.mappers.ReviewConverter;
+import com.vibe_guide.review.mappers.ReviewMapper;
 import com.vibe_guide.review.dtos.ReviewResponseDTO;
 import com.vibe_guide.review.dtos.ReviewSearchCriteriaDTO;
 import com.vibe_guide.review.entities.Review;
@@ -25,7 +25,7 @@ import java.util.UUID;
 public class ReviewQueryServiceImpl implements ReviewQueryService {
 
     private final ReviewRepository reviewRepository;
-    private final ReviewConverter reviewConverter;
+    private final ReviewMapper reviewMapper;
 
     /**
      * Retrieves {@link Review} objects using pagination. Sorting by RATING or DEFAULT (UUID), in ASC or DESC order.
@@ -52,7 +52,7 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
             reviewPage = reviewRepository.findByPlaceIdOrderByRatingDesc(placeId, pageable);
         }
 
-        return reviewPage.map(reviewConverter::toReviewResponseDTO);
+        return reviewPage.map(reviewMapper::toReviewResponseDTO);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
     public List<ReviewResponseDTO> getReviewsForPlace(UUID placeId) {
         List<Review> reviews = reviewRepository.findAllByPlaceIdOrderByDateCreatedAsc(placeId);
 
-        return reviews.stream().map(reviewConverter::toReviewResponseDTO).toList();
+        return reviews.stream().map(reviewMapper::toReviewResponseDTO).toList();
     }
 
     /**
@@ -106,7 +106,7 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
         Pageable pageable = createPageable(sortBy, sortDirection, page, size);
 
         return this.reviewRepository.findAll(specification, pageable)
-                .map(reviewConverter::toReviewResponseDTO);
+                .map(reviewMapper::toReviewResponseDTO);
     }
 
     /**
@@ -121,7 +121,7 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
         List<Review> topReviews = reviewRepository.getTopFiveReviewsByPlace(placeId);
 
         return topReviews.stream()
-                .map(reviewConverter::toReviewResponseDTO)
+                .map(reviewMapper::toReviewResponseDTO)
                 .toList();
     }
 

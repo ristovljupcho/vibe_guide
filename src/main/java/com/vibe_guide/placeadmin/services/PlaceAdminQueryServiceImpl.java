@@ -1,6 +1,6 @@
 package com.vibe_guide.placeadmin.services;
 
-import com.vibe_guide.user.mappers.UserConverter;
+import com.vibe_guide.user.mappers.UserMapper;
 import com.vibe_guide.placeadmin.dtos.PlaceAdminResponseDTO;
 import com.vibe_guide.place.entities.Place;
 import com.vibe_guide.user.entities.User;
@@ -20,7 +20,7 @@ public class PlaceAdminQueryServiceImpl implements PlaceAdminQueryService {
 
     private final PlaceAdminRepository placeAdminRepository;
     private final PlaceRepository placeRepository;
-    private final UserConverter userConverter;
+    private final UserMapper userMapper;
 
     /**
      * Retrieves all admins/{@link User} for a {@link Place}.
@@ -36,6 +36,6 @@ public class PlaceAdminQueryServiceImpl implements PlaceAdminQueryService {
 
         List<User> users = placeAdminRepository.findAllByPlaceId(placeId);
 
-        return users.stream().map(userConverter::toPlaceAdminResponseDTO).toList();
+        return users.stream().map(userMapper::toPlaceAdminResponseDTO).toList();
     }
 }

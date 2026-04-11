@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </ul>
  */
 @Component
-public class OfferConverter {
+public class OfferMapper {
     /**
      * Converts a {@link Offer} entity to a {@link OfferResponseDTO} entity.
      *

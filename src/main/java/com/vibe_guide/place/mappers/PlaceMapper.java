@@ -17,7 +17,7 @@ import java.util.UUID;
  * </ul>
  */
 @Component
-public class PlaceConverter {
+public class PlaceMapper {
 
     /**
      * Converts a {@link Place} entity to a {@link PlaceResponseDTO} entity.

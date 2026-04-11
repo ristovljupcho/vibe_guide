@@ -16,7 +16,7 @@ import java.util.UUID;
  * </ul>
  */
 @Component
-public class TraitConverter {
+public class TraitMapper {
 
     /**
      * Converts a {@link Trait} entity to a {@link TraitResponseDTO} entity.

@@ -1,6 +1,6 @@
 package com.vibe_guide.place.services;
 
-import com.vibe_guide.place.mappers.PlaceConverter;
+import com.vibe_guide.place.mappers.PlaceMapper;
 import com.vibe_guide.place.dtos.PlacePreviewResponseDTO;
 import com.vibe_guide.place.dtos.PlaceResponseDTO;
 import com.vibe_guide.place.entities.Place;
@@ -24,7 +24,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
 
     private final PlaceRepository placeRepository;
     private final PlaceTopTraitsRepository placeTopTraitsRepository;
-    private final PlaceConverter placeConverter;
+    private final PlaceMapper placeMapper;
 
     /**
      * Retrieves {@link Place} with provided ID.
@@ -36,7 +36,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
     public PlaceResponseDTO getPlaceById(UUID placeId) {
         Place place = placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
-        return placeConverter.toPlaceResponseDTO(place);
+        return placeMapper.toPlaceResponseDTO(place);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
         places.sort(comparator);
 
         return places.stream()
-                .map(placeConverter::toPlacePreviewResponseDTO)
+                .map(placeMapper::toPlacePreviewResponseDTO)
                 .toList();
     }
 
@@ -57,7 +57,7 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
     public List<PlacePreviewResponseDTO> getTopPlaces() {
         List<PlaceTopTraits> places = placeTopTraitsRepository.findTop10ByOrderByRatingDesc();
 
-        return places.stream().map(placeConverter::toPlacePreviewResponseDTO).toList();
+        return places.stream().map(placeMapper::toPlacePreviewResponseDTO).toList();
     }
 
     /**

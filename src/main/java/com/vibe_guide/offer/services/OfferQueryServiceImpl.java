@@ -1,6 +1,6 @@
 package com.vibe_guide.offer.services;
 
-import com.vibe_guide.offer.mappers.OfferConverter;
+import com.vibe_guide.offer.mappers.OfferMapper;
 import com.vibe_guide.offer.dtos.OfferResponseDTO;
 import com.vibe_guide.offer.entities.Offer;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class OfferQueryServiceImpl implements OfferQueryService {
     private final OfferRepository offerRepository;
-    private final OfferConverter offerConverter;
+    private final OfferMapper offerMapper;
     private final PlaceRepository placeRepository;
 
     /**
@@ -38,7 +38,7 @@ public class OfferQueryServiceImpl implements OfferQueryService {
         List<Offer> offers = offerRepository.findDailyOffersByPlaceId(now, placeId);
 
         return offers.stream()
-                .map(offerConverter::toOfferResponseDTO)
+                .map(offerMapper::toOfferResponseDTO)
                 .toList();
     }
 
@@ -55,7 +55,7 @@ public class OfferQueryServiceImpl implements OfferQueryService {
         List<Offer> offers = offerRepository.findAllDailyOffers(now);
 
         return offers.stream()
-                .map(offerConverter::toOfferResponseDTO)
+                .map(offerMapper::toOfferResponseDTO)
                 .toList();
     }
 
@@ -69,7 +69,7 @@ public class OfferQueryServiceImpl implements OfferQueryService {
         LocalDateTime today = LocalDateTime.now();
         List<Offer> offers = offerRepository.findAllUpcomingOffers(today);
 
-        return offers.stream().map(offerConverter::toOfferResponseDTO).toList();
+        return offers.stream().map(offerMapper::toOfferResponseDTO).toList();
     }
 
     /**
@@ -85,7 +85,7 @@ public class OfferQueryServiceImpl implements OfferQueryService {
         LocalDateTime today = LocalDateTime.now();
         List<Offer> offers = offerRepository.findUpcomingOffersByPlaceId(today, placeId);
 
-        return offers.stream().map(offerConverter::toOfferResponseDTO).toList();
+        return offers.stream().map(offerMapper::toOfferResponseDTO).toList();
     }
 
     void checkIfPlaceExists(UUID placeId) {

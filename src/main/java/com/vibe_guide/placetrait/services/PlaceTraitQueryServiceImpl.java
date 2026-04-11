@@ -1,6 +1,6 @@
 package com.vibe_guide.placetrait.services;
 
-import com.vibe_guide.trait.mappers.TraitConverter;
+import com.vibe_guide.trait.mappers.TraitMapper;
 import com.vibe_guide.trait.dtos.TraitCarouselResponseDTO;
 import com.vibe_guide.trait.dtos.TraitResponseDTO;
 import com.vibe_guide.place.entities.Place;
@@ -21,7 +21,7 @@ import java.util.UUID;
 public class PlaceTraitQueryServiceImpl implements PlaceTraitQueryService {
 
     private final PlaceTraitRepository placeTraitRepository;
-    private final TraitConverter traitConverter;
+    private final TraitMapper traitMapper;
     private final PlaceRepository placeRepository;
 
     /**
@@ -35,7 +35,7 @@ public class PlaceTraitQueryServiceImpl implements PlaceTraitQueryService {
         checkIfPlaceExists(placeId);
         List<Trait> traits = placeTraitRepository.getTraitsForPlaceCarousel(placeId);
 
-        return traits.stream().map(traitConverter::toTraitCarouselResponseDTO).toList();
+        return traits.stream().map(traitMapper::toTraitCarouselResponseDTO).toList();
     }
 
     /**
@@ -49,7 +49,7 @@ public class PlaceTraitQueryServiceImpl implements PlaceTraitQueryService {
         checkIfPlaceExists(placeId);
         List<Trait> traits = placeTraitRepository.getTopTraitsForPlace(placeId);
 
-        return traits.stream().map(traitConverter::toTraitResponseDTO).toList();
+        return traits.stream().map(traitMapper::toTraitResponseDTO).toList();
     }
 
     /**
@@ -63,7 +63,7 @@ public class PlaceTraitQueryServiceImpl implements PlaceTraitQueryService {
         checkIfPlaceExists(placeId);
         List<Trait> missingTraits = placeTraitRepository.getMissingTraitsForPlace(placeId);
 
-        return missingTraits.stream().map(traitConverter::toTraitResponseDTO).toList();
+        return missingTraits.stream().map(traitMapper::toTraitResponseDTO).toList();
     }
 
     /**
@@ -80,7 +80,7 @@ public class PlaceTraitQueryServiceImpl implements PlaceTraitQueryService {
     public List<TraitResponseDTO> getMostPopularTraits() {
         List<TraitLikesSummary> traitLikesSummaries = placeTraitRepository.getTopTraits().stream().limit(10).toList();
 
-        return traitLikesSummaries.stream().map(traitConverter::toTraitResponseDTO).toList();
+        return traitLikesSummaries.stream().map(traitMapper::toTraitResponseDTO).toList();
     }
 
     void checkIfPlaceExists(UUID placeId) {

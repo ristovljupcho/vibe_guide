@@ -17,7 +17,7 @@ import java.util.UUID;
  * </ul>
  */
 @Component
-public class UserConverter {
+public class UserMapper {
     /**
      * * Converts a {@link User} entity to a {@link UserPreviewResponseDTO} entity.
      *

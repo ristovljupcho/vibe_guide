@@ -1,6 +1,6 @@
 package com.vibe_guide.workinghours.services;
 
-import com.vibe_guide.workinghours.mappers.WorkingHoursConverter;
+import com.vibe_guide.workinghours.mappers.WorkingHoursMapper;
 import com.vibe_guide.workinghours.dtos.WorkingHoursMissingDaysResponseDTO;
 import com.vibe_guide.workinghours.dtos.WorkingHoursResponseDTO;
 import com.vibe_guide.place.entities.Place;
@@ -26,7 +26,7 @@ public class WorkingHoursQueryServiceImpl implements WorkingHoursQueryService {
 
     WorkingHoursRepository workingHoursRepository;
     PlaceRepository placeRepository;
-    WorkingHoursConverter workingHoursConverter;
+    WorkingHoursMapper workingHoursMapper;
 
     /**
      * Retrieves all 7 tuples/weekly {@link WorkingHours} for a {@link Place} with provided ID.
@@ -40,7 +40,7 @@ public class WorkingHoursQueryServiceImpl implements WorkingHoursQueryService {
 
         List<WorkingHours> weeklyWorkingHours = workingHoursRepository.findAllByPlaceId(placeId);
 
-        return weeklyWorkingHours.stream().map(workingHoursConverter::toWorkingHoursResponseDTO).toList();
+        return weeklyWorkingHours.stream().map(workingHoursMapper::toWorkingHoursResponseDTO).toList();
     }
 
     /**
@@ -59,7 +59,7 @@ public class WorkingHoursQueryServiceImpl implements WorkingHoursQueryService {
                 .collect(Collectors.toSet());
         Stream<DayOfWeek> missingDays = Arrays.stream(DayOfWeek.values()).filter(day -> !existingDays.contains(day));
 
-        return missingDays.map(workingHoursConverter::toWorkingHoursMissingDaysResponseDTO).toList();
+        return missingDays.map(workingHoursMapper::toWorkingHoursMissingDaysResponseDTO).toList();
     }
 
     private void checkIfPlaceExists(UUID placeId) {

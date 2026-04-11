@@ -16,7 +16,7 @@ import java.time.LocalTime;
  * </ul>
  */
 @Component
-public class WorkingHoursConverter {
+public class WorkingHoursMapper {
     /**
      * Converts a {@link WorkingHours} entity to a {@link WorkingHoursResponseDTO} entity.
      *

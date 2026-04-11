@@ -1,6 +1,6 @@
 package com.vibe_guide.trait.services;
 
-import com.vibe_guide.trait.mappers.TraitConverter;
+import com.vibe_guide.trait.mappers.TraitMapper;
 import com.vibe_guide.trait.dtos.TraitCarouselResponseDTO;
 import com.vibe_guide.trait.dtos.TraitResponseDTO;
 import com.vibe_guide.trait.entities.Trait;
@@ -22,7 +22,7 @@ import java.util.List;
 public class TraitQueryServiceImpl implements TraitQueryService {
 
     private final TraitRepository traitRepository;
-    private final TraitConverter traitConverter;
+    private final TraitMapper traitMapper;
 
     /**
      * Retrieves {@link Trait} objects using pagination. Filtering is enabled using {@link TraitType} which will
@@ -55,13 +55,13 @@ public class TraitQueryServiceImpl implements TraitQueryService {
             traitPage = traitRepository.findAll(pageRequest);
         else traitPage = traitRepository.findAllByTraitType(traitType, pageRequest);
 
-        return traitPage.map(traitConverter::toTraitResponseDTO);
+        return traitPage.map(traitMapper::toTraitResponseDTO);
     }
 
     @Override
     public List<TraitCarouselResponseDTO> getAllTraits() {
         List<Trait> traits = traitRepository.findAll();
 
-        return traits.stream().map(traitConverter::toTraitCarouselResponseDTO).toList();
+        return traits.stream().map(traitMapper::toTraitCarouselResponseDTO).toList();
     }
 }

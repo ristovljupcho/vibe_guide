@@ -1,6 +1,6 @@
 package com.vibe_guide.event.services;
 
-import com.vibe_guide.event.mappers.EventConverter;
+import com.vibe_guide.event.mappers.EventMapper;
 import com.vibe_guide.event.dtos.EventResponseDTO;
 import com.vibe_guide.event.dtos.EventSearchCriteriaDTO;
 import com.vibe_guide.event.entities.Event;
@@ -24,7 +24,7 @@ import java.util.UUID;
 public class EventQueryServiceImpl implements EventQueryService {
     private final EventRepository eventRepository;
     private final PlaceRepository placeRepository;
-    private final EventConverter eventConverter;
+    private final EventMapper eventMapper;
 
     /**
      * Retrieves {@link Event} objects using pagination. Filtering is enabled using {@link EventSpecification} which
@@ -57,7 +57,7 @@ public class EventQueryServiceImpl implements EventQueryService {
 
         Page<Event> pageOfEvents = eventRepository.findAll(spec, pageRequest);
 
-        return pageOfEvents.map(eventConverter::toEventResponseDTO);
+        return pageOfEvents.map(eventMapper::toEventResponseDTO);
     }
 
     /**
@@ -73,7 +73,7 @@ public class EventQueryServiceImpl implements EventQueryService {
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
 
         List<Event> pastEvents = eventRepository.findPastEvents(placeId, now, oneMonthAgo);
-        return pastEvents.stream().map(eventConverter::toEventResponseDTO).toList();
+        return pastEvents.stream().map(eventMapper::toEventResponseDTO).toList();
     }
 
     /**
@@ -86,7 +86,7 @@ public class EventQueryServiceImpl implements EventQueryService {
         LocalDateTime now = LocalDateTime.now();
         List<Event> upcomingEvents = eventRepository.findUpcomingEvents(now);
 
-        return upcomingEvents.stream().map(eventConverter::toEventResponseDTO).toList();
+        return upcomingEvents.stream().map(eventMapper::toEventResponseDTO).toList();
     }
 
     /**
@@ -100,7 +100,7 @@ public class EventQueryServiceImpl implements EventQueryService {
         checkIfPlaceExists(placeId);
         List<Event> upcomingEventsByPlaceId = eventRepository.findUpcomingEventsByPlaceId(placeId);
 
-        return upcomingEventsByPlaceId.stream().map(eventConverter::toEventResponseDTO).toList();
+        return upcomingEventsByPlaceId.stream().map(eventMapper::toEventResponseDTO).toList();
     }
 
     @Override
@@ -108,7 +108,7 @@ public class EventQueryServiceImpl implements EventQueryService {
         LocalDateTime now = LocalDateTime.now();
         List<Event> activeEvents = eventRepository.findActiveEvents(now);
 
-        return activeEvents.stream().map(eventConverter::toEventResponseDTO).toList();
+        return activeEvents.stream().map(eventMapper::toEventResponseDTO).toList();
     }
 
     /**
@@ -123,7 +123,7 @@ public class EventQueryServiceImpl implements EventQueryService {
         LocalDateTime now = LocalDateTime.now();
         List<Event> activeEventsByPlaceId = eventRepository.findActiveEventsByPlaceId(placeId, now);
 
-        return activeEventsByPlaceId.stream().map(eventConverter::toEventResponseDTO).toList();
+        return activeEventsByPlaceId.stream().map(eventMapper::toEventResponseDTO).toList();
     }
 
     private void checkIfPlaceExists(UUID placeId) {

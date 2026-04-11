@@ -17,7 +17,7 @@ import java.time.LocalDate;
  * </ul>
  */
 @Component
-public class ReviewConverter {
+public class ReviewMapper {
 
     /**
      * * Converts a {@link Review} entity to a {@link ReviewResponseDTO} entity.

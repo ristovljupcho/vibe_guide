@@ -16,7 +16,7 @@ import java.util.List;
  * </ul>
  */
 @Component
-public class EventConverter {
+public class EventMapper {
 
     /**
      * Converts a {@link Event} entity to a {@link EventResponseDTO} entity.

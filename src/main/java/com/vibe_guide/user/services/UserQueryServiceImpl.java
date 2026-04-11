@@ -1,7 +1,7 @@
 package com.vibe_guide.user.services;
 
 
-import com.vibe_guide.user.mappers.UserConverter;
+import com.vibe_guide.user.mappers.UserMapper;
 import com.vibe_guide.user.dtos.UserPreviewResponseDTO;
 import com.vibe_guide.user.entities.User;
 import com.vibe_guide.enums.Role;
@@ -24,7 +24,7 @@ import java.util.UUID;
 public class UserQueryServiceImpl implements UserQueryService {
 
     private final UserRepository userRepository;
-    private final UserConverter userConverter;
+    private final UserMapper userMapper;
     /**
      * Retrieves {@link User} objects using pagination. Sorting by USERNAME or DEFAULT (UUID), in ASC or DESC order.
      *
@@ -47,7 +47,7 @@ public class UserQueryServiceImpl implements UserQueryService {
 
         Page<User> userPage = userRepository.findAll(pageable);
 
-        return userPage.map(userConverter::toUserPreviewResponseDTO);
+        return userPage.map(userMapper::toUserPreviewResponseDTO);
     }
     /**
      * Retrieves a user by their unique identifier.
@@ -60,7 +60,7 @@ public class UserQueryServiceImpl implements UserQueryService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
-        return userConverter.toUserPreviewResponseDTO(user);
+        return userMapper.toUserPreviewResponseDTO(user);
     }
     /**
      * Retrieves a user by their username.
@@ -75,7 +75,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     public UserPreviewResponseDTO getUserByUsername(String username, String sortBy, String direction) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
 
-        return userConverter.toUserPreviewResponseDTO(user);
+        return userMapper.toUserPreviewResponseDTO(user);
     }
     /**
      * Creates a {@link Pageable} object for pagination and sorting.
