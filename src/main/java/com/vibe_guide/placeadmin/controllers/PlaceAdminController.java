@@ -27,24 +27,23 @@ public class PlaceAdminController {
   private final PlaceAdminManagementService placeAdminManagementService;
 
   @GetMapping("/admins")
-  public ResponseEntity<List<PlaceAdminResponseDTO>> getAdminsForPlace(@PathVariable UUID placeId) {
-    List<PlaceAdminResponseDTO> response = placeAdminQueryService.getAllAdminsForPlace(placeId);
+  public ResponseEntity<List<PlaceAdminResponseDTO>> getAllByPlaceId(@PathVariable UUID placeId) {
+    List<PlaceAdminResponseDTO> response = placeAdminQueryService.getAllByPlaceId(placeId);
 
     return ResponseEntity.ok(response);
   }
 
   @PostMapping("/admins/insert")
-  public ResponseEntity<String> insertAdminsForPlace(
+  public ResponseEntity<String> insert(
       @PathVariable UUID placeId, @RequestBody @Validated PlaceAdminRequestDTO dto) {
-    String response = placeAdminManagementService.insertPlaceAdmin(placeId, dto);
+    String response = placeAdminManagementService.insert(placeId, dto);
 
     return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/admins/delete/{userId}")
-  public ResponseEntity<String> deleteAdminsForPlace(
-      @PathVariable UUID placeId, @PathVariable UUID userId) {
-    String response = placeAdminManagementService.deletePlaceAdmin(placeId, userId);
+  public ResponseEntity<String> delete(@PathVariable UUID placeId, @PathVariable UUID userId) {
+    String response = placeAdminManagementService.delete(placeId, userId);
 
     return ResponseEntity.ok(response);
   }

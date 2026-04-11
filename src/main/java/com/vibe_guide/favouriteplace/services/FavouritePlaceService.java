@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface FavouritePlaceService {
-  List<FavouritePlaceResponseDTO> getFavouritePlacesByUserId(UUID userId);
+  List<FavouritePlaceResponseDTO> getAllByUserId(UUID userId);
 
-  String manageFavouritePlace(UUID userId, UUID placeId);
+  String toggle(UUID userId, UUID placeId);
 }

@@ -5,9 +5,9 @@ import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface PlaceGalleryManagementService {
-  void addImagesToPlace(UUID placeId, List<MultipartFile> images);
+  void insertAll(UUID placeId, List<MultipartFile> images);
 
-  void deleteALlImagesFromPlace(UUID placeId);
+  void deleteAll(UUID placeId);
 
-  void deleteImageFromPlace(UUID imageId);
+  void deleteById(UUID imageId);
 }

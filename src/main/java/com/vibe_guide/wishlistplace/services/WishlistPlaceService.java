@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface WishlistPlaceService {
-  List<WishlistPlaceResponseDTO> getWishlistPlacesByUserId(UUID userId);
+  List<WishlistPlaceResponseDTO> getAllByUserId(UUID userId);
 
-  String manageWishlistPlace(UUID userId, UUID placeId);
+  String toggle(UUID userId, UUID placeId);
 }

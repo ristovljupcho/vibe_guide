@@ -25,7 +25,7 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
 
   @Override
   @Transactional
-  public void addImagesToEvent(UUID eventId, List<MultipartFile> images) {
+  public void insertAll(UUID eventId, List<MultipartFile> images) {
     Event event =
         eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
     List<EventGallery> eventGallery = new ArrayList<>();
@@ -49,14 +49,14 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
   }
 
   @Override
-  public void deleteAllImagesFromEvent(UUID eventId) {
+  public void deleteAll(UUID eventId) {
     eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
     List<EventGallery> existingGalleries = eventGalleryRepository.findAllByEventId(eventId);
     eventGalleryRepository.deleteAll(existingGalleries);
   }
 
   @Override
-  public void deleteImageFromEvent(UUID imageId) {
+  public void deleteById(UUID imageId) {
     if (!eventGalleryRepository.existsById(imageId)) throw new ImageNotFoundException(imageId);
 
     eventGalleryRepository.deleteById(imageId);

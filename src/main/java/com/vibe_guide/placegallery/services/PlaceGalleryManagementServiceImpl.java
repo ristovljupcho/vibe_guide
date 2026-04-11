@@ -23,7 +23,7 @@ public class PlaceGalleryManagementServiceImpl implements PlaceGalleryManagement
 
   @Override
   @Transactional
-  public void addImagesToPlace(UUID placeId, List<MultipartFile> images) {
+  public void insertAll(UUID placeId, List<MultipartFile> images) {
     Place place =
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
     List<PlaceGallery> placeGallery = new ArrayList<>();
@@ -47,14 +47,14 @@ public class PlaceGalleryManagementServiceImpl implements PlaceGalleryManagement
   }
 
   @Override
-  public void deleteALlImagesFromPlace(UUID placeId) {
+  public void deleteAll(UUID placeId) {
     placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
     List<PlaceGallery> existingGallery = placeGalleryRepository.findAllByPlaceId(placeId);
     placeGalleryRepository.deleteAll(existingGallery);
   }
 
   @Override
-  public void deleteImageFromPlace(UUID imageId) {
+  public void deleteById(UUID imageId) {
     if (!placeGalleryRepository.existsById(imageId)) {
       throw new ImageNotFoundException(imageId);
     }

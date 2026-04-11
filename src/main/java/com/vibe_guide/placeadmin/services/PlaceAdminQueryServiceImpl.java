@@ -20,7 +20,7 @@ public class PlaceAdminQueryServiceImpl implements PlaceAdminQueryService {
   private final UserMapper userMapper;
 
   @Override
-  public List<PlaceAdminResponseDTO> getAllAdminsForPlace(UUID placeId) {
+  public List<PlaceAdminResponseDTO> getAllByPlaceId(UUID placeId) {
     if (!placeRepository.existsById(placeId)) {
       throw new PlaceNotFoundException(placeId);
     }

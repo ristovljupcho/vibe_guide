@@ -22,17 +22,14 @@ public class FavouritePlaceController {
   private final FavouritePlaceService favouritePlaceService;
 
   @GetMapping("/{userId}")
-  public ResponseEntity<List<FavouritePlaceResponseDTO>> getFavouritePlacesByUserId(
-      @PathVariable UUID userId) {
-    List<FavouritePlaceResponseDTO> response =
-        favouritePlaceService.getFavouritePlacesByUserId(userId);
+  public ResponseEntity<List<FavouritePlaceResponseDTO>> getAllByUserId(@PathVariable UUID userId) {
+    List<FavouritePlaceResponseDTO> response = favouritePlaceService.getAllByUserId(userId);
     return ResponseEntity.ok(response);
   }
 
   @PostMapping("/{userId}/{placeId}")
-  public ResponseEntity<String> manageFavouritePlace(
-      @PathVariable UUID userId, @PathVariable UUID placeId) {
-    String message = favouritePlaceService.manageFavouritePlace(userId, placeId);
+  public ResponseEntity<String> toggle(@PathVariable UUID userId, @PathVariable UUID placeId) {
+    String message = favouritePlaceService.toggle(userId, placeId);
     return ResponseEntity.ok(message);
   }
 }

@@ -24,7 +24,7 @@ public class TraitLikeQueryServiceImpl implements TraitLikeQueryService {
    * @return a list of {@link TraitResponseDTO} representing the liked traits
    */
   @Override
-  public List<TraitResponseDTO> findAllByPlaceAndUser(UUID placeId, UUID userId) {
+  public List<TraitResponseDTO> getAllByPlaceIdAndUserId(UUID placeId, UUID userId) {
     return traitLikeRepository.findAllByUserIdAndPlaceId(userId, placeId);
   }
 }

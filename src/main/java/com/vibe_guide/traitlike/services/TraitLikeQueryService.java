@@ -5,5 +5,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TraitLikeQueryService {
-  List<TraitResponseDTO> findAllByPlaceAndUser(UUID placeId, UUID userId);
+  List<TraitResponseDTO> getAllByPlaceIdAndUserId(UUID placeId, UUID userId);
 }

@@ -4,7 +4,7 @@ import com.vibe_guide.placeadmin.dtos.PlaceAdminRequestDTO;
 import java.util.UUID;
 
 public interface PlaceAdminManagementService {
-  String insertPlaceAdmin(UUID placeId, PlaceAdminRequestDTO placeAdminRequestDTO);
+  String insert(UUID placeId, PlaceAdminRequestDTO placeAdminRequestDTO);
 
-  String deletePlaceAdmin(UUID placeId, UUID userId);
+  String delete(UUID placeId, UUID userId);
 }

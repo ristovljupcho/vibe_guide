@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PlaceTraitQueryService {
-  List<TraitCarouselResponseDTO> getTraitsForDisplayInPlaceCarousel(UUID placeId);
+  List<TraitCarouselResponseDTO> getAllForCarouselByPlaceId(UUID placeId);
 
-  List<TraitResponseDTO> getTopTraitsForPlace(UUID placeId);
+  List<TraitResponseDTO> getTopByPlaceId(UUID placeId);
 
-  List<TraitResponseDTO> getMissingTraitsForPlace(UUID placeId);
+  List<TraitResponseDTO> getMissingByPlaceId(UUID placeId);
 
-  List<TraitResponseDTO> getMostPopularTraits();
+  List<TraitResponseDTO> getMostPopular();
 }

@@ -28,7 +28,7 @@ public class PlaceAdminManagementServiceImpl implements PlaceAdminManagementServ
 
   @Transactional
   @Override
-  public String insertPlaceAdmin(UUID placeId, PlaceAdminRequestDTO placeAdminRequestDTO) {
+  public String insert(UUID placeId, PlaceAdminRequestDTO placeAdminRequestDTO) {
     Place place =
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
@@ -51,7 +51,8 @@ public class PlaceAdminManagementServiceImpl implements PlaceAdminManagementServ
     return String.format(PlaceAdminResponseMessages.PLACE_ADMIN_INSERT_MESSAGE, userId, placeId);
   }
 
-  public String deletePlaceAdmin(UUID placeId, UUID userId) {
+  @Override
+  public String delete(UUID placeId, UUID userId) {
     PlaceAdminId placeAdminId = new PlaceAdminId(placeId, userId);
     if (!placeAdminRepository.existsById(placeAdminId)) {
       throw new AdminForPlaceNotFound(placeId, userId);

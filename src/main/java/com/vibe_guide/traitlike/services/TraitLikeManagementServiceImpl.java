@@ -55,7 +55,7 @@ public class TraitLikeManagementServiceImpl implements TraitLikeManagementServic
    */
   @Transactional
   @Override
-  public String likeTraits(TraitLikeRequestDTO dto) {
+  public String insert(TraitLikeRequestDTO dto) {
     UUID userId = dto.userId();
     User user = loadUser(userId);
 
@@ -115,7 +115,7 @@ public class TraitLikeManagementServiceImpl implements TraitLikeManagementServic
    */
   @Transactional
   @Override
-  public String unlikeTraits(TraitLikeRequestDTO dto) {
+  public String delete(TraitLikeRequestDTO dto) {
     UUID userId = dto.userId();
     loadUser(userId);
 

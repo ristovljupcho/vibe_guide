@@ -21,17 +21,15 @@ public class VisitedPlaceController {
   private final VisitedPlaceService visitedPlaceService;
 
   @GetMapping("/{userId}")
-  public ResponseEntity<List<VisitedPlaceResponseDTO>> getVisitedPlacesByUserId(
-      @PathVariable UUID userId) {
-    List<VisitedPlaceResponseDTO> response = visitedPlaceService.getVisitedPlacesByUserId(userId);
+  public ResponseEntity<List<VisitedPlaceResponseDTO>> getAllByUserId(@PathVariable UUID userId) {
+    List<VisitedPlaceResponseDTO> response = visitedPlaceService.getAllByUserId(userId);
 
     return ResponseEntity.ok(response);
   }
 
   @PostMapping("/{userId}/{placeId}")
-  public ResponseEntity<String> manageVisitedPlace(
-      @PathVariable UUID userId, @PathVariable UUID placeId) {
-    String result = visitedPlaceService.manageVisitedPlace(userId, placeId);
+  public ResponseEntity<String> toggle(@PathVariable UUID userId, @PathVariable UUID placeId) {
+    String result = visitedPlaceService.toggle(userId, placeId);
     return ResponseEntity.ok(result);
   }
 }

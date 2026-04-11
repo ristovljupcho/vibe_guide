@@ -17,7 +17,7 @@ public class EventGalleryQueryServiceImpl implements EventGalleryQueryService {
   private final EventRepository eventRepository;
 
   @Override
-  public List<EventGallery> getEventGallery(UUID eventId) {
+  public List<EventGallery> getAllByEventId(UUID eventId) {
     Event event =
         eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
 

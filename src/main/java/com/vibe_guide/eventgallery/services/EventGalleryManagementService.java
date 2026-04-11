@@ -5,9 +5,9 @@ import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface EventGalleryManagementService {
-  void addImagesToEvent(UUID eventId, List<MultipartFile> images);
+  void insertAll(UUID eventId, List<MultipartFile> images);
 
-  void deleteAllImagesFromEvent(UUID eventId);
+  void deleteAll(UUID eventId);
 
-  void deleteImageFromEvent(UUID imageId);
+  void deleteById(UUID imageId);
 }

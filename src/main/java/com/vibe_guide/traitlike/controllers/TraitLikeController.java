@@ -27,23 +27,23 @@ public class TraitLikeController {
   private final TraitLikeQueryService traitLikeQueryService;
 
   @GetMapping("/likes")
-  public ResponseEntity<List<TraitResponseDTO>> findAllByPlaceAndUser(
+  public ResponseEntity<List<TraitResponseDTO>> getAllByPlaceIdAndUserId(
       @NotNull @RequestParam UUID userId, @NotNull @Valid UUID placeId) {
-    List<TraitResponseDTO> result = traitLikeQueryService.findAllByPlaceAndUser(placeId, userId);
+    List<TraitResponseDTO> result = traitLikeQueryService.getAllByPlaceIdAndUserId(placeId, userId);
 
     return ResponseEntity.ok(result);
   }
 
   @PostMapping("/like")
-  public ResponseEntity<String> likeTraits(@Validated @RequestBody TraitLikeRequestDTO dto) {
-    String result = traitLikeManagementService.likeTraits(dto);
+  public ResponseEntity<String> insert(@Validated @RequestBody TraitLikeRequestDTO dto) {
+    String result = traitLikeManagementService.insert(dto);
 
     return ResponseEntity.ok(result);
   }
 
   @PostMapping("/unlike")
-  public ResponseEntity<String> unlikeTraits(@Validated @RequestBody TraitLikeRequestDTO dto) {
-    String result = traitLikeManagementService.unlikeTraits(dto);
+  public ResponseEntity<String> delete(@Validated @RequestBody TraitLikeRequestDTO dto) {
+    String result = traitLikeManagementService.delete(dto);
 
     return ResponseEntity.ok(result);
   }

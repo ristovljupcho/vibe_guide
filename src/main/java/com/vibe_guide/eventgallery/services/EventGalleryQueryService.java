@@ -5,5 +5,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface EventGalleryQueryService {
-  List<EventGallery> getEventGallery(UUID eventId);
+  List<EventGallery> getAllByEventId(UUID eventId);
 }

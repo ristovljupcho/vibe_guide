@@ -25,17 +25,17 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
   private final UserRepository userRepository;
   private final PlaceRepository placeRepository;
 
-  public List<FavouritePlaceResponseDTO> getFavouritePlacesByUserId(UUID userId) {
+  public List<FavouritePlaceResponseDTO> getAllByUserId(UUID userId) {
     if (userRepository.findById(userId).isEmpty()) {
       throw new UserNotFoundException(userId);
     }
 
-    return favouritePlaceRepository.getFavouritePlacesByUserId(userId);
+    return favouritePlaceRepository.getAllByUserId(userId);
   }
 
   @Override
   @Transactional
-  public String manageFavouritePlace(UUID userId, UUID placeId) {
+  public String toggle(UUID userId, UUID placeId) {
     User user =
         userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 

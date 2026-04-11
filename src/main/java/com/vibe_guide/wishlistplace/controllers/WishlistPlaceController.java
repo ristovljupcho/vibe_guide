@@ -20,14 +20,12 @@ public class WishlistPlaceController {
   private final WishlistPlaceService wishlistService;
 
   @GetMapping("/{userId}")
-  public ResponseEntity<List<WishlistPlaceResponseDTO>> getWishlistPlacesByUserId(
-      @PathVariable UUID userId) {
-    return ResponseEntity.ok(wishlistService.getWishlistPlacesByUserId(userId));
+  public ResponseEntity<List<WishlistPlaceResponseDTO>> getAllByUserId(@PathVariable UUID userId) {
+    return ResponseEntity.ok(wishlistService.getAllByUserId(userId));
   }
 
   @PostMapping("/{userId}/{placeId}")
-  public ResponseEntity<String> manageWishlistPlace(
-      @PathVariable UUID userId, @PathVariable UUID placeId) {
-    return ResponseEntity.ok(wishlistService.manageWishlistPlace(userId, placeId));
+  public ResponseEntity<String> toggle(@PathVariable UUID userId, @PathVariable UUID placeId) {
+    return ResponseEntity.ok(wishlistService.toggle(userId, placeId));
   }
 }

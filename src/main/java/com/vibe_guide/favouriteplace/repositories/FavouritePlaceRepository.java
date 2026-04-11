@@ -20,5 +20,5 @@ public interface FavouritePlaceRepository extends JpaRepository<FavouritePlace, 
       FROM FavouritePlace fp
       WHERE fp.user.id = :userId
       """)
-  List<FavouritePlaceResponseDTO> getFavouritePlacesByUserId(UUID userId);
+  List<FavouritePlaceResponseDTO> getAllByUserId(UUID userId);
 }

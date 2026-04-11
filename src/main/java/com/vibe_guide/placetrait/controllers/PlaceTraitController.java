@@ -31,64 +31,59 @@ public class PlaceTraitController {
   private final PlaceTraitManagementService placeTraitManagementService;
 
   @GetMapping("/{placeId}/traits/carousel")
-  public ResponseEntity<List<TraitCarouselResponseDTO>> getTraitsForCarousel(
+  public ResponseEntity<List<TraitCarouselResponseDTO>> getAllForCarouselByPlaceId(
       @PathVariable UUID placeId) {
     List<TraitCarouselResponseDTO> response =
-        placeTraitQueryService.getTraitsForDisplayInPlaceCarousel(placeId);
+        placeTraitQueryService.getAllForCarouselByPlaceId(placeId);
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/{placeId}/top-traits")
-  public ResponseEntity<List<TraitResponseDTO>> getTopTraitsForPlace(@PathVariable UUID placeId) {
-    List<TraitResponseDTO> response = placeTraitQueryService.getTopTraitsForPlace(placeId);
+  public ResponseEntity<List<TraitResponseDTO>> getTopByPlaceId(@PathVariable UUID placeId) {
+    List<TraitResponseDTO> response = placeTraitQueryService.getTopByPlaceId(placeId);
 
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/{placeId}/missing-traits")
-  public ResponseEntity<List<TraitResponseDTO>> getMissingTraitsForPlace(
-      @PathVariable UUID placeId) {
-    List<TraitResponseDTO> response = placeTraitQueryService.getMissingTraitsForPlace(placeId);
+  public ResponseEntity<List<TraitResponseDTO>> getMissingByPlaceId(@PathVariable UUID placeId) {
+    List<TraitResponseDTO> response = placeTraitQueryService.getMissingByPlaceId(placeId);
 
     return ResponseEntity.ok(response);
   }
 
   @PostMapping("/insert-trait")
-  public ResponseEntity<String> insertTraitForPlace(
-      @RequestBody @Validated PlaceTraitRequestDTO dto) {
-    String response = placeTraitManagementService.insertSingleTraitInPlace(dto);
+  public ResponseEntity<String> insert(@RequestBody @Validated PlaceTraitRequestDTO dto) {
+    String response = placeTraitManagementService.insert(dto);
 
     return ResponseEntity.ok(response);
   }
 
   @PostMapping("/batch-insert-traits")
-  public ResponseEntity<String> batchInsertTraitForPlace(
-      @RequestBody @Validated BatchInsertTraitsInPlace dto) {
-    String response = placeTraitManagementService.batchInsertTraitsInPlace(dto);
+  public ResponseEntity<String> insertAll(@RequestBody @Validated BatchInsertTraitsInPlace dto) {
+    String response = placeTraitManagementService.insertAll(dto);
 
     return ResponseEntity.ok(response);
   }
 
   @PutMapping("/traits/update")
-  public ResponseEntity<String> updateTraitForPlace(
-      @RequestBody @Validated PlaceTraitRequestDTO dto) {
-    String response = placeTraitManagementService.updateTraitForPlace(dto);
+  public ResponseEntity<String> update(@RequestBody @Validated PlaceTraitRequestDTO dto) {
+    String response = placeTraitManagementService.update(dto);
 
     return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/traits/delete/{placeTraitId}")
-  public ResponseEntity<String> deleteTraitForPlace(@PathVariable UUID placeTraitId) {
-    String response = placeTraitManagementService.deleteSingleTraitInPlace(placeTraitId);
+  public ResponseEntity<String> delete(@PathVariable UUID placeTraitId) {
+    String response = placeTraitManagementService.delete(placeTraitId);
 
     return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/batch-delete-traits")
-  public ResponseEntity<String> deleteTraitForPlace(
-      @RequestBody @Validated BatchDeleteTraitsInPlace dto) {
-    String response = placeTraitManagementService.batchDeleteTraitsInPlace(dto);
+  public ResponseEntity<String> deleteAll(@RequestBody @Validated BatchDeleteTraitsInPlace dto) {
+    String response = placeTraitManagementService.deleteAll(dto);
 
     return ResponseEntity.ok(response);
   }

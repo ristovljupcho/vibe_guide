@@ -48,10 +48,10 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
    */
   @Transactional
   @Override
-  public String insertSingleTraitInPlace(PlaceTraitRequestDTO dto) {
+  public String insert(PlaceTraitRequestDTO dto) {
 
     UUID placeId = dto.placeId();
-    Place place = getPlace(placeId);
+    Place place = getById(placeId);
     UUID traitId = dto.traitId();
     Trait trait = getTrait(traitId);
 
@@ -88,7 +88,7 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
    */
   @Transactional
   @Override
-  public String batchInsertTraitsInPlace(BatchInsertTraitsInPlace request) {
+  public String insertAll(BatchInsertTraitsInPlace request) {
 
     List<PlaceTraitRequestDTO> dtos = request.placeTraitRequestDTOs();
     if (dtos.isEmpty()) {
@@ -96,7 +96,7 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
     }
 
     UUID placeId = dtos.getFirst().placeId();
-    Place place = getPlace(placeId);
+    Place place = getById(placeId);
 
     List<UUID> traitIds = dtos.stream().map(PlaceTraitRequestDTO::traitId).toList();
 
@@ -141,7 +141,7 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
    */
   @Transactional
   @Override
-  public String updateTraitForPlace(PlaceTraitRequestDTO dto) {
+  public String update(PlaceTraitRequestDTO dto) {
 
     UUID placeId = dto.placeId();
     UUID traitId = dto.traitId();
@@ -165,7 +165,7 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
    */
   @Transactional
   @Override
-  public String deleteSingleTraitInPlace(UUID id) {
+  public String delete(UUID id) {
     PlaceTrait placeTrait =
         placeTraitRepository.findById(id).orElseThrow(() -> new TraitForPlaceNotFound(id));
     placeTraitRepository.delete(placeTrait);
@@ -184,7 +184,7 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
    */
   @Transactional
   @Override
-  public String batchDeleteTraitsInPlace(BatchDeleteTraitsInPlace request) {
+  public String deleteAll(BatchDeleteTraitsInPlace request) {
 
     UUID placeId = request.placeId();
     if (!placeRepository.existsById(placeId)) {
@@ -215,7 +215,7 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
   }
 
   /** Retrieves a {@link Place} by ID or throws exception. */
-  private Place getPlace(UUID placeId) {
+  private Place getById(UUID placeId) {
     return placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
   }
 

@@ -16,7 +16,7 @@ public class PlaceGalleryQueryServiceImpl implements PlaceGalleryQueryService {
   private final PlaceRepository placeRepository;
 
   @Override
-  public List<PlaceGallery> getPlaceGallery(UUID placeId) {
+  public List<PlaceGallery> getAllByPlaceId(UUID placeId) {
     placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
     return placeGalleryRepository.findAllByPlaceId(placeId);

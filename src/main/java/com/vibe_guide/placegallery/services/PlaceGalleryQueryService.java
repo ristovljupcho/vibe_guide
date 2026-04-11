@@ -5,5 +5,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PlaceGalleryQueryService {
-  List<PlaceGallery> getPlaceGallery(UUID placeId);
+  List<PlaceGallery> getAllByPlaceId(UUID placeId);
 }

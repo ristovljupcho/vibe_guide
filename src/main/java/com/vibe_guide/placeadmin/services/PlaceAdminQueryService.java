@@ -5,5 +5,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PlaceAdminQueryService {
-  List<PlaceAdminResponseDTO> getAllAdminsForPlace(UUID placeId);
+  List<PlaceAdminResponseDTO> getAllByPlaceId(UUID placeId);
 }

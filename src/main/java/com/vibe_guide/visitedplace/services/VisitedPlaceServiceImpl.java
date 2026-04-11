@@ -27,7 +27,7 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
   private final PlaceRepository placeRepository;
 
   @Override
-  public List<VisitedPlaceResponseDTO> getVisitedPlacesByUserId(UUID userId) {
+  public List<VisitedPlaceResponseDTO> getAllByUserId(UUID userId) {
     if (userRepository.findById(userId).isEmpty()) {
       throw new UserNotFoundException(userId);
     }
@@ -37,7 +37,7 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
 
   @Override
   @Transactional
-  public String manageVisitedPlace(UUID userId, UUID placeId) {
+  public String toggle(UUID userId, UUID placeId) {
 
     Place place =
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));

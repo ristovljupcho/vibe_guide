@@ -22,7 +22,7 @@ public class PlaceTraitQueryServiceImpl implements PlaceTraitQueryService {
   private final PlaceRepository placeRepository;
 
   @Override
-  public List<TraitCarouselResponseDTO> getTraitsForDisplayInPlaceCarousel(UUID placeId) {
+  public List<TraitCarouselResponseDTO> getAllForCarouselByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
     List<Trait> traits = placeTraitRepository.getTraitsForPlaceCarousel(placeId);
 
@@ -30,23 +30,23 @@ public class PlaceTraitQueryServiceImpl implements PlaceTraitQueryService {
   }
 
   @Override
-  public List<TraitResponseDTO> getTopTraitsForPlace(UUID placeId) {
+  public List<TraitResponseDTO> getTopByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
-    List<Trait> traits = placeTraitRepository.getTopTraitsForPlace(placeId);
+    List<Trait> traits = placeTraitRepository.getTopByPlaceId(placeId);
 
     return traits.stream().map(traitMapper::toTraitResponseDTO).toList();
   }
 
   @Override
-  public List<TraitResponseDTO> getMissingTraitsForPlace(UUID placeId) {
+  public List<TraitResponseDTO> getMissingByPlaceId(UUID placeId) {
     checkIfPlaceExists(placeId);
-    List<Trait> missingTraits = placeTraitRepository.getMissingTraitsForPlace(placeId);
+    List<Trait> missingTraits = placeTraitRepository.getMissingByPlaceId(placeId);
 
     return missingTraits.stream().map(traitMapper::toTraitResponseDTO).toList();
   }
 
   @Override
-  public List<TraitResponseDTO> getMostPopularTraits() {
+  public List<TraitResponseDTO> getMostPopular() {
     List<TraitLikesSummary> traitLikesSummaries =
         placeTraitRepository.getTopTraits().stream().limit(10).toList();
 
