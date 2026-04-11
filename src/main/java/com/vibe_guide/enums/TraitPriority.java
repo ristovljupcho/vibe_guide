@@ -1,6 +1,6 @@
 package com.vibe_guide.enums;
 
-import com.vibe_guide.entities.PlaceTrait;
+import com.vibe_guide.placetrait.entities.PlaceTrait;
 import lombok.Getter;
 
 /**
@@ -16,14 +16,14 @@ import lombok.Getter;
  *
  * <p>Priority levels:</p>
  * <ul>
- *     <li>{@code PAID_PROMOTION} — Highest priority, typically promoted content.</li>
- *     <li>{@code FAVOURITE} — Highlighted or editorially selected traits.</li>
- *     <li>{@code TRENDING} — Currently popular or high-engagement traits.</li>
- *     <li>{@code DEFAULT} — Standard neutral priority.</li>
- *     <li>{@code LOW} — Minimal importance, shown last.</li>
+ *     <li>{@code PAID_PROMOTION} Ã¢â‚¬â€ Highest priority, typically promoted content.</li>
+ *     <li>{@code FAVOURITE} Ã¢â‚¬â€ Highlighted or editorially selected traits.</li>
+ *     <li>{@code TRENDING} Ã¢â‚¬â€ Currently popular or high-engagement traits.</li>
+ *     <li>{@code DEFAULT} Ã¢â‚¬â€ Standard neutral priority.</li>
+ *     <li>{@code LOW} Ã¢â‚¬â€ Minimal importance, shown last.</li>
  * </ul>
  *
- * <p>⚠<b>IMPORTANT:</b> If priority names are changed, added, or removed, the
+ * <p>Ã¢Å¡Â <b>IMPORTANT:</b> If priority names are changed, added, or removed, the
  * Liquibase initial schema (enum column default values and seed data)
  * must be updated accordingly.</p>
  */

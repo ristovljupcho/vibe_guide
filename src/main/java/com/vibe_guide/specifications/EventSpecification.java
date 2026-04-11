@@ -1,6 +1,6 @@
 package com.vibe_guide.specifications;
 
-import com.vibe_guide.entities.Event;
+import com.vibe_guide.event.entities.Event;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
