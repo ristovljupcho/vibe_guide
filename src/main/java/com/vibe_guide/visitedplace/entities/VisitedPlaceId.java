@@ -1,14 +1,13 @@
 package com.vibe_guide.visitedplace.entities;
 
 import jakarta.persistence.Embeddable;
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.UUID;
 
 @Embeddable
 @Getter
@@ -17,19 +16,18 @@ import java.util.UUID;
 @AllArgsConstructor
 public class VisitedPlaceId implements Serializable {
 
-    private UUID userId;
-    private UUID placeId;
+  private UUID userId;
+  private UUID placeId;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof VisitedPlaceId that)) return false;
-        return Objects.equals(userId, that.userId) &&
-                Objects.equals(placeId, that.placeId);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof VisitedPlaceId that)) return false;
+    return Objects.equals(userId, that.userId) && Objects.equals(placeId, that.placeId);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, placeId);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(userId, placeId);
+  }
 }

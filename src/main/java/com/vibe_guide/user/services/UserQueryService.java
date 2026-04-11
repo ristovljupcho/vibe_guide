@@ -1,19 +1,18 @@
 package com.vibe_guide.user.services;
 
-import com.vibe_guide.user.dtos.UserPreviewResponseDTO;
 import com.vibe_guide.enums.Role;
 import com.vibe_guide.enums.sorting.SortDirection;
 import com.vibe_guide.enums.sorting.UserSortBy;
-import org.springframework.data.domain.Page;
-
+import com.vibe_guide.user.dtos.UserPreviewResponseDTO;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
 
 public interface UserQueryService {
 
-    Page<UserPreviewResponseDTO> getPaginatedUsers(Role role, UserSortBy sortBy, SortDirection sortDirection, int page,
-                                                   int size);
+  Page<UserPreviewResponseDTO> getPaginatedUsers(
+      Role role, UserSortBy sortBy, SortDirection sortDirection, int page, int size);
 
-    UserPreviewResponseDTO getUserById(UUID userId);
+  UserPreviewResponseDTO getUserById(UUID userId);
 
-    UserPreviewResponseDTO getUserByUsername(String username, String sortBy, String direction);
+  UserPreviewResponseDTO getUserByUsername(String username, String sortBy, String direction);
 }

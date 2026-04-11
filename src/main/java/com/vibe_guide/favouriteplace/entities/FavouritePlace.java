@@ -24,16 +24,15 @@ import lombok.ToString;
 @Table(name = "favourite_place")
 public class FavouritePlace {
 
-    @EmbeddedId
-    private FavouritePlaceId id;
+  @EmbeddedId private FavouritePlaceId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("userId")
-    @JoinColumn(name = "user_id")
-    private User user;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @MapsId("userId")
+  @JoinColumn(name = "user_id")
+  private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("placeId")
-    @JoinColumn(name = "place_id")
-    private Place place;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @MapsId("placeId")
+  @JoinColumn(name = "place_id")
+  private Place place;
 }

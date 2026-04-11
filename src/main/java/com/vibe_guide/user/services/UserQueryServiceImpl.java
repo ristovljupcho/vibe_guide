@@ -1,15 +1,14 @@
 package com.vibe_guide.user.services;
 
-
-import com.vibe_guide.user.mappers.UserMapper;
-import com.vibe_guide.user.dtos.UserPreviewResponseDTO;
-import com.vibe_guide.user.entities.User;
 import com.vibe_guide.enums.Role;
 import com.vibe_guide.enums.sorting.SortDirection;
 import com.vibe_guide.enums.sorting.UserSortBy;
 import com.vibe_guide.exceptions.UserNotFoundException;
+import com.vibe_guide.user.dtos.UserPreviewResponseDTO;
+import com.vibe_guide.user.entities.User;
+import com.vibe_guide.user.mappers.UserMapper;
 import com.vibe_guide.user.repositories.UserRepository;
-import com.vibe_guide.user.services.UserQueryService;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,86 +16,95 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @AllArgsConstructor
 public class UserQueryServiceImpl implements UserQueryService {
 
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
-    /**
-     * Retrieves {@link User} objects using pagination. Sorting by USERNAME or DEFAULT (UUID), in ASC or DESC order.
-     *
-     * @param sortDirection used for sorting direction, default sort direction is <b><i>ASC</i></b> from enum
-     *                      {@link SortDirection}.
-     * @param sortBy        used for sorting, default review sort criteria is <b><i>TYPE</i></b> from enum
-     *                      {@link UserSortBy}.
-     * @param page          page number.
-     * @param size          page size.
-     * @return A {@link Page} containing {@link UserPreviewResponseDTO} objects.
-     */
-    @Override
-    public Page<UserPreviewResponseDTO> getPaginatedUsers(Role role,
-                                                          UserSortBy sortBy,
-                                                          SortDirection sortDirection,
-                                                          int page,
-                                                          int size) {
+  private final UserRepository userRepository;
+  private final UserMapper userMapper;
 
-        Pageable pageable = createPageable(sortBy, sortDirection, page, size);
+  /**
+   * Retrieves {@link User} objects using pagination. Sorting by USERNAME or DEFAULT (UUID), in ASC
+   * or DESC order.
+   *
+   * @param sortDirection used for sorting direction, default sort direction is <b><i>ASC</i></b>
+   *     from enum {@link SortDirection}.
+   * @param sortBy used for sorting, default review sort criteria is <b><i>TYPE</i></b> from enum
+   *     {@link UserSortBy}.
+   * @param page page number.
+   * @param size page size.
+   * @return A {@link Page} containing {@link UserPreviewResponseDTO} objects.
+   */
+  @Override
+  public Page<UserPreviewResponseDTO> getPaginatedUsers(
+      Role role, UserSortBy sortBy, SortDirection sortDirection, int page, int size) {
 
-        Page<User> userPage = userRepository.findAll(pageable);
+    Pageable pageable = createPageable(sortBy, sortDirection, page, size);
 
-        return userPage.map(userMapper::toUserPreviewResponseDTO);
-    }
-    /**
-     * Retrieves a user by their unique identifier.
-     *
-     * @param userId The UUID of the user.
-     * @return The user mapped to {@link UserPreviewResponseDTO}.
-     */
-    @Override
-    public UserPreviewResponseDTO getUserById(UUID userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+    Page<User> userPage = userRepository.findAll(pageable);
 
-        return userMapper.toUserPreviewResponseDTO(user);
-    }
-    /**
-     * Retrieves a user by their username.
-     *
-     * @param username  The username of the user.
-     * @param sortBy    The field by which results should be sorted (not used in this method but kept for future
-     *                  extensibility).
-     * @param direction The sorting direction (not used in this method but kept for future extensibility).
-     * @return The user mapped to {@link UserPreviewResponseDTO}.
-     **/
-    @Override
-    public UserPreviewResponseDTO getUserByUsername(String username, String sortBy, String direction) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+    return userPage.map(userMapper::toUserPreviewResponseDTO);
+  }
 
-        return userMapper.toUserPreviewResponseDTO(user);
-    }
-    /**
-     * Creates a {@link Pageable} object for pagination and sorting.
-     *
-     * @param sortBy        sortBy used for sorting, default review sort criteria is <b><i>TYPE</i></b> from enum
-     *                      {@link UserSortBy}.
-     * @param sortDirection sortDirection used for sorting direction, default sort direction is <b><i>ASC</i></b>
-     *                      from enum
-     *                      {@link SortDirection}.
-     * @param page          The page number (zero-based) for pagination.
-     * @param size          The number of elements per page.
-     * @return A {@link Pageable} instance configured with sorting and pagination settings.
-     */
-    private Pageable createPageable(UserSortBy sortBy, SortDirection sortDirection, int page, int size) {
-        String sortField = switch (sortBy) {
-            case DEFAULT -> "id";
-            case USERNAME -> "username";
+  /**
+   * Retrieves a user by their unique identifier.
+   *
+   * @param userId The UUID of the user.
+   * @return The user mapped to {@link UserPreviewResponseDTO}.
+   */
+  @Override
+  public UserPreviewResponseDTO getUserById(UUID userId) {
+    User user =
+        userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
+    return userMapper.toUserPreviewResponseDTO(user);
+  }
+
+  /**
+   * Retrieves a user by their username.
+   *
+   * @param username The username of the user.
+   * @param sortBy The field by which results should be sorted (not used in this method but kept for
+   *     future extensibility).
+   * @param direction The sorting direction (not used in this method but kept for future
+   *     extensibility).
+   * @return The user mapped to {@link UserPreviewResponseDTO}.
+   */
+  @Override
+  public UserPreviewResponseDTO getUserByUsername(
+      String username, String sortBy, String direction) {
+    User user =
+        userRepository
+            .findByUsername(username)
+            .orElseThrow(() -> new UserNotFoundException(username));
+
+    return userMapper.toUserPreviewResponseDTO(user);
+  }
+
+  /**
+   * Creates a {@link Pageable} object for pagination and sorting.
+   *
+   * @param sortBy sortBy used for sorting, default review sort criteria is <b><i>TYPE</i></b> from
+   *     enum {@link UserSortBy}.
+   * @param sortDirection sortDirection used for sorting direction, default sort direction is
+   *     <b><i>ASC</i></b> from enum {@link SortDirection}.
+   * @param page The page number (zero-based) for pagination.
+   * @param size The number of elements per page.
+   * @return A {@link Pageable} instance configured with sorting and pagination settings.
+   */
+  private Pageable createPageable(
+      UserSortBy sortBy, SortDirection sortDirection, int page, int size) {
+    String sortField =
+        switch (sortBy) {
+          case DEFAULT -> "id";
+          case USERNAME -> "username";
         };
 
-        Sort sort =
-                Sort.by(sortDirection == SortDirection.DESC ? Sort.Order.desc(sortField) : Sort.Order.asc(sortField));
-        return PageRequest.of(page, size, sort);
-    }
+    Sort sort =
+        Sort.by(
+            sortDirection == SortDirection.DESC
+                ? Sort.Order.desc(sortField)
+                : Sort.Order.asc(sortField));
+    return PageRequest.of(page, size, sort);
+  }
 }

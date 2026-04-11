@@ -5,11 +5,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Immutable;
-
-import java.util.UUID;
 
 @Immutable
 @Getter
@@ -17,13 +16,12 @@ import java.util.UUID;
 @Entity
 @Table(name = "trait_likes_summary")
 public class TraitLikesSummary {
-    @Id
-    private UUID id;
+  @Id private UUID id;
 
-    private TraitType traitType;
+  private TraitType traitType;
 
-    private String name;
+  private String name;
 
-    @Column(name = "total_likes")
-    private Integer totalLikes;
+  @Column(name = "total_likes")
+  private Integer totalLikes;
 }

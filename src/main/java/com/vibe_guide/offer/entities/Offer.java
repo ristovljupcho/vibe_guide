@@ -9,17 +9,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,41 +27,40 @@ import java.util.UUID;
 @Setter
 @Entity
 public class Offer implements Base64Image {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    private String name;
+  private String name;
 
-    @CreationTimestamp
-    private LocalDate dateCreated;
+  @CreationTimestamp private LocalDate dateCreated;
 
-    private LocalDateTime startDate;
+  private LocalDateTime startDate;
 
-    private LocalDateTime endDate;
+  private LocalDateTime endDate;
 
-    private String description;
+  private String description;
 
-    private byte[] image;
+  private byte[] image;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "place_id")
-    @ToString.Exclude
-    private Place place;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "place_id")
+  @ToString.Exclude
+  private Place place;
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Offer that = (Offer) o;
-        return Objects.equals(id, that.id);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    Offer that = (Offer) o;
+    return Objects.equals(id, that.id);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
+  }
 
-    public String generateEncodedImage() {
-        return generateBase64Image();
-    }
+  public String generateEncodedImage() {
+    return generateBase64Image();
+  }
 }

@@ -6,5 +6,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class CustomNotFoundException extends RuntimeException {
-    private final String message;
+  private final String message;
 }

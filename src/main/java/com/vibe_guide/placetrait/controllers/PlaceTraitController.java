@@ -3,10 +3,12 @@ package com.vibe_guide.placetrait.controllers;
 import com.vibe_guide.placetrait.dtos.BatchDeleteTraitsInPlace;
 import com.vibe_guide.placetrait.dtos.BatchInsertTraitsInPlace;
 import com.vibe_guide.placetrait.dtos.PlaceTraitRequestDTO;
-import com.vibe_guide.trait.dtos.TraitCarouselResponseDTO;
-import com.vibe_guide.trait.dtos.TraitResponseDTO;
 import com.vibe_guide.placetrait.services.PlaceTraitManagementService;
 import com.vibe_guide.placetrait.services.PlaceTraitQueryService;
+import com.vibe_guide.trait.dtos.TraitCarouselResponseDTO;
+import com.vibe_guide.trait.dtos.TraitResponseDTO;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,71 +21,75 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.UUID;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/places")
 @Validated
 public class PlaceTraitController {
 
-    private final PlaceTraitQueryService placeTraitQueryService;
-    private final PlaceTraitManagementService placeTraitManagementService;
+  private final PlaceTraitQueryService placeTraitQueryService;
+  private final PlaceTraitManagementService placeTraitManagementService;
 
-    @GetMapping("/{placeId}/traits/carousel")
-    public ResponseEntity<List<TraitCarouselResponseDTO>> getTraitsForCarousel(@PathVariable UUID placeId) {
-        List<TraitCarouselResponseDTO> response = placeTraitQueryService.getTraitsForDisplayInPlaceCarousel(placeId);
+  @GetMapping("/{placeId}/traits/carousel")
+  public ResponseEntity<List<TraitCarouselResponseDTO>> getTraitsForCarousel(
+      @PathVariable UUID placeId) {
+    List<TraitCarouselResponseDTO> response =
+        placeTraitQueryService.getTraitsForDisplayInPlaceCarousel(placeId);
 
-        return ResponseEntity.ok(response);
-    }
+    return ResponseEntity.ok(response);
+  }
 
-    @GetMapping("/{placeId}/top-traits")
-    public ResponseEntity<List<TraitResponseDTO>> getTopTraitsForPlace(@PathVariable UUID placeId) {
-        List<TraitResponseDTO> response = placeTraitQueryService.getTopTraitsForPlace(placeId);
+  @GetMapping("/{placeId}/top-traits")
+  public ResponseEntity<List<TraitResponseDTO>> getTopTraitsForPlace(@PathVariable UUID placeId) {
+    List<TraitResponseDTO> response = placeTraitQueryService.getTopTraitsForPlace(placeId);
 
-        return ResponseEntity.ok(response);
-    }
+    return ResponseEntity.ok(response);
+  }
 
-    @GetMapping("/{placeId}/missing-traits")
-    public ResponseEntity<List<TraitResponseDTO>> getMissingTraitsForPlace(@PathVariable UUID placeId) {
-        List<TraitResponseDTO> response = placeTraitQueryService.getMissingTraitsForPlace(placeId);
+  @GetMapping("/{placeId}/missing-traits")
+  public ResponseEntity<List<TraitResponseDTO>> getMissingTraitsForPlace(
+      @PathVariable UUID placeId) {
+    List<TraitResponseDTO> response = placeTraitQueryService.getMissingTraitsForPlace(placeId);
 
-        return ResponseEntity.ok(response);
-    }
+    return ResponseEntity.ok(response);
+  }
 
-    @PostMapping("/insert-trait")
-    public ResponseEntity<String> insertTraitForPlace(@RequestBody @Validated PlaceTraitRequestDTO dto) {
-        String response = placeTraitManagementService.insertSingleTraitInPlace(dto);
+  @PostMapping("/insert-trait")
+  public ResponseEntity<String> insertTraitForPlace(
+      @RequestBody @Validated PlaceTraitRequestDTO dto) {
+    String response = placeTraitManagementService.insertSingleTraitInPlace(dto);
 
-        return ResponseEntity.ok(response);
-    }
+    return ResponseEntity.ok(response);
+  }
 
-    @PostMapping("/batch-insert-traits")
-    public ResponseEntity<String> batchInsertTraitForPlace(@RequestBody @Validated BatchInsertTraitsInPlace dto) {
-        String response = placeTraitManagementService.batchInsertTraitsInPlace(dto);
+  @PostMapping("/batch-insert-traits")
+  public ResponseEntity<String> batchInsertTraitForPlace(
+      @RequestBody @Validated BatchInsertTraitsInPlace dto) {
+    String response = placeTraitManagementService.batchInsertTraitsInPlace(dto);
 
-        return ResponseEntity.ok(response);
-    }
+    return ResponseEntity.ok(response);
+  }
 
-    @PutMapping("/traits/update")
-    public ResponseEntity<String> updateTraitForPlace(@RequestBody @Validated PlaceTraitRequestDTO dto) {
-        String response = placeTraitManagementService.updateTraitForPlace(dto);
+  @PutMapping("/traits/update")
+  public ResponseEntity<String> updateTraitForPlace(
+      @RequestBody @Validated PlaceTraitRequestDTO dto) {
+    String response = placeTraitManagementService.updateTraitForPlace(dto);
 
-        return ResponseEntity.ok(response);
-    }
+    return ResponseEntity.ok(response);
+  }
 
-    @DeleteMapping("/traits/delete/{placeTraitId}")
-    public ResponseEntity<String> deleteTraitForPlace(@PathVariable UUID placeTraitId) {
-        String response = placeTraitManagementService.deleteSingleTraitInPlace(placeTraitId);
+  @DeleteMapping("/traits/delete/{placeTraitId}")
+  public ResponseEntity<String> deleteTraitForPlace(@PathVariable UUID placeTraitId) {
+    String response = placeTraitManagementService.deleteSingleTraitInPlace(placeTraitId);
 
-        return ResponseEntity.ok(response);
-    }
+    return ResponseEntity.ok(response);
+  }
 
-    @DeleteMapping("/batch-delete-traits")
-    public ResponseEntity<String> deleteTraitForPlace(@RequestBody @Validated BatchDeleteTraitsInPlace dto) {
-        String response = placeTraitManagementService.batchDeleteTraitsInPlace(dto);
+  @DeleteMapping("/batch-delete-traits")
+  public ResponseEntity<String> deleteTraitForPlace(
+      @RequestBody @Validated BatchDeleteTraitsInPlace dto) {
+    String response = placeTraitManagementService.batchDeleteTraitsInPlace(dto);
 
-        return ResponseEntity.ok(response);
-    }
+    return ResponseEntity.ok(response);
+  }
 }

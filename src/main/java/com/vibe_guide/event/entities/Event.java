@@ -11,18 +11,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,40 +31,40 @@ import java.util.UUID;
 @Setter
 @Entity
 public class Event {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    private String name;
+  private String name;
 
-    @CreationTimestamp
-    @Column(updatable = false, nullable = false)
-    private LocalDate dateCreated;
+  @CreationTimestamp
+  @Column(updatable = false, nullable = false)
+  private LocalDate dateCreated;
 
-    private String description;
+  private String description;
 
-    private LocalDateTime startDate;
+  private LocalDateTime startDate;
 
-    private LocalDateTime endDate;
+  private LocalDateTime endDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "place_id")
-    @ToString.Exclude
-    private Place place;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "place_id")
+  @ToString.Exclude
+  private Place place;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "event")
-    @ToString.Exclude
-    private Set<EventGallery> galleries = new HashSet<>();
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
+  @ToString.Exclude
+  private Set<EventGallery> galleries = new HashSet<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return Objects.equals(id, event.id);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    Event event = (Event) o;
+    return Objects.equals(id, event.id);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
+  }
 }

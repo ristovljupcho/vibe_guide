@@ -12,16 +12,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,34 +29,32 @@ import java.util.UUID;
 @Setter
 @Entity
 public class Trait {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @ToString.Include
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  @ToString.Include
+  private UUID id;
 
-    @Enumerated(EnumType.STRING)
-    private TraitType traitType;
+  @Enumerated(EnumType.STRING)
+  private TraitType traitType;
 
-    @Column(unique = true)
-    @ToString.Include
-    private String name;
+  @Column(unique = true)
+  @ToString.Include
+  private String name;
 
-    @OneToMany(mappedBy = "trait",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private Set<PlaceTrait> places = new HashSet<>();
+  @OneToMany(mappedBy = "trait", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @ToString.Exclude
+  private Set<PlaceTrait> places = new HashSet<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Trait trait = (Trait) o;
-        return Objects.equals(id, trait.id);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Trait trait = (Trait) o;
+    return Objects.equals(id, trait.id);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
 }
