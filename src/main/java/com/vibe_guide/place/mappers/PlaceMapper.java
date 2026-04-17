@@ -6,6 +6,7 @@ import com.vibe_guide.place.dtos.PlacePreviewResponseDTO;
 import com.vibe_guide.place.dtos.PlaceResponseDTO;
 import com.vibe_guide.place.entities.Place;
 import com.vibe_guide.place.entities.PlaceTopTraits;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ public class PlaceMapper {
     String menuLink = place.getMenuLink();
     PrimaryType primaryType = place.getPrimaryType();
     PriceLevel priceLevel = place.getPriceLevel();
+    List<String> imageUrls = place.getGallery().stream().map(gallery -> gallery.getPhoto()).toList();
 
     return new PlaceResponseDTO(
         name,
@@ -31,7 +33,8 @@ public class PlaceMapper {
         rating,
         menuLink,
         primaryType,
-        priceLevel);
+        priceLevel,
+        imageUrls);
   }
 
   public PlacePreviewResponseDTO toPlacePreviewResponseDTO(PlaceTopTraits placeTopTraits) {

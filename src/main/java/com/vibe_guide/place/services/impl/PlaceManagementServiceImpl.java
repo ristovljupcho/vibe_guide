@@ -9,15 +9,19 @@ import com.vibe_guide.place.dtos.PlaceResponseDTO;
 import com.vibe_guide.place.entities.Place;
 import com.vibe_guide.place.repositories.PlaceRepository;
 import com.vibe_guide.place.utils.PlaceResponseMessages;
+import com.vibe_guide.placegallery.services.PlaceGalleryManagementService;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @Service
 public class PlaceManagementServiceImpl implements PlaceManagementService {
   private PlaceRepository placeRepository;
+  private PlaceGalleryManagementService placeGalleryManagementService;
 
   @Override
   public PlaceResponseDTO insert() {
@@ -38,6 +42,7 @@ public class PlaceManagementServiceImpl implements PlaceManagementService {
     String menuLink = placeRequestDTO.menuLink();
     PrimaryType primaryType = placeRequestDTO.primaryType();
     PriceLevel priceLevel = placeRequestDTO.priceLevel();
+    List<MultipartFile> images = placeRequestDTO.images();
 
     place.setName(name);
     place.setDescription(description);
@@ -50,6 +55,11 @@ public class PlaceManagementServiceImpl implements PlaceManagementService {
 
     placeRepository.save(place);
 
+    if (images != null && !images.isEmpty()) {
+      placeGalleryManagementService.deleteAll(placeId);
+      placeGalleryManagementService.insertAll(placeId, images);
+    }
+
     return String.format(PlaceResponseMessages.PLACE_UPDATE_MESSAGE, name);
   }
 
@@ -58,6 +68,7 @@ public class PlaceManagementServiceImpl implements PlaceManagementService {
   public String delete(UUID placeId) {
     Place place = getById(placeId);
 
+    placeGalleryManagementService.deleteAll(placeId);
     placeRepository.deleteById(placeId);
 
     String placeName = place.getName();

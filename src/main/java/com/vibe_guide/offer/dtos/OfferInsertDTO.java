@@ -11,4 +11,4 @@ public record OfferInsertDTO(
     @NotNull LocalDateTime startDate,
     @NotNull LocalDateTime endDate,
     @NotEmpty String description,
-    byte[] image) {}
+    String imageUrl) {}

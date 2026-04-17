@@ -19,14 +19,14 @@ public class EventMapper {
     LocalDateTime endDate = event.getEndDate();
 
     List<EventGallery> gallery = event.getGalleries().stream().toList();
-    byte[] image;
+    String imageUrl;
     if (gallery.isEmpty()) {
-      image = null;
+      imageUrl = null;
     } else {
       EventGallery eventGallery = gallery.getFirst();
-      image = eventGallery.getImage();
+      imageUrl = eventGallery.getPhoto();
     }
 
-    return new EventResponseDTO(name, placeName, description, startDate, endDate, image);
+    return new EventResponseDTO(name, placeName, description, startDate, endDate, imageUrl);
   }
 }

@@ -15,8 +15,8 @@ public class OfferMapper {
     String description = offer.getDescription();
     LocalDateTime startDate = offer.getStartDate();
     LocalDateTime endDate = offer.getEndDate();
-    byte[] image = offer.getImage();
+    String imageUrl = offer.getImage();
 
-    return new OfferResponseDTO(name, placeName, description, startDate, endDate, image);
+    return new OfferResponseDTO(name, placeName, description, startDate, endDate, imageUrl);
   }
 }

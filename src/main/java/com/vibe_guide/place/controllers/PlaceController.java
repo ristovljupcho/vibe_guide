@@ -13,6 +13,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -50,7 +51,7 @@ public class PlaceController {
   }
 
   @PutMapping("/update")
-  ResponseEntity<String> update(@RequestBody @Valid PlaceRequestDTO dto) {
+  ResponseEntity<String> update(@ModelAttribute @Valid PlaceRequestDTO dto) {
     String response = placeManagementService.update(dto);
 
     return ResponseEntity.ok(response);

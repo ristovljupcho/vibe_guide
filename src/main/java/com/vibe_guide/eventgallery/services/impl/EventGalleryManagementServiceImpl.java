@@ -7,11 +7,9 @@ import com.vibe_guide.eventgallery.entities.EventGallery;
 import com.vibe_guide.eventgallery.repositories.EventGalleryRepository;
 import com.vibe_guide.exceptions.EventNotFoundException;
 import com.vibe_guide.exceptions.ImageNotFoundException;
+import com.vibe_guide.storage.ImageStorageService;
 import jakarta.transaction.Transactional;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,29 +21,24 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
 
   private final EventRepository eventRepository;
   private final EventGalleryRepository eventGalleryRepository;
+  private final ImageStorageService imageStorageService;
 
   @Override
   @Transactional
   public void insertAll(UUID eventId, List<MultipartFile> images) {
     Event event =
         eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
-    List<EventGallery> eventGallery = new ArrayList<>();
-
-    for (MultipartFile image : images) {
-      if (image != null && !image.isEmpty()) {
-        if (!Objects.requireNonNull(image.getContentType()).startsWith("image")) {
-          throw new IllegalArgumentException("Uploaded file is not an image");
-        }
-        try {
-          EventGallery gallery = new EventGallery();
-          gallery.setPhoto(image.getBytes());
-          gallery.setEvent(event);
-          eventGallery.add(gallery);
-        } catch (IOException e) {
-          throw new RuntimeException("Failed to read image bytes", e);
-        }
-      }
-    }
+    List<EventGallery> eventGallery =
+        images.stream()
+            .filter(image -> image != null && !image.isEmpty())
+            .map(
+                image -> {
+                  EventGallery gallery = new EventGallery();
+                  gallery.setPhoto(imageStorageService.store(image, "events/" + eventId));
+                  gallery.setEvent(event);
+                  return gallery;
+                })
+            .toList();
     eventGalleryRepository.saveAll(eventGallery);
   }
 
@@ -53,14 +46,16 @@ public class EventGalleryManagementServiceImpl implements EventGalleryManagement
   public void deleteAll(UUID eventId) {
     eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
     List<EventGallery> existingGalleries = eventGalleryRepository.findAllByEventId(eventId);
+    existingGalleries.forEach(gallery -> imageStorageService.delete(gallery.getPhoto()));
     eventGalleryRepository.deleteAll(existingGalleries);
   }
 
   @Override
   public void deleteById(UUID imageId) {
-    if (!eventGalleryRepository.existsById(imageId)) throw new ImageNotFoundException(imageId);
-
-    eventGalleryRepository.deleteById(imageId);
+    EventGallery gallery =
+        eventGalleryRepository.findById(imageId).orElseThrow(() -> new ImageNotFoundException(imageId));
+    imageStorageService.delete(gallery.getPhoto());
+    eventGalleryRepository.delete(gallery);
   }
 }
 

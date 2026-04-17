@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -75,7 +76,7 @@ public class EventController {
   }
 
   @PostMapping("/insert")
-  ResponseEntity<String> insert(@RequestBody @Valid EventInsertRequestDTO dto) {
+  ResponseEntity<String> insert(@ModelAttribute @Valid EventInsertRequestDTO dto) {
     String response = eventManagementService.insert(dto);
 
     return ResponseEntity.ok(response);
