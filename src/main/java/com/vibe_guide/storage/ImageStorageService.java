@@ -7,3 +7,4 @@ public interface ImageStorageService {
 
   void delete(String storedPath);
 }
+

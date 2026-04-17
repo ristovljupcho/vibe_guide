@@ -1,6 +1,6 @@
 package com.vibe_guide.enums;
 
-import com.vibe_guide.placetrait.entities.PlaceTrait;
+import com.vibe_guide.domain.placetrait.entities.PlaceTrait;
 import lombok.Getter;
 
 /**
@@ -38,3 +38,4 @@ public enum TraitPriority {
     this.weight = weight;
   }
 }
+

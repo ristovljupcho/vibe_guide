@@ -6,8 +6,11 @@ This file defines the required implementation standards for contributors and cod
 
 ## Directory Structure
 
-1. Each model MUST have its own top-level directory.
-2. Every model directory MUST contain the following subdirectories:
+1. Each model MUST live under the shared `domain` root directory.
+2. Each model MUST have its own directory under `domain`.
+   - Example: `com.vibe_guide.domain.place`
+3. Shared technical or cross-cutting packages MUST stay outside `domain`.
+4. Every model directory MUST contain the following subdirectories:
    - `entities`
    - `repositories`
    - `dtos`
@@ -15,11 +18,13 @@ This file defines the required implementation standards for contributors and cod
    - `services`
    - `utils`
    - `controllers`
-3. The `services` directory MUST contain both:
+5. The `services` directory MUST contain both:
    - the service interface
    - the service implementation class
-4. `.gitkeep` files MAY be used only to preserve intentionally empty directories.
-5. If a directory is populated with real source files, its `.gitkeep` file MUST be removed.
+6. Service implementation classes MUST live in:
+   - `services.impl`
+7. `.gitkeep` files MAY be used only to preserve intentionally empty directories.
+8. If a directory is populated with real source files, its `.gitkeep` file MUST be removed.
 
 ## Shared Directories
 

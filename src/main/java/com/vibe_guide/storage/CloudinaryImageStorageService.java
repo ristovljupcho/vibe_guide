@@ -124,3 +124,4 @@ public class CloudinaryImageStorageService implements ImageStorageService {
     return publicIdWithExtension.substring(0, extensionIndex);
   }
 }
+

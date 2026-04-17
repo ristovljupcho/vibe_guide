@@ -16,3 +16,4 @@ public class ExceptionMessage {
     this.generalExceptionMessage = generalExceptionMessage;
   }
 }
+

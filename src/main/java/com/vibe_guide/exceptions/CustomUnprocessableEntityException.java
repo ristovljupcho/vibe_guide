@@ -8,3 +8,4 @@ import lombok.RequiredArgsConstructor;
 public class CustomUnprocessableEntityException extends RuntimeException {
   private final String message;
 }
+

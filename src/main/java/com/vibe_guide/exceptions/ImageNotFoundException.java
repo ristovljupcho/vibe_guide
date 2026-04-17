@@ -7,3 +7,4 @@ public class ImageNotFoundException extends CustomNotFoundException {
     super(String.format("Image with id %s not found", imageId));
   }
 }
+

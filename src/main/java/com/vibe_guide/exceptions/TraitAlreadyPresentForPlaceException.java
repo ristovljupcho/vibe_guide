@@ -8,3 +8,4 @@ public class TraitAlreadyPresentForPlaceException extends CustomUnprocessableEnt
     super("Trait with id " + traitId + " already exists for place with id " + placeId + ".");
   }
 }
+

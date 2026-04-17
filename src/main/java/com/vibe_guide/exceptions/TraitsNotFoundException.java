@@ -5,3 +5,4 @@ public class TraitsNotFoundException extends CustomNotFoundException {
     super("Traits with ids " + missingTraitsString + " not found.");
   }
 }
+

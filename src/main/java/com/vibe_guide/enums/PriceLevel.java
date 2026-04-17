@@ -6,3 +6,4 @@ public enum PriceLevel {
   EXPENSIVE,
   OTHER
 }
+

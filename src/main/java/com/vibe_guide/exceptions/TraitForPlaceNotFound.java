@@ -11,3 +11,4 @@ public class TraitForPlaceNotFound extends CustomNotFoundException {
     super("Trait with id " + placeId + " for place with id " + traitId + " not found.");
   }
 }
+

@@ -12,3 +12,4 @@ public class WorkingHoursNotFoundException extends CustomNotFoundException {
     super("Working days '" + days + "' for place with id " + placeId + " not found.");
   }
 }
+

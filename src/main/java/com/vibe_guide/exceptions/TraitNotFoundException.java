@@ -7,3 +7,4 @@ public class TraitNotFoundException extends CustomNotFoundException {
     super("Trait with id " + traitId.toString() + " not found.");
   }
 }
+

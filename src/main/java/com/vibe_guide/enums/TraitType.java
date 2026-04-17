@@ -9,3 +9,4 @@ public enum TraitType {
   FOOD,
   MUSIC_TYPE,
 }
+

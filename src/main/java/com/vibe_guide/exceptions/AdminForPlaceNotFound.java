@@ -7,3 +7,4 @@ public class AdminForPlaceNotFound extends CustomNotFoundException {
     super("Admin for place id " + placeId + " and user id " + userId + ".");
   }
 }
+

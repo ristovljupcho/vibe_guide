@@ -7,3 +7,4 @@ public class ReviewNotFoundException extends RuntimeException {
     super(String.format("Review with id %s not found", reviewId));
   }
 }
+

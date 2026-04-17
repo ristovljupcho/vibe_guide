@@ -9,3 +9,4 @@ public class WorkingHoursAlreadyPresentException extends CustomUnprocessableEnti
     super("For place with id " + placeId + " duplicated days are inserted: " + duplicateDays);
   }
 }
+

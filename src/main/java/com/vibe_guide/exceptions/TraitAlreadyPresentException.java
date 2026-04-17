@@ -12,3 +12,4 @@ public class TraitAlreadyPresentException extends CustomUnprocessableEntityExcep
             + " already present in the database.");
   }
 }
+
