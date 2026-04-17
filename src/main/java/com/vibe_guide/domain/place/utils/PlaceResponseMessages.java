@@ -9,3 +9,4 @@ public class PlaceResponseMessages {
       "Place with id '%s' and name '%s' successfully deleted.";
 }
 
+

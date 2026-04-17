@@ -52,7 +52,13 @@ The following directories are shared and MUST remain outside model-specific dire
 
 1. Complex methods MUST include JavaDocs.
 2. Helper methods MUST include JavaDocs when their purpose, behavior, or usage is not immediately obvious.
-3. JavaDocs SHOULD explain intent and non-obvious behavior, not restate trivial code.
+3. JavaDocs MUST include full tags when applicable:
+   - `@param` for every parameter
+   - `@return` for every non-void method
+   - `@throws` for every meaningful exception the method can raise
+4. JavaDocs MUST use simple class names in tags and descriptions, not fully qualified package paths.
+5. If a JavaDoc references a class by simple name, that class MUST be added as an import in the file.
+6. JavaDocs SHOULD explain intent and non-obvious behavior, not restate trivial code.
 
 ## CRUD Standards
 

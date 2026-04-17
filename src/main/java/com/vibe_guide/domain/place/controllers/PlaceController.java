@@ -1,9 +1,10 @@
 package com.vibe_guide.domain.place.controllers;
 
+import com.vibe_guide.domain.place.dtos.PlaceCreateDTO;
 import com.vibe_guide.enums.sorting.PlaceSortBy;
 import com.vibe_guide.enums.sorting.SortDirection;
 import com.vibe_guide.domain.place.dtos.PlacePreviewResponseDTO;
-import com.vibe_guide.domain.place.dtos.PlaceRequestDTO;
+import com.vibe_guide.domain.place.dtos.PlaceUpdateDTO;
 import com.vibe_guide.domain.place.dtos.PlaceResponseDTO;
 import com.vibe_guide.domain.place.services.PlaceManagementService;
 import com.vibe_guide.domain.place.services.PlaceQueryService;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -50,8 +52,15 @@ public class PlaceController {
     return ResponseEntity.ok(response);
   }
 
+  @PostMapping("/create")
+  ResponseEntity<PlaceResponseDTO> create(@ModelAttribute @Valid PlaceCreateDTO dto) {
+    PlaceResponseDTO response = placeManagementService.create(dto);
+
+    return ResponseEntity.ok(response);
+  }
+
   @PutMapping("/update")
-  ResponseEntity<String> update(@ModelAttribute @Valid PlaceRequestDTO dto) {
+  ResponseEntity<String> update(@ModelAttribute @Valid PlaceUpdateDTO dto) {
     String response = placeManagementService.update(dto);
 
     return ResponseEntity.ok(response);
@@ -64,4 +73,6 @@ public class PlaceController {
     return ResponseEntity.ok(response);
   }
 }
+
+
 

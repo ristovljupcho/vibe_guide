@@ -38,3 +38,4 @@ public class PlaceTopTraits {
   private String[] topTraits;
 }
 
+

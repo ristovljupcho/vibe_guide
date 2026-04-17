@@ -1,5 +1,6 @@
 package com.vibe_guide.domain.place.entities;
 
+import com.vibe_guide.audit.AuditableEntity;
 import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
 import com.vibe_guide.domain.placeadmin.entities.PlaceAdmin;
@@ -30,7 +31,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-public class Place {
+public class Place extends AuditableEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   @ToString.Include
@@ -81,4 +82,5 @@ public class Place {
     return Objects.hashCode(id);
   }
 }
+
 

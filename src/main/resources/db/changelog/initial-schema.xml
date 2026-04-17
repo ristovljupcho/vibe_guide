@@ -39,7 +39,30 @@
             <column name="menu_link" type="VARCHAR(255)"/>
             <column name="price_level" type="VARCHAR(50)"/>
             <column name="primary_type" type="VARCHAR(50)"/>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="created_by" type="UUID"/>
+            <column name="updated_by" type="UUID"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="add-audit-columns-to-place" author="codex">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="place" columnName="created_at"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="place">
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="2026-03-01T09:00:00">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="created_by" type="UUID"/>
+            <column name="updated_by" type="UUID"/>
+        </addColumn>
     </changeSet>
 
     <changeSet id="place_trait_table" author="negrioska">

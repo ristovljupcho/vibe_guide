@@ -11,10 +11,10 @@ import com.vibe_guide.domain.place.entities.PlaceTopTraits;
 import com.vibe_guide.domain.place.mappers.PlaceMapper;
 import com.vibe_guide.domain.place.repositories.PlaceRepository;
 import com.vibe_guide.domain.place.repositories.PlaceTopTraitsRepository;
-import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,10 +39,8 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
     PlaceSortBy actualSortBy = (sortBy != null) ? sortBy : PlaceSortBy.DEFAULT;
     SortDirection actualSortDirection =
         (sortDirection != null) ? sortDirection : SortDirection.DESC;
-    List<PlaceTopTraits> places = loadPlaces(traits);
-    Comparator<PlaceTopTraits> comparator = buildComparator(actualSortBy, actualSortDirection);
-
-    places.sort(comparator);
+    Sort sort = buildSort(actualSortBy, actualSortDirection);
+    List<PlaceTopTraits> places = loadPlaces(traits, sort);
 
     return places.stream().map(placeMapper::toPlacePreviewResponseDTO).toList();
   }
@@ -54,30 +52,29 @@ public class PlaceQueryServiceImpl implements PlaceQueryService {
     return places.stream().map(placeMapper::toPlacePreviewResponseDTO).toList();
   }
 
-  private List<PlaceTopTraits> loadPlaces(List<String> traits) {
+  private List<PlaceTopTraits> loadPlaces(List<String> traits, Sort sort) {
     if (traits == null || traits.isEmpty()) {
-      return placeTopTraitsRepository.findAll();
+      return placeTopTraitsRepository.findAll(sort);
     }
 
-    return placeTopTraitsRepository.findAllByTraits(traits, traits.size());
+    return placeTopTraitsRepository.findAllByTraits(traits, traits.size(), sort);
   }
 
-  private Comparator<PlaceTopTraits> buildComparator(
+  private Sort buildSort(
       PlaceSortBy sortBy, SortDirection sortDirection) {
-    Comparator<PlaceTopTraits> comparator =
+    String sortField =
         switch (sortBy) {
-          case DEFAULT ->
-              Comparator.comparing(PlaceTopTraits::getName, String.CASE_INSENSITIVE_ORDER);
-          case RATING ->
-              Comparator.comparing(
-                  PlaceTopTraits::getRating, Comparator.nullsLast(Double::compareTo));
-          case PRICE_LEVEL ->
-              Comparator.comparing(
-                  PlaceTopTraits::getPriceLevel, Comparator.nullsLast(Enum::compareTo));
+          case DEFAULT -> "name";
+          case RATING -> "rating";
+          case PRICE_LEVEL -> "priceLevel";
         };
 
-    return sortDirection == SortDirection.DESC ? comparator.reversed() : comparator;
+    return Sort.by(
+        sortDirection == SortDirection.DESC
+            ? Sort.Order.desc(sortField)
+            : Sort.Order.asc(sortField));
   }
 }
+
 
 

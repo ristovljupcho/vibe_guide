@@ -13,3 +13,4 @@ public record PlacePreviewResponseDTO(
     PriceLevel priceLevel,
     String[] topTraits) {}
 
+

@@ -7,3 +7,4 @@ import java.util.UUID;
 
 public record BatchDeleteTraitsInPlace(@NotNull UUID placeId, @NotEmpty List<UUID> traitIds) {}
 
+

@@ -16,3 +16,4 @@ public class PlaceTraitResponseMessages {
       "Deleted %d traits for place with id %s.";
 }
 
+

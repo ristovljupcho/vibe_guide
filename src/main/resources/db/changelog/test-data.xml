@@ -99,6 +99,7 @@
             <column name="menu_link" value="https://pulsecoffeelab.mk/menu"/>
             <column name="price_level" value="MODERATE"/>
             <column name="primary_type" value="COFFEE_SHOP"/>
+            <column name="created_at" value="2026-03-01 09:00:00"/>
         </insert>
         <insert tableName="place">
             <column name="id" value="22222222-2222-2222-2222-222222222002"/>
@@ -112,6 +113,7 @@
             <column name="menu_link" value="https://bistro42.mk/menu"/>
             <column name="price_level" value="EXPENSIVE"/>
             <column name="primary_type" value="RESTAURANT"/>
+            <column name="created_at" value="2026-03-01 09:05:00"/>
         </insert>
         <insert tableName="place">
             <column name="id" value="22222222-2222-2222-2222-222222222003"/>
@@ -124,6 +126,7 @@
             <column name="menu_link" value="https://riverfronttaproom.mk/menu"/>
             <column name="price_level" value="INEXPENSIVE"/>
             <column name="primary_type" value="PUB"/>
+            <column name="created_at" value="2026-03-01 09:10:00"/>
         </insert>
         <insert tableName="place">
             <column name="id" value="22222222-2222-2222-2222-222222222004"/>
@@ -136,6 +139,7 @@
             <column name="menu_link" value="https://skylinelounge.mk/menu"/>
             <column name="price_level" value="EXPENSIVE"/>
             <column name="primary_type" value="LOUNGE"/>
+            <column name="created_at" value="2026-03-01 09:15:00"/>
         </insert>
         <insert tableName="place">
             <column name="id" value="22222222-2222-2222-2222-222222222005"/>
@@ -148,6 +152,7 @@
             <column name="menu_link" value="https://novaclub.mk/menu"/>
             <column name="price_level" value="MODERATE"/>
             <column name="primary_type" value="CLUB"/>
+            <column name="created_at" value="2026-03-01 09:20:00"/>
         </insert>
     </changeSet>
 
