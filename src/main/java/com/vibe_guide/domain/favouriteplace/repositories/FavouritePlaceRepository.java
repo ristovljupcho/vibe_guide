@@ -16,7 +16,8 @@ public interface FavouritePlaceRepository extends JpaRepository<FavouritePlace, 
            fp.place.name,
            fp.place.rating,
            fp.place.description,
-           fp.createdAt
+           fp.createdAt,
+           fp.note
       )
       FROM FavouritePlace fp
       WHERE fp.user.id = :userId

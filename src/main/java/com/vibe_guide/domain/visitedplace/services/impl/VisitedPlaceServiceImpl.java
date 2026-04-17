@@ -38,7 +38,7 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
 
   @Override
   @Transactional
-  public String toggle(UUID userId, UUID placeId) {
+  public String toggle(UUID userId, UUID placeId, String note) {
 
     Place place =
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
@@ -59,7 +59,7 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
     visitedPlace.setId(visitedPlaceId);
     visitedPlace.setUser(user);
     visitedPlace.setPlace(place);
-    visitedPlace.setNote(null);
+    visitedPlace.setNote(note);
 
     visitedPlaceRepository.save(visitedPlace);
 

@@ -38,7 +38,7 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
 
   @Override
   @Transactional
-  public String toggle(UUID userId, UUID placeId) {
+  public String toggle(UUID userId, UUID placeId, String note) {
 
     User user =
         userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
@@ -58,6 +58,7 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
     wishlistPlace.setId(id);
     wishlistPlace.setUser(user);
     wishlistPlace.setPlace(place);
+    wishlistPlace.setNote(note);
 
     wishlistRepository.save(wishlistPlace);
 

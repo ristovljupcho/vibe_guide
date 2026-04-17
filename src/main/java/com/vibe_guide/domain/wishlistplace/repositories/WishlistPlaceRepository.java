@@ -17,7 +17,8 @@ public interface WishlistPlaceRepository extends JpaRepository<WishlistPlace, Wi
           wp.place.name,
           wp.place.rating,
           wp.place.description,
-          wp.createdAt
+          wp.createdAt,
+          wp.note
       )
       FROM WishlistPlace wp
       WHERE wp.user.id = :userId

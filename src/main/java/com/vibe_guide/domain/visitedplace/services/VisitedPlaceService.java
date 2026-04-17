@@ -7,6 +7,6 @@ import java.util.UUID;
 public interface VisitedPlaceService {
   List<VisitedPlaceResponseDTO> getAllByUserId(UUID userId);
 
-  String toggle(UUID userId, UUID placeId);
+  String toggle(UUID userId, UUID placeId, String note);
 }
 

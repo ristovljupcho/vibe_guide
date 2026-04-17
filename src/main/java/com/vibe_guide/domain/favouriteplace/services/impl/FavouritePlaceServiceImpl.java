@@ -39,7 +39,7 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
 
   @Override
   @Transactional
-  public String toggle(UUID userId, UUID placeId) {
+  public String toggle(UUID userId, UUID placeId, String note) {
     User user =
         userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
@@ -55,7 +55,7 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
       return FavouritePlaceResponseMessages.FAVOURITE_PLACE_REMOVED;
     }
 
-    FavouritePlace fav = favouritePlaceMapper.toFavouritePlace(id, user, place);
+    FavouritePlace fav = favouritePlaceMapper.toFavouritePlace(id, user, place, note);
     favouritePlaceRepository.save(fav);
 
     return FavouritePlaceResponseMessages.FAVOURITE_PLACE_ADDED;
