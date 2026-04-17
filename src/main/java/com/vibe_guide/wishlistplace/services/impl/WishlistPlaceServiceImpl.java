@@ -11,6 +11,7 @@ import com.vibe_guide.wishlistplace.dtos.WishlistPlaceResponseDTO;
 import com.vibe_guide.wishlistplace.entities.WishlistPlace;
 import com.vibe_guide.wishlistplace.entities.WishlistPlaceId;
 import com.vibe_guide.wishlistplace.repositories.WishlistPlaceRepository;
+import com.vibe_guide.wishlistplace.utils.WishlistPlaceResponseMessages;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
 
     if (existing.isPresent()) {
       wishlistRepository.delete(existing.get());
-      return "Place removed from wishlist.";
+      return WishlistPlaceResponseMessages.WISHLIST_PLACE_REMOVED;
     }
 
     WishlistPlace wishlistPlace = new WishlistPlace();
@@ -60,7 +61,7 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
 
     wishlistRepository.save(wishlistPlace);
 
-    return "Place added to wishlist.";
+    return WishlistPlaceResponseMessages.WISHLIST_PLACE_ADDED;
   }
 }
 

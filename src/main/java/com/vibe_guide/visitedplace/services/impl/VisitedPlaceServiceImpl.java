@@ -11,6 +11,7 @@ import com.vibe_guide.visitedplace.dtos.VisitedPlaceResponseDTO;
 import com.vibe_guide.visitedplace.entities.VisitedPlace;
 import com.vibe_guide.visitedplace.entities.VisitedPlaceId;
 import com.vibe_guide.visitedplace.repositories.VisitedPlaceRepository;
+import com.vibe_guide.visitedplace.utils.VisitedPlaceResponseMessages;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -51,7 +52,7 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
 
     if (existing.isPresent()) {
       visitedPlaceRepository.delete(existing.get());
-      return "Place removed from visited list.";
+      return VisitedPlaceResponseMessages.VISITED_PLACE_REMOVED;
     }
 
     VisitedPlace visitedPlace = new VisitedPlace();
@@ -62,7 +63,7 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
 
     visitedPlaceRepository.save(visitedPlace);
 
-    return "Place marked as visited.";
+    return VisitedPlaceResponseMessages.VISITED_PLACE_ADDED;
   }
 }
 
