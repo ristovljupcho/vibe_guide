@@ -71,3 +71,38 @@ The following directories are shared and MUST remain outside model-specific dire
    - `getOfferById`
    when the method already lives inside the corresponding model service or controller.
 8. Repository method names MAY stay more descriptive when required by Spring Data query derivation or query intent, but service and controller methods MUST keep the standard CRUD naming style.
+
+## Commit Message Standards
+
+1. Subject line MUST be in imperative mood.
+   - Good: `Add favourites toggle endpoint`
+   - Bad: `Added favourites toggle endpoint`
+2. Subject line MUST start with a capital letter and MUST NOT end with punctuation.
+3. Subject line SHOULD be concise and ideally <= 50 characters.
+4. If more context is needed, include a body separated by a blank line.
+5. Body lines SHOULD wrap at ~72 characters.
+6. Body MUST explain the `what` and `why`, not only the `how`.
+7. Avoid vague or filler commit messages such as:
+   - `fix stuff`
+   - `oops`
+   - `I think this works`
+8. Prefer one logical change per commit.
+
+Preferred structure:
+
+`<type>: <imperative summary>`
+
+Optional body:
+
+- what changed
+- why it changed
+- impact/risk notes (if relevant)
+
+Suggested commit types:
+
+- `feat` for new functionality
+- `fix` for bug fixes
+- `refactor` for code restructuring without behavior changes
+- `docs` for documentation changes
+- `test` for tests
+- `chore` for maintenance/non-feature work
