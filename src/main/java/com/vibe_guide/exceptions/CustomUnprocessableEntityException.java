@@ -6,5 +6,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class CustomUnprocessableEntityException extends RuntimeException {
-    private final String message;
+  private final String message;
 }
+
