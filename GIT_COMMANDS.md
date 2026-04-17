@@ -11,6 +11,8 @@ Treat these mappings as the default interpretation for human shorthand and agent
 1. Prefer explicit, non-interactive Git commands.
 2. Avoid ambiguous shorthand when it can hide behavior.
 3. Never assume `commit -a` includes untracked files.
+4. Group files into the same commit only when they belong to the same logical change, scope, or purpose.
+5. Split unrelated changes into separate commits.
 
 ## Command Mappings
 
@@ -22,6 +24,7 @@ Treat these mappings as the default interpretation for human shorthand and agent
 - `diff staged` -> `git diff --cached`
 - `log` -> `git log --oneline --decorate -n 10`
 - `branches` -> `git branch -a`
+- `branch` -> `git branch`
 
 ### Staging
 
@@ -33,20 +36,21 @@ Treat these mappings as the default interpretation for human shorthand and agent
 
 - `commit` -> commit currently staged changes only
 - `commit task` -> stage only the files related to the current task, then commit
-- `commit all` -> `git add -A && git commit`
+- `commit all` -> stage and commit the entire current working tree only when all pending changes belong to the same logical change
 - `commit tracked` -> `git commit -a`
 
 Important:
 
 - `commit task` is the preferred command when only part of the working tree belongs to the task
+- `commit all` should be used only when the entire working tree is one coherent change
 - `git commit -a` stages only modified and deleted tracked files
 - it does not include new untracked files
 - use `commit all` when the intention is truly all current changes
 
 ### Branching
 
-- `new branch <name>` -> `git checkout -b <name>`
-- `switch <name>` -> `git checkout <name>`
+- `new branch <name>` -> `git switch -c <name>`
+- `switch <name>` -> `git switch <name>`
 - `current branch` -> `git branch --show-current`
 
 ### Sync
