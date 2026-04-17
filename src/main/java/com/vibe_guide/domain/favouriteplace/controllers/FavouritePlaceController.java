@@ -30,12 +30,9 @@ public class FavouritePlaceController {
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping("/{userId}/{placeId}")
-  public ResponseEntity<String> toggle(
-      @PathVariable UUID userId,
-      @PathVariable UUID placeId,
-      @RequestBody(required = false) @Valid FavouritePlaceToggleRequestDTO dto) {
-    String message = favouritePlaceService.toggle(userId, placeId, dto != null ? dto.note() : null);
+  @PostMapping("/toggle")
+  public ResponseEntity<String> toggle(@RequestBody @Valid FavouritePlaceToggleRequestDTO dto) {
+    String message = favouritePlaceService.toggle(dto);
     return ResponseEntity.ok(message);
   }
 }

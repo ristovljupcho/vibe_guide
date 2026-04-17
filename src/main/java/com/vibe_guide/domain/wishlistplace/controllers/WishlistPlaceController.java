@@ -27,12 +27,9 @@ public class WishlistPlaceController {
     return ResponseEntity.ok(wishlistService.getAllByUserId(userId));
   }
 
-  @PostMapping("/{userId}/{placeId}")
-  public ResponseEntity<String> toggle(
-      @PathVariable UUID userId,
-      @PathVariable UUID placeId,
-      @RequestBody(required = false) @Valid WishlistPlaceToggleRequestDTO dto) {
-    return ResponseEntity.ok(wishlistService.toggle(userId, placeId, dto != null ? dto.note() : null));
+  @PostMapping("/toggle")
+  public ResponseEntity<String> toggle(@RequestBody @Valid WishlistPlaceToggleRequestDTO dto) {
+    return ResponseEntity.ok(wishlistService.toggle(dto));
   }
 }
 

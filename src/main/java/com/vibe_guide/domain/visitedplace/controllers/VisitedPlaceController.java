@@ -30,12 +30,9 @@ public class VisitedPlaceController {
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping("/{userId}/{placeId}")
-  public ResponseEntity<String> toggle(
-      @PathVariable UUID userId,
-      @PathVariable UUID placeId,
-      @RequestBody(required = false) @Valid VisitedPlaceToggleRequestDTO dto) {
-    String result = visitedPlaceService.toggle(userId, placeId, dto != null ? dto.note() : null);
+  @PostMapping("/toggle")
+  public ResponseEntity<String> toggle(@RequestBody @Valid VisitedPlaceToggleRequestDTO dto) {
+    String result = visitedPlaceService.toggle(dto);
     return ResponseEntity.ok(result);
   }
 }

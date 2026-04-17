@@ -1,5 +1,6 @@
 package com.vibe_guide.domain.favouriteplace.services.impl;
 
+import com.vibe_guide.domain.favouriteplace.dtos.FavouritePlaceToggleRequestDTO;
 import com.vibe_guide.domain.favouriteplace.services.FavouritePlaceService;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.exceptions.UserNotFoundException;
@@ -39,7 +40,9 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
 
   @Override
   @Transactional
-  public String toggle(UUID userId, UUID placeId, String note) {
+  public String toggle(FavouritePlaceToggleRequestDTO dto) {
+    UUID userId = dto.userId();
+    UUID placeId = dto.placeId();
     User user =
         userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
@@ -55,7 +58,7 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
       return FavouritePlaceResponseMessages.FAVOURITE_PLACE_REMOVED;
     }
 
-    FavouritePlace fav = favouritePlaceMapper.toFavouritePlace(id, user, place, note);
+    FavouritePlace fav = favouritePlaceMapper.toFavouritePlace(id, user, place, dto.note());
     favouritePlaceRepository.save(fav);
 
     return FavouritePlaceResponseMessages.FAVOURITE_PLACE_ADDED;
