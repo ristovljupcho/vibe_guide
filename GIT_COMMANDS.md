@@ -32,11 +32,13 @@ Treat these mappings as the default interpretation for human shorthand and agent
 ### Commit
 
 - `commit` -> commit currently staged changes only
+- `commit task` -> stage only the files related to the current task, then commit
 - `commit all` -> `git add -A && git commit`
 - `commit tracked` -> `git commit -a`
 
 Important:
 
+- `commit task` is the preferred command when only part of the working tree belongs to the task
 - `git commit -a` stages only modified and deleted tracked files
 - it does not include new untracked files
 - use `commit all` when the intention is truly all current changes
@@ -57,11 +59,12 @@ Important:
 ## Recommendations
 
 1. Prefer `commit all` over `commit -a` when working quickly.
-2. Use `status` before every commit.
-3. Use `diff staged` before committing.
-4. Keep one logical change per commit.
-5. Prefer branch names tied to issue numbers when available.
-6. Prefer small, descriptive commit messages in imperative mood.
+2. Prefer `commit task` when unrelated files are also modified in the working tree.
+3. Use `status` before every commit.
+4. Use `diff staged` before committing.
+5. Keep one logical change per commit.
+6. Prefer branch names tied to issue numbers when available.
+7. Prefer small, descriptive commit messages in imperative mood.
 
 ## Recommended Shorthand Set
 
@@ -71,6 +74,7 @@ If you want a compact set of daily-use commands, use these:
 - `diff`
 - `diff staged`
 - `stage all`
+- `commit task`
 - `commit all`
 - `push`
 - `branches`
