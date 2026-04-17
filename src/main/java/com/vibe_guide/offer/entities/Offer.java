@@ -1,7 +1,6 @@
 package com.vibe_guide.offer.entities;
 
 import com.vibe_guide.place.entities.Place;
-import com.vibe_guide.utils.photoEncoder.Base64Image;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +25,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 @Setter
 @Entity
-public class Offer implements Base64Image {
+public class Offer {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
@@ -41,7 +40,7 @@ public class Offer implements Base64Image {
 
   private String description;
 
-  private byte[] image;
+  private String image;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "place_id")
@@ -58,9 +57,5 @@ public class Offer implements Base64Image {
   @Override
   public int hashCode() {
     return Objects.hashCode(id);
-  }
-
-  public String generateEncodedImage() {
-    return generateBase64Image();
   }
 }

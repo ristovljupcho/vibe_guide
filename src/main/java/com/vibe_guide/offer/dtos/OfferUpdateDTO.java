@@ -12,4 +12,4 @@ public record OfferUpdateDTO(
     @NotNull LocalDateTime startDate,
     @NotNull LocalDateTime endDate,
     @NotEmpty String description,
-    byte[] image) {}
+    String imageUrl) {}

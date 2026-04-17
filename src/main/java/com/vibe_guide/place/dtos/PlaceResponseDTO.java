@@ -2,6 +2,7 @@ package com.vibe_guide.place.dtos;
 
 import com.vibe_guide.enums.PriceLevel;
 import com.vibe_guide.enums.PrimaryType;
+import java.util.List;
 
 public record PlaceResponseDTO(
     String name,
@@ -12,4 +13,5 @@ public record PlaceResponseDTO(
     double rating,
     String menuLink,
     PrimaryType primaryType,
-    PriceLevel priceLevel) {}
+    PriceLevel priceLevel,
+    List<String> imageUrls) {}

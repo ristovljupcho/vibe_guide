@@ -9,17 +9,18 @@ import com.vibe_guide.offer.repositories.OfferRepository;
 import com.vibe_guide.offer.utils.OfferResponseMessages;
 import com.vibe_guide.place.entities.Place;
 import com.vibe_guide.place.repositories.PlaceRepository;
-import java.util.Base64;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.vibe_guide.storage.ImageStorageService;
 
 @AllArgsConstructor
 @Service
 public class OfferManagementServiceImpl implements OfferManagementService {
   private final OfferRepository offerRepository;
   private final PlaceRepository placeRepository;
+  private final ImageStorageService imageStorageService;
 
   @Override
   @Transactional
@@ -35,9 +36,7 @@ public class OfferManagementServiceImpl implements OfferManagementService {
     offer.setDescription(offerInsertDTO.description());
     offer.setPlace(place);
 
-    if (offerInsertDTO.image() != null) {
-      offer.setImage(Base64.getEncoder().encode(offerInsertDTO.image()));
-    }
+    offer.setImage(offerInsertDTO.imageUrl());
 
     offerRepository.save(offer);
 
@@ -58,8 +57,9 @@ public class OfferManagementServiceImpl implements OfferManagementService {
     offer.setEndDate(offerUpdateDTO.endDate());
     offer.setDescription(offerUpdateDTO.description());
 
-    if (offerUpdateDTO.image() != null) {
-      offer.setImage(Base64.getEncoder().encode(offerUpdateDTO.image()));
+    if (offerUpdateDTO.imageUrl() != null) {
+      imageStorageService.delete(offer.getImage());
+      offer.setImage(offerUpdateDTO.imageUrl());
     }
 
     offerRepository.save(offer);
@@ -72,6 +72,7 @@ public class OfferManagementServiceImpl implements OfferManagementService {
     Offer offer =
         offerRepository.findById(offerId).orElseThrow(() -> new OfferNotFoundException(offerId));
 
+    imageStorageService.delete(offer.getImage());
     offerRepository.delete(offer);
     return OfferResponseMessages.OFFER_DELETE_MESSAGE;
   }

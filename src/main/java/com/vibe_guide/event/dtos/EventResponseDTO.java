@@ -8,4 +8,4 @@ public record EventResponseDTO(
     String description,
     LocalDateTime startDate,
     LocalDateTime endDate,
-    byte[] image) {}
+    String imageUrl) {}

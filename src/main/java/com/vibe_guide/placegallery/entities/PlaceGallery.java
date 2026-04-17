@@ -29,7 +29,7 @@ public class PlaceGallery {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  private byte[] photo;
+  private String photo;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "place_id")
