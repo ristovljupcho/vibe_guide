@@ -12,7 +12,6 @@ import com.vibe_guide.wishlistplace.entities.WishlistPlace;
 import com.vibe_guide.wishlistplace.entities.WishlistPlaceId;
 import com.vibe_guide.wishlistplace.repositories.WishlistPlaceRepository;
 import jakarta.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -54,7 +53,10 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
       return "Place removed from wishlist.";
     }
 
-    WishlistPlace wishlistPlace = new WishlistPlace(id, user, place, LocalDateTime.now());
+    WishlistPlace wishlistPlace = new WishlistPlace();
+    wishlistPlace.setId(id);
+    wishlistPlace.setUser(user);
+    wishlistPlace.setPlace(place);
 
     wishlistRepository.save(wishlistPlace);
 

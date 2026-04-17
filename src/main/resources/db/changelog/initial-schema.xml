@@ -222,7 +222,9 @@
             <column name="place_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
-            <column name="date_visited" type="TIMESTAMP"/>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
             <column name="note" type="VARCHAR(255)"/>
         </createTable>
 
@@ -247,6 +249,28 @@
                                  constraintName="fk_visited_place_place"/>
     </changeSet>
 
+    <changeSet id="add-created-at-to-visited-place" author="codex">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="visited_place" columnName="created_at"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="visited_place">
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="2026-03-09T09:00:00">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="drop-date-visited-from-visited-place" author="codex">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="visited_place" columnName="date_visited"/>
+        </preConditions>
+
+        <dropColumn tableName="visited_place" columnName="date_visited"/>
+    </changeSet>
+
     <changeSet id="create-wishlist_place-table" author="ristovljupcho">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -263,7 +287,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="date_added" type="TIMESTAMP">
+            <column name="created_at" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -290,6 +314,28 @@
                 onDelete="CASCADE"
                 onUpdate="CASCADE"
                 constraintName="fk_wishlist_place_place"/>
+    </changeSet>
+
+    <changeSet id="add-created-at-to-wishlist-place" author="codex">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="wishlist_place" columnName="created_at"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="wishlist_place">
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="2026-03-11T17:00:00">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="drop-date-added-from-wishlist-place" author="codex">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="wishlist_place" columnName="date_added"/>
+        </preConditions>
+
+        <dropColumn tableName="wishlist_place" columnName="date_added"/>
     </changeSet>
 
     <changeSet id="create-favourite-place-table" author="ristovljupcho">

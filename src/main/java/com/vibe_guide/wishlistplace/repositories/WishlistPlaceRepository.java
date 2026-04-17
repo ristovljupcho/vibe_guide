@@ -16,10 +16,12 @@ public interface WishlistPlaceRepository extends JpaRepository<WishlistPlace, Wi
           wp.place.id,
           wp.place.name,
           wp.place.rating,
-          wp.place.description
+          wp.place.description,
+          wp.createdAt
       )
       FROM WishlistPlace wp
       WHERE wp.user.id = :userId
+      ORDER BY wp.createdAt DESC
       """)
   List<WishlistPlaceResponseDTO> getWishlistByUserId(UUID userId);
 }

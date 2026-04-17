@@ -8,5 +8,5 @@ public record VisitedPlaceResponseDTO(
     String placeName,
     double rating,
     String description,
-    LocalDateTime dateVisited,
+    LocalDateTime createdAt,
     String note) {}

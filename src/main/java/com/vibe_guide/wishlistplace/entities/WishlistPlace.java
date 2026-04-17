@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,19 @@ public class WishlistPlace {
   @MapsId("placeId")
   private Place place;
 
-  @Column(name = "date_added", nullable = false)
-  private LocalDateTime dateAdded;
+  /**
+   * Stores the time when the place was added to the wishlist.
+   *
+   * <p>This field is also the canonical wishlist-added timestamp and should be used anywhere the
+   * application needs the added-at date.
+   */
+  @Column(name = "created_at", nullable = false)
+  private LocalDateTime createdAt;
+
+  @PrePersist
+  void prePersist() {
+    if (createdAt == null) {
+      createdAt = LocalDateTime.now();
+    }
+  }
 }

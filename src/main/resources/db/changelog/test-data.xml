@@ -579,17 +579,17 @@
         <insert tableName="wishlist_place">
             <column name="user_id" value="33333333-3333-3333-3333-333333333001"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222004"/>
-            <column name="date_added" value="2026-03-11 17:00:00"/>
+            <column name="created_at" value="2026-03-11 17:00:00"/>
         </insert>
         <insert tableName="wishlist_place">
             <column name="user_id" value="33333333-3333-3333-3333-333333333002"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222002"/>
-            <column name="date_added" value="2026-03-11 17:30:00"/>
+            <column name="created_at" value="2026-03-11 17:30:00"/>
         </insert>
         <insert tableName="wishlist_place">
             <column name="user_id" value="33333333-3333-3333-3333-333333333003"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222001"/>
-            <column name="date_added" value="2026-03-11 18:00:00"/>
+            <column name="created_at" value="2026-03-11 18:00:00"/>
         </insert>
     </changeSet>
 
@@ -615,19 +615,19 @@
         <insert tableName="visited_place">
             <column name="user_id" value="33333333-3333-3333-3333-333333333001"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222003"/>
-            <column name="date_visited" value="2026-03-09 20:15:00"/>
+            <column name="created_at" value="2026-03-09 20:20:00"/>
             <column name="note" value="Tried the new IPA lineup."/>
         </insert>
         <insert tableName="visited_place">
             <column name="user_id" value="33333333-3333-3333-3333-333333333002"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222001"/>
-            <column name="date_visited" value="2026-03-09 10:30:00"/>
+            <column name="created_at" value="2026-03-09 10:35:00"/>
             <column name="note" value="Quiet workspace and great coffee."/>
         </insert>
         <insert tableName="visited_place">
             <column name="user_id" value="33333333-3333-3333-3333-333333333003"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222005"/>
-            <column name="date_visited" value="2026-03-09 23:45:00"/>
+            <column name="created_at" value="2026-03-09 23:50:00"/>
             <column name="note" value="Live DJ set was excellent."/>
         </insert>
     </changeSet>

@@ -12,7 +12,6 @@ import com.vibe_guide.visitedplace.entities.VisitedPlace;
 import com.vibe_guide.visitedplace.entities.VisitedPlaceId;
 import com.vibe_guide.visitedplace.repositories.VisitedPlaceRepository;
 import jakarta.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,7 +54,11 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
       return "Place removed from visited list.";
     }
 
-    VisitedPlace visitedPlace = new VisitedPlace(user, place, LocalDateTime.now(), null);
+    VisitedPlace visitedPlace = new VisitedPlace();
+    visitedPlace.setId(visitedPlaceId);
+    visitedPlace.setUser(user);
+    visitedPlace.setPlace(place);
+    visitedPlace.setNote(null);
 
     visitedPlaceRepository.save(visitedPlace);
 

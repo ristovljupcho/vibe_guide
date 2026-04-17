@@ -17,12 +17,12 @@ public interface VisitedPlaceRepository extends JpaRepository<VisitedPlace, Visi
            vp.place.name,
            vp.place.rating,
            vp.place.description,
-           vp.dateVisited,
+           vp.createdAt,
            vp.note
       )
       FROM VisitedPlace vp
       WHERE vp.user.id = :userId
-      ORDER BY vp.dateVisited DESC
+      ORDER BY vp.createdAt DESC
       """)
   List<VisitedPlaceResponseDTO> findVisitedPlacesByUser(UUID userId);
 
