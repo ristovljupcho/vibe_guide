@@ -332,6 +332,20 @@
                 constraintName="fk_favourite_place_place"/>
     </changeSet>
 
+    <changeSet id="add-created-at-to-favourite-place" author="codex">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="favourite_place" columnName="created_at"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="favourite_place">
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="2026-03-11T12:00:00">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
     <changeSet id="create-review-table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>

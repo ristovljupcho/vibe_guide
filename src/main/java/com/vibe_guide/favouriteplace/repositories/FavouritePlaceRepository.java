@@ -15,10 +15,12 @@ public interface FavouritePlaceRepository extends JpaRepository<FavouritePlace, 
            fp.place.id,
            fp.place.name,
            fp.place.rating,
-           fp.place.description
+           fp.place.description,
+           fp.createdAt
       )
       FROM FavouritePlace fp
       WHERE fp.user.id = :userId
+      ORDER BY fp.createdAt DESC
       """)
   List<FavouritePlaceResponseDTO> getAllByUserId(UUID userId);
 }

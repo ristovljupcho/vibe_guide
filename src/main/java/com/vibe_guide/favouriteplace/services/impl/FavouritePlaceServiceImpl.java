@@ -6,7 +6,9 @@ import com.vibe_guide.exceptions.UserNotFoundException;
 import com.vibe_guide.favouriteplace.dtos.FavouritePlaceResponseDTO;
 import com.vibe_guide.favouriteplace.entities.FavouritePlace;
 import com.vibe_guide.favouriteplace.entities.FavouritePlaceId;
+import com.vibe_guide.favouriteplace.mappers.FavouritePlaceMapper;
 import com.vibe_guide.favouriteplace.repositories.FavouritePlaceRepository;
+import com.vibe_guide.favouriteplace.utils.FavouritePlaceResponseMessages;
 import com.vibe_guide.place.entities.Place;
 import com.vibe_guide.place.repositories.PlaceRepository;
 import com.vibe_guide.user.entities.User;
@@ -25,6 +27,7 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
   private final FavouritePlaceRepository favouritePlaceRepository;
   private final UserRepository userRepository;
   private final PlaceRepository placeRepository;
+  private final FavouritePlaceMapper favouritePlaceMapper;
 
   public List<FavouritePlaceResponseDTO> getAllByUserId(UUID userId) {
     if (userRepository.findById(userId).isEmpty()) {
@@ -49,13 +52,13 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
 
     if (existing.isPresent()) {
       favouritePlaceRepository.delete(existing.get());
-      return "Place removed from favourites.";
+      return FavouritePlaceResponseMessages.FAVOURITE_PLACE_REMOVED;
     }
 
-    FavouritePlace fav = new FavouritePlace(id, user, place);
+    FavouritePlace fav = favouritePlaceMapper.toFavouritePlace(id, user, place);
     favouritePlaceRepository.save(fav);
 
-    return "Place added to favourites.";
+    return FavouritePlaceResponseMessages.FAVOURITE_PLACE_ADDED;
   }
 }
 

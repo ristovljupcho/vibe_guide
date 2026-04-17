@@ -597,14 +597,17 @@
         <insert tableName="favourite_place">
             <column name="user_id" value="33333333-3333-3333-3333-333333333001"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222001"/>
+            <column name="created_at" value="2026-03-11 18:15:00"/>
         </insert>
         <insert tableName="favourite_place">
             <column name="user_id" value="33333333-3333-3333-3333-333333333002"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222003"/>
+            <column name="created_at" value="2026-03-11 19:00:00"/>
         </insert>
         <insert tableName="favourite_place">
             <column name="user_id" value="33333333-3333-3333-3333-333333333003"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222004"/>
+            <column name="created_at" value="2026-03-11 19:30:00"/>
         </insert>
     </changeSet>
 
