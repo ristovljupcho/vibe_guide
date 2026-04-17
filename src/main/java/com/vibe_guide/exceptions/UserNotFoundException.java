@@ -11,3 +11,4 @@ public class UserNotFoundException extends CustomNotFoundException {
     super(String.format("User with id %s not found", userId));
   }
 }
+

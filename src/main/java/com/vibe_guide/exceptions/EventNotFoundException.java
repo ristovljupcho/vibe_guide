@@ -7,3 +7,4 @@ public class EventNotFoundException extends CustomNotFoundException {
     super(String.format("Event with id '%s' not found.", eventId.toString()));
   }
 }
+

@@ -1,6 +1,6 @@
 package com.vibe_guide.specifications;
 
-import com.vibe_guide.review.entities.Review;
+import com.vibe_guide.domain.review.entities.Review;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -62,3 +62,4 @@ public class ReviewSpecification {
     };
   }
 }
+

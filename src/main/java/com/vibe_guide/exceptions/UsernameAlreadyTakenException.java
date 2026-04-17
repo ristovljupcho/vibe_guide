@@ -5,3 +5,4 @@ public class UsernameAlreadyTakenException extends CustomUnprocessableEntityExce
     super(String.format("Username %s is already taken!", username));
   }
 }
+

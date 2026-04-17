@@ -8,3 +8,4 @@ import lombok.Getter;
 public class CustomBadRequestException extends RuntimeException {
   private final String message;
 }
+

@@ -7,3 +7,4 @@ public class OfferNotFoundException extends CustomNotFoundException {
     super(String.format("Offer with id '%s' not found.", offerId.toString()));
   }
 }
+

@@ -4,3 +4,4 @@ public enum TraitSortBy {
   DEFAULT,
   NAME
 }
+

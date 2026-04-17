@@ -7,3 +7,4 @@ public class AdminForPlaceAlreadyExistsException extends CustomUnprocessableEnti
     super("Admin already exists for place id " + placeId + " and user id " + userId + ".");
   }
 }
+

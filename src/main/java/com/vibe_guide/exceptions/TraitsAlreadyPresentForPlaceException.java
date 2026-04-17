@@ -7,3 +7,4 @@ public class TraitsAlreadyPresentForPlaceException extends CustomUnprocessableEn
     super("Traits with ids " + alreadyPresentTraits + " already exists for place " + placeId + ".");
   }
 }
+

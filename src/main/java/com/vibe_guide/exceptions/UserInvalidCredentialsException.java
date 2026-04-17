@@ -5,3 +5,4 @@ public class UserInvalidCredentialsException extends CustomUnprocessableEntityEx
     super(String.format("Invalid credentials for user: %s", username));
   }
 }
+

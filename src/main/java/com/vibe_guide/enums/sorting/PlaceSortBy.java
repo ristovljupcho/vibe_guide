@@ -5,3 +5,4 @@ public enum PlaceSortBy {
   RATING,
   PRICE_LEVEL
 }
+

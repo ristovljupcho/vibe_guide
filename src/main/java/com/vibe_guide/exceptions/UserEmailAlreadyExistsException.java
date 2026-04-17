@@ -5,3 +5,4 @@ public class UserEmailAlreadyExistsException extends CustomUnprocessableEntityEx
     super(String.format("User with email %s already exists", email));
   }
 }
+

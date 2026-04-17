@@ -6,8 +6,11 @@ This file defines the required implementation standards for contributors and cod
 
 ## Directory Structure
 
-1. Each model MUST have its own top-level directory.
-2. Every model directory MUST contain the following subdirectories:
+1. Each model MUST live under the shared `domain` root directory.
+2. Each model MUST have its own directory under `domain`.
+   - Example: `com.vibe_guide.domain.place`
+3. Shared technical or cross-cutting packages MUST stay outside `domain`.
+4. Every model directory MUST contain the following subdirectories:
    - `entities`
    - `repositories`
    - `dtos`
@@ -15,9 +18,13 @@ This file defines the required implementation standards for contributors and cod
    - `services`
    - `utils`
    - `controllers`
-3. The `services` directory MUST contain both:
+5. The `services` directory MUST contain both:
    - the service interface
    - the service implementation class
+6. Service implementation classes MUST live in:
+   - `services.impl`
+7. `.gitkeep` files MAY be used only to preserve intentionally empty directories.
+8. If a directory is populated with real source files, its `.gitkeep` file MUST be removed.
 
 ## Shared Directories
 
@@ -33,6 +40,13 @@ The following directories are shared and MUST remain outside model-specific dire
 2. Logic SHOULD also be extracted into helper methods when a method becomes too long, hard to read, or too complex.
 3. Helper methods SHOULD be used to keep service and controller code focused, readable, and maintainable.
 4. N+1 query problems in entity relations MUST be avoided.
+5. Response messages, exception messages, and other repeated application messages MUST be defined as constants instead of inline string literals.
+
+## Entity Lifecycle Rules
+
+1. If an entity has `createdAt`, it MUST initialize it with an `@PrePersist` method inside the entity.
+2. If an entity has `updatedAt`, it MUST maintain it with an `@PreUpdate` method inside the entity.
+3. Services SHOULD NOT manually set lifecycle timestamps when those timestamps are entity-managed.
 
 ## JavaDoc Rules
 
@@ -73,6 +87,12 @@ The following directories are shared and MUST remain outside model-specific dire
 8. Repository method names MAY stay more descriptive when required by Spring Data query derivation or query intent, but service and controller methods MUST keep the standard CRUD naming style.
 
 ## Commit Message Standards
+
+Commit grouping rules:
+
+1. If pending changes are all connected and contribute to the same logical change, they SHOULD be grouped into a single commit.
+2. If pending changes are unrelated or belong to separate logical changes, they MUST be split into multiple commits.
+3. A commit SHOULD represent one coherent change that can be understood, reviewed, and reverted independently.
 
 1. Subject line MUST be in imperative mood.
    - Good: `Add favourites toggle endpoint`

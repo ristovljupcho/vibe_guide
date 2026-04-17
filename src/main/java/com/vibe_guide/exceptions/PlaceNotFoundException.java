@@ -11,3 +11,4 @@ public class PlaceNotFoundException extends CustomNotFoundException {
     super(String.format("Place with id %s not found.", placeId));
   }
 }
+
