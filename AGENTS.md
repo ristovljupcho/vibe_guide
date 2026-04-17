@@ -83,6 +83,12 @@ The following directories are shared and MUST remain outside model-specific dire
 
 ## Commit Message Standards
 
+Commit grouping rules:
+
+1. If pending changes are all connected and contribute to the same logical change, they SHOULD be grouped into a single commit.
+2. If pending changes are unrelated or belong to separate logical changes, they MUST be split into multiple commits.
+3. A commit SHOULD represent one coherent change that can be understood, reviewed, and reverted independently.
+
 1. Subject line MUST be in imperative mood.
    - Good: `Add favourites toggle endpoint`
    - Bad: `Added favourites toggle endpoint`
