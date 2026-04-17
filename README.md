@@ -2,7 +2,8 @@
 
 Vibe Guide is a Spring Boot backend for discovering places, events, offers, and trait-based recommendations in Skopje.
 
-This repository currently contains the backend application only. It exposes REST endpoints for places, events, offers, reviews, favourites, wishlists, visited places, place admins, traits, trait likes, and working hours.
+This repository currently contains the backend application only. It exposes REST endpoints for places, events, offers,
+reviews, favourites, wishlists, visited places, place admins, traits, trait likes, and working hours.
 
 ## Stack
 
@@ -11,8 +12,9 @@ This repository currently contains the backend application only. It exposes REST
 - Spring Web
 - Spring Data JPA
 - PostgreSQL
+- Neon for managed PostgreSQL hosting
 - Liquibase
-- Cloudinary for hosted image storage
+- Cloudinary for hosted image storage and delivery
 - Lombok
 
 ## Current project structure
@@ -36,20 +38,29 @@ Main domain modules live under `src/main/java/com/vibe_guide`:
 
 Liquibase changelogs live under `src/main/resources/db/changelog`.
 
-## Image storage
+## Neon and Cloudinary
 
-Images are not stored as `byte[]` blobs anymore.
+This project uses [Neon](https://neon.com/) as the hosted PostgreSQL database and [Cloudinary](https://cloudinary.com/) as the hosted image storage service.
 
-The current implementation:
+Useful links:
 
-- uploads place and event gallery images to Cloudinary
-- stores the returned hosted URL in the database
-- returns image URLs from the API
+- Neon homepage: [https://neon.com/](https://neon.com/)
+- Neon docs: [https://neon.com/docs](https://neon.com/docs)
+- Cloudinary homepage: [https://cloudinary.com/](https://cloudinary.com/)
+- Cloudinary docs: [https://cloudinary.com/documentation](https://cloudinary.com/documentation)
 
-Relevant code:
+Neon usage:
 
-- [CloudinaryImageStorageService.java](C:/Users/Ljupcho.Ristov/IdeaProjects/vibe_guide/src/main/java/com/vibe_guide/storage/CloudinaryImageStorageService.java)
-- [CloudinaryConfig.java](C:/Users/Ljupcho.Ristov/IdeaProjects/vibe_guide/src/main/java/com/vibe_guide/storage/CloudinaryConfig.java)
+- stores the application data
+- is used through the Spring datasource and Liquibase configuration
+- can be reset and recreated cleanly for demo environments
+
+Cloudinary usage:
+
+- stores uploaded place and event gallery images
+- returns hosted image URLs that are saved in the database
+- serves those images directly to clients
+- removes hosted assets when gallery records are deleted
 
 ## Environment variables
 
@@ -80,7 +91,7 @@ cloudinary://<api_key>:<api_secret>@<cloud_name>
 Example PowerShell session:
 
 ```powershell
-$env:SPRING_DATASOURCE_URL="jdbc:postgresql://ep-xxxxx-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require&channelBinding=require"
+$env:SPRING_DATASOURCE_URL="jdbc:postgresql://<your-neon-host>/neondb?sslmode=require&channelBinding=require"
 $env:SPRING_DATASOURCE_USERNAME="neondb_owner"
 $env:SPRING_DATASOURCE_PASSWORD="your-password"
 $env:CLOUDINARY_URL="cloudinary://<api_key>:<api_secret>@<cloud_name>"
@@ -90,6 +101,8 @@ $env:APP_STORAGE_CLOUDINARY_FOLDER="vibe-guide-demo"
 ## Database and Liquibase
 
 The app runs Liquibase on startup.
+
+Neon is the intended hosted database for this project. The backend connects to Neon with the standard Spring datasource variables, and Liquibase builds the schema on startup.
 
 Important for the current setup:
 
@@ -121,39 +134,3 @@ Compile only:
 ```powershell
 .\mvnw -DskipTests compile
 ```
-
-## API notes
-
-Notable current API behavior:
-
-- `PUT /places/update` uses `multipart/form-data` via `@ModelAttribute`
-- `POST /events/insert` uses `multipart/form-data` via `@ModelAttribute`
-- offer create/update uses image URLs, not raw image bytes
-- place responses include `imageUrls`
-- event and offer responses include `imageUrl`
-
-## Quick image test
-
-Example place image upload:
-
-```powershell
-curl.exe -X PUT "http://localhost:8080/places/update" `
-  -F "placeId=22222222-2222-2222-2222-222222222001" `
-  -F "name=Pulse Coffee Lab" `
-  -F "description=Modern specialty coffee spot with single-origin brews and relaxed daytime energy." `
-  -F "mapsUri=https://maps.google.com/?q=Pulse+Coffee+Lab+Skopje" `
-  -F "phoneNumber=+389 2 111 0101" `
-  -F "address=Partizanski Odredi 15, Skopje" `
-  -F "menuLink=https://pulsecoffeelab.mk/menu" `
-  -F "primaryType=COFFEE_SHOP" `
-  -F "priceLevel=MODERATE" `
-  -F "images=@C:\Users\Ljupcho.Ristov\Desktop\placeImage.jpg"
-```
-
-Then fetch the place:
-
-```powershell
-Invoke-WebRequest -UseBasicParsing http://localhost:8080/places/22222222-2222-2222-2222-222222222001
-```
-
-The response should include a Cloudinary URL in `imageUrls`.
