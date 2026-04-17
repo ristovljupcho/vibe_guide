@@ -83,6 +83,7 @@ public class EventManagementServiceImpl implements EventManagementService {
   @Transactional
   public String delete(UUID eventId) {
     eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
+    eventGalleryManagementService.deleteAll(eventId);
     eventRepository.deleteById(eventId);
 
     return EventResponseMessages.EVENT_DELETE_MESSAGE;

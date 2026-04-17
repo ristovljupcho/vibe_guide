@@ -1,7 +1,6 @@
 package com.vibe_guide.eventgallery.entities;
 
 import com.vibe_guide.event.entities.Event;
-import com.vibe_guide.utils.photoEncoder.Base64Image;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,12 +24,12 @@ import lombok.ToString;
 @Setter
 @Entity
 @Table(name = "event_gallery")
-public class EventGallery implements Base64Image {
+public class EventGallery {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  private byte[] photo;
+  private String photo;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "event_id")
@@ -48,14 +47,5 @@ public class EventGallery implements Base64Image {
   @Override
   public int hashCode() {
     return Objects.hashCode(id);
-  }
-
-  @Override
-  public byte[] getImage() {
-    return this.photo;
-  }
-
-  public String generateEncodedImage() {
-    return generateBase64Image();
   }
 }

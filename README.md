@@ -1,85 +1,159 @@
 # Vibe Guide
 
-**Vibe Guide** is a Java Spring Boot backend with a React Native (Expo Go) mobile app.  
-It helps users discover the best places in Skopje to hang out, enjoy food, drinks, and events.  
+Vibe Guide is a Spring Boot backend for discovering places, events, offers, and trait-based recommendations in Skopje.
 
----
+This repository currently contains the backend application only. It exposes REST endpoints for places, events, offers, reviews, favourites, wishlists, visited places, place admins, traits, trait likes, and working hours.
 
-## ✨ Features
-- Categorization of places based on their traits:
-  - Music genre
-  - Type of venue (restaurant, lounge bar, coffee shop, pub, etc.)
-  - Type of food and drinks offered
-  - Atmosphere (casual, fancy, cozy, etc.)
-- Scoring and grading places based on traits for more accurate recommendations.
-- Individual venue profiles where owners can:
-  - Publish events (concerts, parties, celebrations, etc.)
-  - Share daily highlights (special offers or important announcements).
+## Stack
 
----
+- Java 23
+- Spring Boot 3.4
+- Spring Web
+- Spring Data JPA
+- PostgreSQL
+- Liquibase
+- Cloudinary for hosted image storage
+- Lombok
 
-## 🎯 Motivation
-We often face the same question: *"Where should we go out with friends?"*  
-Vibe Guide was created to make that decision easier — not just for us, but for anyone who wants to explore and get to know Skopje better.  
-By applying filters, users can quickly discover a selection of venues that match their preferences.  
+## Current project structure
 
----
+Main domain modules live under `src/main/java/com/vibe_guide`:
 
-## 🛠️ Technologies
-- **Backend:** Java Spring Boot  
-- **Frontend:** React Native (Expo Go)  
-- **Database:** PostgreSQL  
-- **APIs:** Google Maps API  
+- `place`
+- `event`
+- `offer`
+- `review`
+- `trait`
+- `traitlike`
+- `placegallery`
+- `eventgallery`
+- `placeadmin`
+- `favouriteplace`
+- `wishlistplace`
+- `visitedplace`
+- `workinghours`
+- `storage`
 
----
+Liquibase changelogs live under `src/main/resources/db/changelog`.
 
-## 👥 User Roles
+## Image storage
 
-### 👤 User
-- Edit personal profile.  
-- Browse venues, events, and news.  
-- Add venues to favorites.  
+Images are not stored as `byte[]` blobs anymore.
 
-### 🏪 Admin (Venue Owner/Manager)
-- Edit their profile and their venue’s profile.  
-- Post events related to their venue.  
-- Publish news and daily offers.  
+The current implementation:
 
-### 🛡 SuperAdmin
-- Manage user and venue profiles.  
-- Approve new Admin accounts (venue owners/managers).  
+- uploads place and event gallery images to Cloudinary
+- stores the returned hosted URL in the database
+- returns image URLs from the API
 
----
+Relevant code:
 
-## 🚀 Getting Started
+- [CloudinaryImageStorageService.java](C:/Users/Ljupcho.Ristov/IdeaProjects/vibe_guide/src/main/java/com/vibe_guide/storage/CloudinaryImageStorageService.java)
+- [CloudinaryConfig.java](C:/Users/Ljupcho.Ristov/IdeaProjects/vibe_guide/src/main/java/com/vibe_guide/storage/CloudinaryConfig.java)
 
-### Backend Setup
-1. Create a Neon project at [neon.com](https://neon.com/) and open the `Connect` modal for your database.
-2. Copy the direct `Java / JDBC` connection details.
-3. Set the Spring datasource variables before starting the backend.
+## Environment variables
+
+The backend reads its configuration from environment variables.
+
+Required:
+
+- `SPRING_DATASOURCE_URL`
+- `SPRING_DATASOURCE_USERNAME`
+- `SPRING_DATASOURCE_PASSWORD`
+- `CLOUDINARY_URL`
+
+Optional:
+
+- `SPRING_LIQUIBASE_URL`
+- `SPRING_LIQUIBASE_USER`
+- `SPRING_LIQUIBASE_PASSWORD`
+- `SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE`
+- `SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE`
+- `APP_STORAGE_CLOUDINARY_FOLDER`
+
+`CLOUDINARY_URL` format:
+
+```text
+cloudinary://<api_key>:<api_secret>@<cloud_name>
+```
+
+Example PowerShell session:
+
+```powershell
+$env:SPRING_DATASOURCE_URL="jdbc:postgresql://ep-xxxxx-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require&channelBinding=require"
+$env:SPRING_DATASOURCE_USERNAME="neondb_owner"
+$env:SPRING_DATASOURCE_PASSWORD="your-password"
+$env:CLOUDINARY_URL="cloudinary://<api_key>:<api_secret>@<cloud_name>"
+$env:APP_STORAGE_CLOUDINARY_FOLDER="vibe-guide-demo"
+```
+
+## Database and Liquibase
+
+The app runs Liquibase on startup.
+
+Important for the current setup:
+
+- the changelog is written for a fresh database
+- if you make incompatible schema-history edits, reset the database and let Liquibase recreate it from scratch
+
+Default local fallback if datasource env vars are missing:
+
+```text
+jdbc:postgresql://localhost:5432/vibe_guide?sslmode=disable
+username: postgres
+password: postgres
+```
+
+## Run locally
+
+Use JDK 23.
 
 PowerShell example:
 
 ```powershell
-$env:SPRING_DATASOURCE_URL="jdbc:postgresql://ep-xxxxx.us-east-2.aws.neon.tech/neondb?sslmode=require&channelBinding=require"
-$env:SPRING_DATASOURCE_USERNAME="neondb_owner"
-$env:SPRING_DATASOURCE_PASSWORD="your-neon-password"
+$env:JAVA_HOME="$HOME\.jdks\corretto-23.0.2"
+$env:Path="$env:JAVA_HOME\bin;$env:Path"
+.\mvnw spring-boot:run
 ```
 
-Optional: keep Liquibase on a direct Neon endpoint even if the runtime datasource later uses a pooled `-pooler` host.
+Compile only:
 
 ```powershell
-$env:SPRING_LIQUIBASE_URL=$env:SPRING_DATASOURCE_URL
-$env:SPRING_LIQUIBASE_USER=$env:SPRING_DATASOURCE_USERNAME
-$env:SPRING_LIQUIBASE_PASSWORD=$env:SPRING_DATASOURCE_PASSWORD
+.\mvnw -DskipTests compile
 ```
 
-Notes:
-- This app runs Liquibase migrations on startup, so a direct Neon connection is the safest default.
-- Neon recommends TLS plus channel binding for secure Postgres connections, and the JDBC URL above uses the PostgreSQL Java driver's `channelBinding=require` parameter.
-- For local Postgres development, the app still falls back to `jdbc:postgresql://localhost:5432/vibe_guide` with `postgres/postgres`.
+## API notes
 
-4. Build and run the backend:  
-   ```bash
-   ./mvnw spring-boot:run
-   ```
+Notable current API behavior:
+
+- `PUT /places/update` uses `multipart/form-data` via `@ModelAttribute`
+- `POST /events/insert` uses `multipart/form-data` via `@ModelAttribute`
+- offer create/update uses image URLs, not raw image bytes
+- place responses include `imageUrls`
+- event and offer responses include `imageUrl`
+
+## Quick image test
+
+Example place image upload:
+
+```powershell
+curl.exe -X PUT "http://localhost:8080/places/update" `
+  -F "placeId=22222222-2222-2222-2222-222222222001" `
+  -F "name=Pulse Coffee Lab" `
+  -F "description=Modern specialty coffee spot with single-origin brews and relaxed daytime energy." `
+  -F "mapsUri=https://maps.google.com/?q=Pulse+Coffee+Lab+Skopje" `
+  -F "phoneNumber=+389 2 111 0101" `
+  -F "address=Partizanski Odredi 15, Skopje" `
+  -F "menuLink=https://pulsecoffeelab.mk/menu" `
+  -F "primaryType=COFFEE_SHOP" `
+  -F "priceLevel=MODERATE" `
+  -F "images=@C:\Users\Ljupcho.Ristov\Desktop\placeImage.jpg"
+```
+
+Then fetch the place:
+
+```powershell
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/places/22222222-2222-2222-2222-222222222001
+```
+
+The response should include a Cloudinary URL in `imageUrls`.
