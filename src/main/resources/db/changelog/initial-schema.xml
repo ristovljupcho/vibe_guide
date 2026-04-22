@@ -395,30 +395,6 @@
         </addColumn>
     </changeSet>
 
-    <changeSet id="add-note-to-wishlist-place" author="codex">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <columnExists tableName="wishlist_place" columnName="note"/>
-            </not>
-        </preConditions>
-
-        <addColumn tableName="wishlist_place">
-            <column name="note" type="VARCHAR(255)"/>
-        </addColumn>
-    </changeSet>
-
-    <changeSet id="add-note-to-favourite-place" author="codex">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <columnExists tableName="favourite_place" columnName="note"/>
-            </not>
-        </preConditions>
-
-        <addColumn tableName="favourite_place">
-            <column name="note" type="VARCHAR(255)"/>
-        </addColumn>
-    </changeSet>
-
     <changeSet id="create-review-table" author="negrioska">
         <preConditions onFail="MARK_RAN">
             <not>
