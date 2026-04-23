@@ -43,6 +43,8 @@ public class WishlistPlace {
   @Column(name = "created_at", nullable = false)
   private LocalDateTime createdAt;
 
+  private String note;
+
   @PrePersist
   void prePersist() {
     if (createdAt == null) {

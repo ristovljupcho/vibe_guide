@@ -1,11 +1,14 @@
 package com.vibe_guide.domain.wishlistplace.controllers;
 
 import com.vibe_guide.domain.wishlistplace.dtos.WishlistPlaceResponseDTO;
+import com.vibe_guide.domain.wishlistplace.dtos.WishlistPlaceToggleRequestDTO;
 import com.vibe_guide.domain.wishlistplace.services.WishlistPlaceService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +27,9 @@ public class WishlistPlaceController {
     return ResponseEntity.ok(wishlistService.getAllByUserId(userId));
   }
 
-  @PostMapping("/{userId}/{placeId}")
-  public ResponseEntity<String> toggle(@PathVariable UUID userId, @PathVariable UUID placeId) {
-    return ResponseEntity.ok(wishlistService.toggle(userId, placeId));
+  @PostMapping("/toggle")
+  public ResponseEntity<String> toggle(@RequestBody @Valid WishlistPlaceToggleRequestDTO dto) {
+    return ResponseEntity.ok(wishlistService.toggle(dto));
   }
 }
 
