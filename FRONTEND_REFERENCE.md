@@ -161,6 +161,7 @@ Use it as the quick source of truth for:
 | `user_id` | Related user |
 | `place_id` | Related place |
 | `created_at` | Saved timestamp |
+| `note` | Optional user note |
 
 #### `favourite_place`
 
@@ -168,6 +169,8 @@ Use it as the quick source of truth for:
 | --- | --- |
 | `user_id` | Related user |
 | `place_id` | Related place |
+| `created_at` | Saved timestamp |
+| `note` | Optional user note |
 
 #### `place_admin`
 
@@ -377,17 +380,21 @@ Returns all favourite places for one user.
 | `rating` | `double` |
 | `description` | `String` |
 | `createdAt` | `LocalDateTime` |
+| `note` | `String` |
 
-### `POST /favourite-places/{userId}/{placeId}`
+### `POST /favourite-places/toggle`
 
 Toggles a place as favourite for a user.
 
-**Path params**
+**Request DTO**
 
-| Name | Type |
+`FavouritePlaceToggleRequestDTO`
+
+| Field | Type |
 | --- | --- |
 | `userId` | `UUID` |
 | `placeId` | `UUID` |
+| `note` | `String` |
 
 **Response**
 
@@ -1151,16 +1158,19 @@ Returns visited places for one user.
 | `createdAt` | `LocalDateTime` |
 | `note` | `String` |
 
-### `POST /visited-places/{userId}/{placeId}`
+### `POST /visited-places/toggle`
 
 Toggles a place as visited for a user.
 
-**Path params**
+**Request DTO**
 
-| Name | Type |
+`VisitedPlaceToggleRequestDTO`
+
+| Field | Type |
 | --- | --- |
 | `userId` | `UUID` |
 | `placeId` | `UUID` |
+| `note` | `String` |
 
 **Response**
 
@@ -1194,17 +1204,21 @@ Returns wishlist places for one user.
 | `rating` | `double` |
 | `description` | `String` |
 | `createdAt` | `LocalDateTime` |
+| `note` | `String` |
 
-### `POST /wishlist-places/{userId}/{placeId}`
+### `POST /wishlist-places/toggle`
 
 Toggles a place into or out of the wishlist for a user.
 
-**Path params**
+**Request DTO**
 
-| Name | Type |
+`WishlistPlaceToggleRequestDTO`
+
+| Field | Type |
 | --- | --- |
 | `userId` | `UUID` |
 | `placeId` | `UUID` |
+| `note` | `String` |
 
 **Response**
 
