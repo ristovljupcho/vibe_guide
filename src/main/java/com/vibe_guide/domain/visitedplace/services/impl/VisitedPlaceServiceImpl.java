@@ -1,5 +1,6 @@
 package com.vibe_guide.domain.visitedplace.services.impl;
 
+import com.vibe_guide.domain.visitedplace.dtos.VisitedPlaceToggleRequestDTO;
 import com.vibe_guide.domain.visitedplace.services.VisitedPlaceService;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.exceptions.UserNotFoundException;
@@ -38,7 +39,9 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
 
   @Override
   @Transactional
-  public String toggle(UUID userId, UUID placeId) {
+  public String toggle(VisitedPlaceToggleRequestDTO dto) {
+    UUID userId = dto.userId();
+    UUID placeId = dto.placeId();
 
     Place place =
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
@@ -59,7 +62,7 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
     visitedPlace.setId(visitedPlaceId);
     visitedPlace.setUser(user);
     visitedPlace.setPlace(place);
-    visitedPlace.setNote(null);
+    visitedPlace.setNote(dto.note());
 
     visitedPlaceRepository.save(visitedPlace);
 

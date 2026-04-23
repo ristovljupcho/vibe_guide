@@ -313,6 +313,8 @@
             <column name="created_at" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="note" type="VARCHAR(255)"/>
         </createTable>
 
         <addPrimaryKey
@@ -375,6 +377,7 @@
             <column name="place_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
+            <column name="note" type="VARCHAR(255)"/>
         </createTable>
 
         <addPrimaryKey

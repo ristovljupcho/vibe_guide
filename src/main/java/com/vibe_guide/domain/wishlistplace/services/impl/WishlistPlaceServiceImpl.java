@@ -1,5 +1,6 @@
 package com.vibe_guide.domain.wishlistplace.services.impl;
 
+import com.vibe_guide.domain.wishlistplace.dtos.WishlistPlaceToggleRequestDTO;
 import com.vibe_guide.domain.wishlistplace.services.WishlistPlaceService;
 import com.vibe_guide.exceptions.PlaceNotFoundException;
 import com.vibe_guide.exceptions.UserNotFoundException;
@@ -38,7 +39,9 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
 
   @Override
   @Transactional
-  public String toggle(UUID userId, UUID placeId) {
+  public String toggle(WishlistPlaceToggleRequestDTO dto) {
+    UUID userId = dto.userId();
+    UUID placeId = dto.placeId();
 
     User user =
         userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
@@ -58,6 +61,7 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
     wishlistPlace.setId(id);
     wishlistPlace.setUser(user);
     wishlistPlace.setPlace(place);
+    wishlistPlace.setNote(dto.note());
 
     wishlistRepository.save(wishlistPlace);
 

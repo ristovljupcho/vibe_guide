@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FavouritePlaceMapper {
-  public FavouritePlace toFavouritePlace(FavouritePlaceId id, User user, Place place) {
-    return new FavouritePlace(id, user, place, null);
+  public FavouritePlace toFavouritePlace(FavouritePlaceId id, User user, Place place, String note) {
+    return new FavouritePlace(id, user, place, null, note);
   }
 }
 

@@ -1,12 +1,15 @@
 package com.vibe_guide.domain.visitedplace.controllers;
 
 import com.vibe_guide.domain.visitedplace.dtos.VisitedPlaceResponseDTO;
+import com.vibe_guide.domain.visitedplace.dtos.VisitedPlaceToggleRequestDTO;
 import com.vibe_guide.domain.visitedplace.services.VisitedPlaceService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +30,9 @@ public class VisitedPlaceController {
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping("/{userId}/{placeId}")
-  public ResponseEntity<String> toggle(@PathVariable UUID userId, @PathVariable UUID placeId) {
-    String result = visitedPlaceService.toggle(userId, placeId);
+  @PostMapping("/toggle")
+  public ResponseEntity<String> toggle(@RequestBody @Valid VisitedPlaceToggleRequestDTO dto) {
+    String result = visitedPlaceService.toggle(dto);
     return ResponseEntity.ok(result);
   }
 }
