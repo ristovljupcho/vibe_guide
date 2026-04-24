@@ -628,25 +628,16 @@
     </changeSet>
 
     <changeSet id="create-place-top-traits-view" runOnChange="true" author="ristovljupcho">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="place_top_traits"/>
-            </not>
-        </preConditions>
+        <sql>DROP MATERIALIZED VIEW IF EXISTS place_top_traits CASCADE;</sql>
         <sql>
             CREATE
             MATERIALIZED VIEW place_top_traits AS
             WITH ranked_traits AS (
                 SELECT
-                    p.id,
-                    p.name,
-                    p.description,
-                    p.rating,
-                    p.primary_type,
-                    p.price_level,
+                    pt.place_id,
                     t.name AS trait_name,
                     ROW_NUMBER() OVER (
-                        PARTITION BY p.id
+                        PARTITION BY pt.place_id
                         ORDER BY
                             CASE pt.priority
                                 WHEN 'PAID_PROMOTION' THEN 100
@@ -659,21 +650,16 @@
                             pt.like_counter DESC,
                             t.name ASC
                     ) AS rn
-                FROM place p
-                LEFT JOIN place_trait pt ON pt.place_id = p.id
-                LEFT JOIN trait t ON t.id = pt.trait_id
+                FROM place_trait pt
+                JOIN trait t ON t.id = pt.trait_id
             )
-            SELECT id,
-                   name,
-                   description,
-                   rating,
-                   primary_type,
-                   price_level,
+            SELECT place_id,
                    ARRAY_AGG(trait_name ORDER BY rn) AS top_traits
             FROM ranked_traits
             WHERE rn &lt;= 5
-            GROUP BY id, name, description, rating, primary_type, price_level;
+            GROUP BY place_id;
         </sql>
+        <sql>CREATE UNIQUE INDEX place_top_traits_place_id_idx ON place_top_traits (place_id);</sql>
     </changeSet>
 
     <changeSet id="refresh-all-views" author="system" runAlways="true">

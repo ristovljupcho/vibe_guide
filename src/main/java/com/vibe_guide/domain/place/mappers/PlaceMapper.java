@@ -1,11 +1,9 @@
 package com.vibe_guide.domain.place.mappers;
 
 import com.vibe_guide.domain.place.dtos.PlaceCreateDTO;
-import com.vibe_guide.domain.place.dtos.PlacePreviewResponseDTO;
 import com.vibe_guide.domain.place.dtos.PlaceUpdateDTO;
 import com.vibe_guide.domain.place.dtos.PlaceResponseDTO;
 import com.vibe_guide.domain.place.entities.Place;
-import com.vibe_guide.domain.place.entities.PlaceTopTraits;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -49,12 +47,7 @@ public interface PlaceMapper {
   @Mapping(target = "imageUrls", expression = "java(toImageUrls(place))")
   PlaceResponseDTO toPlaceResponseDTO(Place place);
 
-  PlacePreviewResponseDTO toPlacePreviewResponseDTO(PlaceTopTraits placeTopTraits);
-
   default List<String> toImageUrls(Place place) {
     return place.getGallery().stream().map(gallery -> gallery.getPhoto()).toList();
   }
 }
-
-
-
