@@ -29,25 +29,6 @@ public class EventSpecification {
   }
 
   /**
-   * Returns a Specification that filters events containing the given event name.
-   *
-   * <p>If the provided eventName is blank, this specification returns a conjunction, effectively
-   * skipping the filtering on event name.
-   *
-   * @param eventName the event name to search for (case-insensitive); if eventName is blank, no
-   *     filtering is applied.
-   * @return a Specification for filtering by eventName or no specification if eventName is blank.
-   */
-  public static Specification<Event> containsEventName(String eventName) {
-    return (Root<Event> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
-      if (eventName.isBlank()) {
-        return cb.conjunction();
-      }
-      return cb.like(cb.lower(root.get("name")), "%" + eventName.toLowerCase() + "%");
-    };
-  }
-
-  /**
    * Returns a Specification that filters events starting on or after the specified date.
    *
    * <p>If the provided startDate is null, it defaults to the current date and time.

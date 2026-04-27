@@ -207,13 +207,12 @@ Base path: `/events`
 
 ### `GET /events/paginated`
 
-Returns paginated events with optional filtering by place name and date range.
+Returns paginated events with optional filtering by date range.
 
 **Query params**
 
 | Name | Type | Required |
 | --- | --- | --- |
-| `placeName` | `String` | No |
 | `startDate` | `LocalDateTime` | No |
 | `endDate` | `LocalDateTime` | No |
 | `page` | `int` | Yes |
