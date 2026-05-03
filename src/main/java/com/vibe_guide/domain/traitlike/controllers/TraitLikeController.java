@@ -4,7 +4,6 @@ import com.vibe_guide.domain.trait.dtos.TraitResponseDTO;
 import com.vibe_guide.domain.traitlike.dtos.TraitLikeRequestDTO;
 import com.vibe_guide.domain.traitlike.services.TraitLikeManagementService;
 import com.vibe_guide.domain.traitlike.services.TraitLikeQueryService;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +27,7 @@ public class TraitLikeController {
 
   @GetMapping("/likes")
   public ResponseEntity<List<TraitResponseDTO>> getAllByPlaceIdAndUserId(
-      @NotNull @RequestParam UUID userId, @NotNull @Valid UUID placeId) {
+      @NotNull @RequestParam String userId, @NotNull @RequestParam UUID placeId) {
     List<TraitResponseDTO> result = traitLikeQueryService.getAllByPlaceIdAndUserId(placeId, userId);
 
     return ResponseEntity.ok(result);

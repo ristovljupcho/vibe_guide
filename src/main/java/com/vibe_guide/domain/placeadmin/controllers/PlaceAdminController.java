@@ -42,7 +42,7 @@ public class PlaceAdminController {
   }
 
   @DeleteMapping("/admins/delete/{userId}")
-  public ResponseEntity<String> delete(@PathVariable UUID placeId, @PathVariable UUID userId) {
+  public ResponseEntity<String> delete(@PathVariable UUID placeId, @PathVariable String userId) {
     String response = placeAdminManagementService.delete(placeId, userId);
 
     return ResponseEntity.ok(response);

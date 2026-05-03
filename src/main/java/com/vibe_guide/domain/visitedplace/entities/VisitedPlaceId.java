@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class VisitedPlaceId implements Serializable {
 
-  private UUID userId;
+  private String userId;
   private UUID placeId;
 
   @Override

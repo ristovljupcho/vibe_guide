@@ -15,3 +15,4 @@ public interface PlaceTraitQueryService {
   List<TraitResponseDTO> getMostPopular();
 }
 
+

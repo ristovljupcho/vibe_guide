@@ -24,9 +24,8 @@ public class PlaceGalleryManagementServiceImpl implements PlaceGalleryManagement
 
   @Override
   @Transactional
-  public void insertAll(UUID placeId, List<MultipartFile> images) {
-    Place place =
-        placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
+  public void insertAll(Place place, List<MultipartFile> images) {
+    UUID placeId = place.getId();
     List<PlaceGallery> placeGallery =
         images.stream()
             .filter(image -> image != null && !image.isEmpty())
@@ -43,11 +42,25 @@ public class PlaceGalleryManagementServiceImpl implements PlaceGalleryManagement
   }
 
   @Override
-  public void deleteAll(UUID placeId) {
-    placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
-    List<PlaceGallery> existingGallery = placeGalleryRepository.findAllByPlaceId(placeId);
+  @Transactional
+  public void insertAll(UUID placeId, List<MultipartFile> images) {
+    Place place =
+        placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
+    insertAll(place, images);
+  }
+
+  @Override
+  public void deleteAll(Place place) {
+    List<PlaceGallery> existingGallery = placeGalleryRepository.findAllByPlaceId(place.getId());
     existingGallery.forEach(gallery -> imageStorageService.delete(gallery.getPhoto()));
     placeGalleryRepository.deleteAll(existingGallery);
+  }
+
+  @Override
+  public void deleteAll(UUID placeId) {
+    Place place =
+        placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
+    deleteAll(place);
   }
 
   @Override

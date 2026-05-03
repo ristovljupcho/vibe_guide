@@ -54,8 +54,8 @@ public class PlaceTraitController {
   }
 
   @PostMapping("/insert-trait")
-  public ResponseEntity<String> insert(@RequestBody @Validated PlaceTraitRequestDTO dto) {
-    String response = placeTraitManagementService.insert(dto);
+  public ResponseEntity<String> create(@RequestBody @Validated PlaceTraitRequestDTO dto) {
+    String response = placeTraitManagementService.create(dto);
 
     return ResponseEntity.ok(response);
   }
@@ -88,4 +88,5 @@ public class PlaceTraitController {
     return ResponseEntity.ok(response);
   }
 }
+
 

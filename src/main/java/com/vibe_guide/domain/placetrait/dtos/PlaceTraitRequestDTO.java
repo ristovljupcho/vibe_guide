@@ -11,3 +11,4 @@ public record PlaceTraitRequestDTO(
     @NotBlank String additionalInformation,
     @NotNull TraitPriority priority) {}
 
+

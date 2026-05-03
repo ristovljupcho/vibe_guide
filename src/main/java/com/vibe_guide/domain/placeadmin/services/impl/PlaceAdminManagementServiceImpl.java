@@ -33,11 +33,11 @@ public class PlaceAdminManagementServiceImpl implements PlaceAdminManagementServ
     Place place =
         placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotFoundException(placeId));
 
-    UUID userId = placeAdminRequestDTO.userId();
+    String userId = placeAdminRequestDTO.userId();
     User user =
         userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
-    PlaceAdminId placeAdminId = new PlaceAdminId(placeId, userId);
+    PlaceAdminId placeAdminId = new PlaceAdminId(userId, placeId);
     if (placeAdminRepository.existsById(placeAdminId)) {
       throw new AdminForPlaceAlreadyExistsException(placeId, userId);
     }
@@ -53,8 +53,8 @@ public class PlaceAdminManagementServiceImpl implements PlaceAdminManagementServ
   }
 
   @Override
-  public String delete(UUID placeId, UUID userId) {
-    PlaceAdminId placeAdminId = new PlaceAdminId(placeId, userId);
+  public String delete(UUID placeId, String userId) {
+    PlaceAdminId placeAdminId = new PlaceAdminId(userId, placeId);
     if (!placeAdminRepository.existsById(placeAdminId)) {
       throw new AdminForPlaceNotFound(placeId, userId);
     }

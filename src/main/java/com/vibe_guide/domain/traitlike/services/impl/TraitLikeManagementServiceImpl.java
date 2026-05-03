@@ -57,7 +57,7 @@ public class TraitLikeManagementServiceImpl implements TraitLikeManagementServic
   @Transactional
   @Override
   public String insert(TraitLikeRequestDTO dto) {
-    UUID userId = dto.userId();
+    String userId = dto.userId();
     User user = loadUser(userId);
 
     UUID placeId = dto.placeId();
@@ -117,7 +117,7 @@ public class TraitLikeManagementServiceImpl implements TraitLikeManagementServic
   @Transactional
   @Override
   public String delete(TraitLikeRequestDTO dto) {
-    UUID userId = dto.userId();
+    String userId = dto.userId();
     loadUser(userId);
 
     UUID placeId = dto.placeId();
@@ -159,7 +159,7 @@ public class TraitLikeManagementServiceImpl implements TraitLikeManagementServic
    * @return the user entity
    * @throws UserNotFoundException if the user does not exist
    */
-  private User loadUser(UUID userId) {
+  private User loadUser(String userId) {
     return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
   }
 
@@ -206,7 +206,7 @@ public class TraitLikeManagementServiceImpl implements TraitLikeManagementServic
    * @param placeTraits the place traits to check against
    * @return map of placeTraitId ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ TraitLike
    */
-  private Map<UUID, TraitLike> loadExistingLikes(UUID userId, Collection<PlaceTrait> placeTraits) {
+  private Map<UUID, TraitLike> loadExistingLikes(String userId, Collection<PlaceTrait> placeTraits) {
 
     List<UUID> placeTraitIds = placeTraits.stream().map(PlaceTrait::getId).toList();
 

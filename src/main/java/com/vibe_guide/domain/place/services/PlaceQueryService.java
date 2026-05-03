@@ -16,3 +16,4 @@ public interface PlaceQueryService {
   List<PlacePreviewResponseDTO> getTop();
 }
 
+

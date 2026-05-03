@@ -89,65 +89,70 @@
     <changeSet id="seed-02-places" author="codex">
         <insert tableName="place">
             <column name="id" value="22222222-2222-2222-2222-222222222001"/>
-            <column name="name" value="Pulse Coffee Lab"/>
+            <column name="name" value="Noas Rooftop Restaurant"/>
             <column name="description"
-                    value="Modern specialty coffee spot with single-origin brews and relaxed daytime energy."/>
-            <column name="maps_uri" value="https://maps.google.com/?q=Pulse+Coffee+Lab+Skopje"/>
-            <column name="phone_number" value="+389 2 111 0101"/>
-            <column name="address" value="Partizanski Odredi 15, Skopje"/>
+                    value="Modern rooftop dining venue in Skopje known for elevated city views and contemporary cuisine."/>
+            <column name="maps_uri" value="https://maps.google.com/?q=Noas+Rooftop+Restaurant+Skopje"/>
+            <column name="phone_number" value="+389 76 454 899"/>
+            <column name="address" value="Hasan Pristina 114, Skopje"/>
             <column name="rating" value="4.6"/>
-            <column name="menu_link" value="https://pulsecoffeelab.mk/menu"/>
-            <column name="price_level" value="MODERATE"/>
-            <column name="primary_type" value="COFFEE_SHOP"/>
+            <column name="menu_link" value="https://www.noas.mk/"/>
+            <column name="price_level" value="EXPENSIVE"/>
+            <column name="primary_type" value="RESTAURANT"/>
+            <column name="created_at" value="2026-03-01 09:00:00"/>
         </insert>
         <insert tableName="place">
             <column name="id" value="22222222-2222-2222-2222-222222222002"/>
-            <column name="name" value="Bistro 42"/>
+            <column name="name" value="Hotel Arka Rooftop Bar"/>
             <column name="description"
-                    value="Contemporary bistro focused on seasonal cuisine and wood-fired classics."/>
-            <column name="maps_uri" value="https://maps.google.com/?q=Bistro+42+Skopje"/>
-            <column name="phone_number" value="+389 2 111 0202"/>
-            <column name="address" value="Debar Maalo 42, Skopje"/>
+                    value="Panoramic rooftop bar above the Old Bazaar with cocktails, skyline views, and late-night atmosphere."/>
+            <column name="maps_uri" value="https://maps.google.com/?q=Hotel+Arka+Rooftop+Bar+Skopje"/>
+            <column name="phone_number" value="+389 70 221 591"/>
+            <column name="address" value="Bitpazarska 90/2, Skopje"/>
             <column name="rating" value="4.7"/>
-            <column name="menu_link" value="https://bistro42.mk/menu"/>
+            <column name="menu_link" value="https://hotelarka.mk/rooftop/"/>
             <column name="price_level" value="EXPENSIVE"/>
-            <column name="primary_type" value="RESTAURANT"/>
+            <column name="primary_type" value="LOUNGE"/>
+            <column name="created_at" value="2026-03-01 09:05:00"/>
         </insert>
         <insert tableName="place">
             <column name="id" value="22222222-2222-2222-2222-222222222003"/>
-            <column name="name" value="Riverfront Taproom"/>
-            <column name="description" value="Craft beer pub by the river with rotating taps and social atmosphere."/>
-            <column name="maps_uri" value="https://maps.google.com/?q=Riverfront+Taproom+Skopje"/>
-            <column name="phone_number" value="+389 2 111 0303"/>
-            <column name="address" value="Kej 13 Noemvri 8, Skopje"/>
+            <column name="name" value="The Loft Rooftop Bar and Club"/>
+            <column name="description" value="High-rise rooftop destination in central Skopje for dining, drinks, and nightlife with a city view."/>
+            <column name="maps_uri" value="https://maps.google.com/?q=The+Loft+Rooftop+Bar+and+Club+Skopje"/>
+            <column name="phone_number" value="+389 71 272 000"/>
+            <column name="address" value="Multi-storey Garage Solunski Kongres, Skopje"/>
             <column name="rating" value="4.4"/>
-            <column name="menu_link" value="https://riverfronttaproom.mk/menu"/>
-            <column name="price_level" value="INEXPENSIVE"/>
-            <column name="primary_type" value="PUB"/>
+            <column name="menu_link" value="https://svnadesign.com/theloft/"/>
+            <column name="price_level" value="EXPENSIVE"/>
+            <column name="primary_type" value="CLUB"/>
+            <column name="created_at" value="2026-03-01 09:10:00"/>
         </insert>
         <insert tableName="place">
             <column name="id" value="22222222-2222-2222-2222-222222222004"/>
-            <column name="name" value="Skyline Lounge"/>
-            <column name="description" value="Rooftop lounge with signature cocktails and city skyline views."/>
-            <column name="maps_uri" value="https://maps.google.com/?q=Skyline+Lounge+Skopje"/>
-            <column name="phone_number" value="+389 2 111 0404"/>
-            <column name="address" value="Macedonia Square 3, Skopje"/>
+            <column name="name" value="Ragusa 360 Rooftop"/>
+            <column name="description" value="Elegant rooftop event and dining venue in Skopje with a panoramic city outlook."/>
+            <column name="maps_uri" value="https://maps.google.com/?q=Ragusa+360+Rooftop+Skopje"/>
+            <column name="phone_number" value="+389 75 398 919"/>
+            <column name="address" value="Sv. Kiril i Metodij 1/1, Skopje"/>
             <column name="rating" value="4.8"/>
-            <column name="menu_link" value="https://skylinelounge.mk/menu"/>
+            <column name="menu_link" value="https://ragusa360.com/"/>
             <column name="price_level" value="EXPENSIVE"/>
             <column name="primary_type" value="LOUNGE"/>
+            <column name="created_at" value="2026-03-01 09:15:00"/>
         </insert>
         <insert tableName="place">
             <column name="id" value="22222222-2222-2222-2222-222222222005"/>
-            <column name="name" value="Nova Club"/>
-            <column name="description" value="Night venue with weekend DJ sets, energetic crowd, and late-night menu."/>
-            <column name="maps_uri" value="https://maps.google.com/?q=Nova+Club+Skopje"/>
-            <column name="phone_number" value="+389 2 111 0505"/>
-            <column name="address" value="Mito Hadzivasilev Jasmin 11, Skopje"/>
+            <column name="name" value="Sky Restaurant and Pool Bar"/>
+            <column name="description" value="Restaurant and pool bar near Skopje known for open-air dining, cocktails, and summer atmosphere."/>
+            <column name="maps_uri" value="https://maps.google.com/?q=Sky+Restaurant+and+Pool+Bar+Skopje"/>
+            <column name="phone_number" value="+389 71 527 184"/>
+            <column name="address" value="Mirkovci, Cucer-Sandevo, Skopje"/>
             <column name="rating" value="4.3"/>
-            <column name="menu_link" value="https://novaclub.mk/menu"/>
+            <column name="menu_link" value="https://skyrestaurant.mk/"/>
             <column name="price_level" value="MODERATE"/>
-            <column name="primary_type" value="CLUB"/>
+            <column name="primary_type" value="RESTAURANT"/>
+            <column name="created_at" value="2026-03-01 09:20:00"/>
         </insert>
     </changeSet>
 
@@ -158,8 +163,6 @@
             <column name="name" value="Ana Petrova"/>
             <column name="email" value="ana.petrova@vibeguide.test"/>
             <column name="role" value="USER"/>
-            <column name="password" value="hashed_password_ana"/>
-            <column name="created_at" value="2026-03-01 09:00:00"/>
         </insert>
         <insert tableName="user_table">
             <column name="id" value="33333333-3333-3333-3333-333333333002"/>
@@ -167,8 +170,6 @@
             <column name="name" value="Marko Iliev"/>
             <column name="email" value="marko.iliev@vibeguide.test"/>
             <column name="role" value="USER"/>
-            <column name="password" value="hashed_password_marko"/>
-            <column name="created_at" value="2026-03-01 09:05:00"/>
         </insert>
         <insert tableName="user_table">
             <column name="id" value="33333333-3333-3333-3333-333333333003"/>
@@ -176,8 +177,6 @@
             <column name="name" value="Elena Kostova"/>
             <column name="email" value="elena.kostova@vibeguide.test"/>
             <column name="role" value="USER"/>
-            <column name="password" value="hashed_password_elena"/>
-            <column name="created_at" value="2026-03-01 09:10:00"/>
         </insert>
         <insert tableName="user_table">
             <column name="id" value="33333333-3333-3333-3333-333333333004"/>
@@ -185,8 +184,6 @@
             <column name="name" value="Viktor Manager"/>
             <column name="email" value="viktor.manager@vibeguide.test"/>
             <column name="role" value="ADMIN"/>
-            <column name="password" value="hashed_password_owner"/>
-            <column name="created_at" value="2026-03-01 09:15:00"/>
         </insert>
     </changeSet>
 
@@ -480,27 +477,27 @@
         <insert tableName="place_gallery">
             <column name="id" value="99999999-9999-9999-9999-999999999001"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222001"/>
-            <column name="photo" value="0xB100"/>
+            <column name="photo" value="https://www.noas.mk/Uploads/Homepage/Topfive/24/L1280844.JPG"/>
         </insert>
         <insert tableName="place_gallery">
             <column name="id" value="99999999-9999-9999-9999-999999999002"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222002"/>
-            <column name="photo" value="0xB200"/>
+            <column name="photo" value="https://ewry26q3atr.exactdn.com/wp-content/uploads/2021/05/Hotel_Arka_Rooftop_people-1024x711.jpg?lossy=1&amp;ssl=1&amp;strip=all"/>
         </insert>
         <insert tableName="place_gallery">
             <column name="id" value="99999999-9999-9999-9999-999999999003"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222003"/>
-            <column name="photo" value="0xB300"/>
+            <column name="photo" value="https://svnadesign.com/theloft/assets/DSC_7446-105min.jpg"/>
         </insert>
         <insert tableName="place_gallery">
             <column name="id" value="99999999-9999-9999-9999-999999999004"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222004"/>
-            <column name="photo" value="0xB400"/>
+            <column name="photo" value="https://ragusa360.com/storage/app/media/panorama/360-slider.jpg"/>
         </insert>
         <insert tableName="place_gallery">
             <column name="id" value="99999999-9999-9999-9999-999999999005"/>
             <column name="place_id" value="22222222-2222-2222-2222-222222222005"/>
-            <column name="photo" value="0xB500"/>
+            <column name="photo" value="https://skyrestaurant.mk/img/slika14.jpg"/>
         </insert>
     </changeSet>
 

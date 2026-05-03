@@ -7,15 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,22 +26,17 @@ import lombok.ToString;
 @Entity
 @Table(name = "user_table")
 public class User {
+
+  /** Clerk-issued user ID (e.g. "user_2abc..."). Assigned by Clerk, never generated here. */
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
   @ToString.Include
-  private UUID id;
+  private String id;
 
   @ToString.Include private String username;
 
   private String name;
 
   private String email;
-
-  private String password;
-
-  private LocalDateTime createdAt;
-
-  private LocalDateTime updatedAt;
 
   @Enumerated(EnumType.STRING)
   private Role role;
@@ -67,4 +58,3 @@ public class User {
     return Objects.hashCode(id);
   }
 }
-

@@ -5,7 +5,6 @@ import com.vibe_guide.domain.visitedplace.dtos.VisitedPlaceToggleRequestDTO;
 import com.vibe_guide.domain.visitedplace.services.VisitedPlaceService;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +23,7 @@ public class VisitedPlaceController {
   private final VisitedPlaceService visitedPlaceService;
 
   @GetMapping("/{userId}")
-  public ResponseEntity<List<VisitedPlaceResponseDTO>> getAllByUserId(@PathVariable UUID userId) {
+  public ResponseEntity<List<VisitedPlaceResponseDTO>> getAllByUserId(@PathVariable String userId) {
     List<VisitedPlaceResponseDTO> response = visitedPlaceService.getAllByUserId(userId);
 
     return ResponseEntity.ok(response);

@@ -16,3 +16,4 @@ public record PlaceResponseDTO(
     PriceLevel priceLevel,
     List<String> imageUrls) {}
 
+

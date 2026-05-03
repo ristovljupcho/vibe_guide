@@ -5,7 +5,6 @@ import com.vibe_guide.domain.wishlistplace.dtos.WishlistPlaceToggleRequestDTO;
 import com.vibe_guide.domain.wishlistplace.services.WishlistPlaceService;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +22,7 @@ public class WishlistPlaceController {
   private final WishlistPlaceService wishlistService;
 
   @GetMapping("/{userId}")
-  public ResponseEntity<List<WishlistPlaceResponseDTO>> getAllByUserId(@PathVariable UUID userId) {
+  public ResponseEntity<List<WishlistPlaceResponseDTO>> getAllByUserId(@PathVariable String userId) {
     return ResponseEntity.ok(wishlistService.getAllByUserId(userId));
   }
 

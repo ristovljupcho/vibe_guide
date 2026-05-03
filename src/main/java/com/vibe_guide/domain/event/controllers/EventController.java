@@ -28,13 +28,11 @@ public class EventController {
 
   @GetMapping("/paginated")
   ResponseEntity<Page<EventResponseDTO>> getPaginated(
-      @RequestParam(required = false) String placeName,
       @RequestParam(required = false) LocalDateTime startDate,
       @RequestParam(required = false) LocalDateTime endDate,
       @RequestParam Integer page,
       @RequestParam Integer size) {
-    EventSearchCriteriaDTO searchCriteria =
-        new EventSearchCriteriaDTO(placeName, startDate, endDate);
+    EventSearchCriteriaDTO searchCriteria = new EventSearchCriteriaDTO(startDate, endDate);
     Page<EventResponseDTO> response = eventQueryService.getPaginated(searchCriteria, page, size);
 
     return ResponseEntity.ok(response);

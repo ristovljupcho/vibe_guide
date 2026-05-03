@@ -1,53 +1,53 @@
 package com.vibe_guide.domain.place.mappers;
 
-import com.vibe_guide.enums.PriceLevel;
-import com.vibe_guide.enums.PrimaryType;
-import com.vibe_guide.domain.place.dtos.PlacePreviewResponseDTO;
+import com.vibe_guide.domain.place.dtos.PlaceCreateDTO;
+import com.vibe_guide.domain.place.dtos.PlaceUpdateDTO;
 import com.vibe_guide.domain.place.dtos.PlaceResponseDTO;
 import com.vibe_guide.domain.place.entities.Place;
-import com.vibe_guide.domain.place.entities.PlaceTopTraits;
 import java.util.List;
-import java.util.UUID;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
-@Component
-public class PlaceMapper {
-  public PlaceResponseDTO toPlaceResponseDTO(Place place) {
-    String name = place.getName();
-    String description = place.getDescription();
-    String mapsUri = place.getMapsUri();
-    String phoneNumber = place.getPhoneNumber();
-    String address = place.getAddress();
-    double rating = place.getRating();
-    String menuLink = place.getMenuLink();
-    PrimaryType primaryType = place.getPrimaryType();
-    PriceLevel priceLevel = place.getPriceLevel();
-    List<String> imageUrls = place.getGallery().stream().map(gallery -> gallery.getPhoto()).toList();
+@Mapper(componentModel = "spring")
+public interface PlaceMapper {
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "rating", ignore = true)
+  @Mapping(target = "admins", ignore = true)
+  @Mapping(target = "traits", ignore = true)
+  @Mapping(target = "gallery", ignore = true)
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
+  @Mapping(target = "createdBy", ignore = true)
+  @Mapping(target = "updatedBy", ignore = true)
+  Place toPlace(PlaceCreateDTO dto);
 
-    return new PlaceResponseDTO(
-        name,
-        description,
-        mapsUri,
-        phoneNumber,
-        address,
-        rating,
-        menuLink,
-        primaryType,
-        priceLevel,
-        imageUrls);
-  }
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "rating", ignore = true)
+  @Mapping(target = "admins", ignore = true)
+  @Mapping(target = "traits", ignore = true)
+  @Mapping(target = "gallery", ignore = true)
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
+  @Mapping(target = "createdBy", ignore = true)
+  @Mapping(target = "updatedBy", ignore = true)
+  Place toPlace(PlaceUpdateDTO dto);
 
-  public PlacePreviewResponseDTO toPlacePreviewResponseDTO(PlaceTopTraits placeTopTraits) {
-    UUID id = placeTopTraits.getId();
-    String name = placeTopTraits.getName();
-    String description = placeTopTraits.getDescription();
-    double rating = placeTopTraits.getRating();
-    PrimaryType primaryType = placeTopTraits.getPrimaryType();
-    PriceLevel priceLevel = placeTopTraits.getPriceLevel();
-    String[] topTraits = placeTopTraits.getTopTraits();
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "rating", ignore = true)
+  @Mapping(target = "admins", ignore = true)
+  @Mapping(target = "traits", ignore = true)
+  @Mapping(target = "gallery", ignore = true)
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
+  @Mapping(target = "createdBy", ignore = true)
+  @Mapping(target = "updatedBy", ignore = true)
+  void applyRequest(PlaceUpdateDTO dto, @MappingTarget Place place);
 
-    return new PlacePreviewResponseDTO(
-        id, name, description, rating, primaryType, priceLevel, topTraits);
+  @Mapping(target = "imageUrls", expression = "java(toImageUrls(place))")
+  PlaceResponseDTO toPlaceResponseDTO(Place place);
+
+  default List<String> toImageUrls(Place place) {
+    return place.getGallery().stream().map(gallery -> gallery.getPhoto()).toList();
   }
 }
-

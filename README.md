@@ -66,21 +66,53 @@ Cloudinary usage:
 
 The backend reads its configuration from environment variables.
 
-Required:
+### Required
+
+- `CLOUDINARY_URL` (must be set)
+
+The app can start without datasource env vars only if your local defaults are valid (`localhost:5432`, user `postgres`, password `postgres`).
+In most setups, you should still set the datasource values explicitly.
+
+### Commonly set (recommended)
 
 - `SPRING_DATASOURCE_URL`
 - `SPRING_DATASOURCE_USERNAME`
 - `SPRING_DATASOURCE_PASSWORD`
-- `CLOUDINARY_URL`
+- `APP_STORAGE_CLOUDINARY_FOLDER`
 
-Optional:
+### Optional
 
 - `SPRING_LIQUIBASE_URL`
 - `SPRING_LIQUIBASE_USER`
 - `SPRING_LIQUIBASE_PASSWORD`
 - `SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE`
 - `SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE`
-- `APP_STORAGE_CLOUDINARY_FOLDER`
+
+### `.env` template
+
+Create a `.env` file in the project root with:
+
+```dotenv
+# Required
+CLOUDINARY_URL=cloudinary://your_api_key:your_api_secret@your_cloud_name
+
+# Recommended datasource values
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/vibe_guide?sslmode=disable
+SPRING_DATASOURCE_USERNAME=postgres
+SPRING_DATASOURCE_PASSWORD=postgres
+
+# Optional app setting
+APP_STORAGE_CLOUDINARY_FOLDER=vibe-guide-demo
+
+# Optional Liquibase overrides
+# SPRING_LIQUIBASE_URL=
+# SPRING_LIQUIBASE_USER=
+# SPRING_LIQUIBASE_PASSWORD=
+
+# Optional pool tuning
+# SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=5
+# SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE=1
+```
 
 `CLOUDINARY_URL` format:
 
@@ -88,15 +120,7 @@ Optional:
 cloudinary://<api_key>:<api_secret>@<cloud_name>
 ```
 
-Example PowerShell session:
-
-```powershell
-$env:SPRING_DATASOURCE_URL="jdbc:postgresql://<your-neon-host>/neondb?sslmode=require&channelBinding=require"
-$env:SPRING_DATASOURCE_USERNAME="neondb_owner"
-$env:SPRING_DATASOURCE_PASSWORD="your-password"
-$env:CLOUDINARY_URL="cloudinary://<api_key>:<api_secret>@<cloud_name>"
-$env:APP_STORAGE_CLOUDINARY_FOLDER="vibe-guide-demo"
-```
+Cloudinary dashboard already provides this full value as **API Environment variable**, so you can copy-paste it directly.
 
 ## Database and Liquibase
 

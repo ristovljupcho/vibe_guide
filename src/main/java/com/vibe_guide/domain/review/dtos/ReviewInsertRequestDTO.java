@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 public record ReviewInsertRequestDTO(
-    @NotNull UUID userId,
+    @NotBlank String userId,
     @NotNull UUID placeId,
     @NotBlank String description,
     @NotNull Float rating) {}

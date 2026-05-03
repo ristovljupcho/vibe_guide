@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface TraitLikeRepository extends JpaRepository<TraitLike, UUID> {
-  List<TraitLike> findAllByUserIdAndPlaceTraitIdIn(UUID userId, List<UUID> placeTraitIds);
+  List<TraitLike> findAllByUserIdAndPlaceTraitIdIn(String userId, List<UUID> placeTraitIds);
 
   @Query(
       """
@@ -20,6 +20,6 @@ public interface TraitLikeRepository extends JpaRepository<TraitLike, UUID> {
       FROM TraitLike tl
       WHERE tl.user.id = :userId AND tl.placeTrait.place.id = :placeId
       """)
-  List<TraitResponseDTO> findAllByUserIdAndPlaceId(UUID userId, UUID placeId);
+  List<TraitResponseDTO> findAllByUserIdAndPlaceId(String userId, UUID placeId);
 }
 

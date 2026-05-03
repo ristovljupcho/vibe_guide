@@ -46,3 +46,4 @@ public interface PlaceTraitRepository extends JpaRepository<PlaceTrait, UUID> {
   List<PlaceTrait> findAllByPlaceIdAndTraitIdIn(UUID placeId, List<UUID> traitIds);
 }
 
+

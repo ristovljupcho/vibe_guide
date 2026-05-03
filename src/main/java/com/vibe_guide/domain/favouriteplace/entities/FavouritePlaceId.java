@@ -18,7 +18,7 @@ import lombok.Setter;
 public class FavouritePlaceId implements Serializable {
 
   @Column(name = "user_id")
-  private UUID userId;
+  private String userId;
 
   @Column(name = "place_id")
   private UUID placeId;
@@ -35,4 +35,3 @@ public class FavouritePlaceId implements Serializable {
     return Objects.hash(userId, placeId);
   }
 }
-

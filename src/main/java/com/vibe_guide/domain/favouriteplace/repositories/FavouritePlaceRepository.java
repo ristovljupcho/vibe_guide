@@ -23,6 +23,6 @@ public interface FavouritePlaceRepository extends JpaRepository<FavouritePlace, 
       WHERE fp.user.id = :userId
       ORDER BY fp.createdAt DESC
       """)
-  List<FavouritePlaceResponseDTO> getAllByUserId(UUID userId);
+  List<FavouritePlaceResponseDTO> getAllByUserId(String userId);
 }
 

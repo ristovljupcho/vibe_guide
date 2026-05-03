@@ -6,7 +6,7 @@ import com.vibe_guide.domain.placetrait.dtos.PlaceTraitRequestDTO;
 import java.util.UUID;
 
 public interface PlaceTraitManagementService {
-  String insert(PlaceTraitRequestDTO placeTraitInsertRequestDTO);
+  String create(PlaceTraitRequestDTO placeTraitInsertRequestDTO);
 
   String insertAll(BatchInsertTraitsInPlace batchInsertTraitsInPlace);
 
@@ -16,4 +16,5 @@ public interface PlaceTraitManagementService {
 
   String deleteAll(BatchDeleteTraitsInPlace batchDeleteTraitsInPlace);
 }
+
 

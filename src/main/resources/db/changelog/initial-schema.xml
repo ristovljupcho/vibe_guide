@@ -39,7 +39,30 @@
             <column name="menu_link" type="VARCHAR(255)"/>
             <column name="price_level" type="VARCHAR(50)"/>
             <column name="primary_type" type="VARCHAR(50)"/>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="created_by" type="UUID"/>
+            <column name="updated_by" type="UUID"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="add-audit-columns-to-place" author="codex">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="place" columnName="created_at"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="place">
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="2026-03-01T09:00:00">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="created_by" type="UUID"/>
+            <column name="updated_by" type="UUID"/>
+        </addColumn>
     </changeSet>
 
     <changeSet id="place_trait_table" author="negrioska">
@@ -138,16 +161,13 @@
             </not>
         </preConditions>
         <createTable tableName="user_table">
-            <column name="id" type="UUID">
+            <column name="id" type="VARCHAR(255)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="username" type="VARCHAR(100) NOT NULL"/>
             <column name="name" type="VARCHAR(100) NOT NULL"/>
             <column name="email" type="VARCHAR(100) NOT NULL"/>
             <column name="role" type="VARCHAR(100) NOT NULL"/>
-            <column name="password" type="VARCHAR(100) NOT NULL"/>
-            <column name="created_at" type="TIMESTAMP NOT NULL"/>
-            <column name="updated_at" type="TIMESTAMP"/>
         </createTable>
     </changeSet>
 
@@ -167,7 +187,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="user_id" type="UUID">
+            <column name="user_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
@@ -216,7 +236,7 @@
         </preConditions>
 
         <createTable tableName="visited_place">
-            <column name="user_id" type="UUID">
+            <column name="user_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="place_id" type="UUID">
@@ -279,7 +299,7 @@
         </preConditions>
 
         <createTable tableName="wishlist_place">
-            <column name="user_id" type="UUID">
+            <column name="user_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
@@ -348,7 +368,7 @@
         </preConditions>
 
         <createTable tableName="favourite_place">
-            <column name="user_id" type="UUID">
+            <column name="user_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="place_id" type="UUID">
@@ -409,7 +429,7 @@
             <column name="date_modified" type="DATETIME"/>
             <column name="rating" type="DECIMAL(3, 1) NOT NULL"/>
             <column name="description" type="VARCHAR(255) NOT NULL"/>
-            <column name="user_id" type="UUID NOT NULL"/>
+            <column name="user_id" type="VARCHAR(255) NOT NULL"/>
             <column name="place_id" type="UUID NOT NULL"/>
         </createTable>
 
@@ -438,7 +458,7 @@
         </preConditions>
         <createTable tableName="place_admin">
             <column name="place_id" type="UUID NOT NULL"/>
-            <column name="user_id" type="UUID NOT NULL"/>
+            <column name="user_id" type="VARCHAR(255) NOT NULL"/>
             <column name="date_created" type="TIMESTAMP NOT NULL"/>
         </createTable>
 
@@ -605,25 +625,16 @@
     </changeSet>
 
     <changeSet id="create-place-top-traits-view" runOnChange="true" author="ristovljupcho">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="place_top_traits"/>
-            </not>
-        </preConditions>
+        <sql>DROP MATERIALIZED VIEW IF EXISTS place_top_traits CASCADE;</sql>
         <sql>
             CREATE
             MATERIALIZED VIEW place_top_traits AS
             WITH ranked_traits AS (
                 SELECT
-                    p.id,
-                    p.name,
-                    p.description,
-                    p.rating,
-                    p.primary_type,
-                    p.price_level,
+                    pt.place_id,
                     t.name AS trait_name,
                     ROW_NUMBER() OVER (
-                        PARTITION BY p.id
+                        PARTITION BY pt.place_id
                         ORDER BY
                             CASE pt.priority
                                 WHEN 'PAID_PROMOTION' THEN 100
@@ -636,21 +647,16 @@
                             pt.like_counter DESC,
                             t.name ASC
                     ) AS rn
-                FROM place p
-                LEFT JOIN place_trait pt ON pt.place_id = p.id
-                LEFT JOIN trait t ON t.id = pt.trait_id
+                FROM place_trait pt
+                JOIN trait t ON t.id = pt.trait_id
             )
-            SELECT id,
-                   name,
-                   description,
-                   rating,
-                   primary_type,
-                   price_level,
+            SELECT place_id,
                    ARRAY_AGG(trait_name ORDER BY rn) AS top_traits
             FROM ranked_traits
             WHERE rn &lt;= 5
-            GROUP BY id, name, description, rating, primary_type, price_level;
+            GROUP BY place_id;
         </sql>
+        <sql>CREATE UNIQUE INDEX place_top_traits_place_id_idx ON place_top_traits (place_id);</sql>
     </changeSet>
 
     <changeSet id="refresh-all-views" author="system" runAlways="true">

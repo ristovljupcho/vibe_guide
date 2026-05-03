@@ -31,11 +31,6 @@ public class EventQueryServiceImpl implements EventQueryService {
     PageRequest pageRequest = PageRequest.of(page, size);
     Specification<Event> spec = Specification.where(null);
 
-    String eventName = searchCriteria.eventName();
-    if (eventName != null && !eventName.isEmpty()) {
-      spec = spec.and(EventSpecification.containsEventName(eventName));
-    }
-
     LocalDateTime startDate = searchCriteria.startDate();
     if (startDate != null) {
       spec = spec.and(EventSpecification.startsOnOrAfter(startDate));

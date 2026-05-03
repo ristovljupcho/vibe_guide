@@ -18,6 +18,7 @@ import com.vibe_guide.domain.placetrait.utils.PlaceTraitResponseMessages;
 import com.vibe_guide.domain.trait.entities.Trait;
 import com.vibe_guide.domain.trait.repositories.TraitRepository;
 import jakarta.transaction.Transactional;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -49,7 +50,7 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
    */
   @Transactional
   @Override
-  public String insert(PlaceTraitRequestDTO dto) {
+  public String create(PlaceTraitRequestDTO dto) {
 
     UUID placeId = dto.placeId();
     Place place = getById(placeId);
@@ -91,7 +92,7 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
   @Override
   public String insertAll(BatchInsertTraitsInPlace request) {
 
-    List<PlaceTraitRequestDTO> dtos = request.placeTraitRequestDTOs();
+    List<PlaceTraitRequestDTO> dtos = uniqueTraitRequests(request.placeTraitRequestDTOs());
     if (dtos.isEmpty()) {
       throw new IllegalArgumentException("Trait list cannot be empty.");
     }
@@ -251,6 +252,27 @@ public class PlaceTraitManagementServiceImpl implements PlaceTraitManagementServ
   private String convertTraitIdsToString(List<UUID> traitIds) {
     return String.join(", ", traitIds.stream().map(UUID::toString).toList());
   }
+
+  /**
+   * Normalizes incoming trait requests to unique trait IDs while preserving the first occurrence
+   * order.
+   *
+   * @param dtos incoming trait requests
+   * @return list with duplicate trait IDs removed
+   */
+  private List<PlaceTraitRequestDTO> uniqueTraitRequests(List<PlaceTraitRequestDTO> dtos) {
+    return dtos.stream()
+        .collect(
+            Collectors.toMap(
+                PlaceTraitRequestDTO::traitId,
+                dto -> dto,
+                (existing, ignored) -> existing,
+                LinkedHashMap::new))
+        .values()
+        .stream()
+        .toList();
+  }
 }
+
 
 

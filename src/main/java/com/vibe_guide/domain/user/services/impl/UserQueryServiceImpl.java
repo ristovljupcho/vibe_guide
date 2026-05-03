@@ -9,7 +9,6 @@ import com.vibe_guide.domain.user.dtos.UserPreviewResponseDTO;
 import com.vibe_guide.domain.user.entities.User;
 import com.vibe_guide.domain.user.mappers.UserMapper;
 import com.vibe_guide.domain.user.repositories.UserRepository;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,17 +28,14 @@ public class UserQueryServiceImpl implements UserQueryService {
       Role role, UserSortBy sortBy, SortDirection sortDirection, int page, int size) {
 
     Pageable pageable = createPageable(sortBy, sortDirection, page, size);
-
     Page<User> userPage = userRepository.findAll(pageable);
-
     return userPage.map(userMapper::toUserPreviewResponseDTO);
   }
 
   @Override
-  public UserPreviewResponseDTO getById(UUID userId) {
+  public UserPreviewResponseDTO getById(String userId) {
     User user =
         userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-
     return userMapper.toUserPreviewResponseDTO(user);
   }
 
@@ -49,7 +45,6 @@ public class UserQueryServiceImpl implements UserQueryService {
         userRepository
             .findByUsername(username)
             .orElseThrow(() -> new UserNotFoundException(username));
-
     return userMapper.toUserPreviewResponseDTO(user);
   }
 
@@ -69,5 +64,3 @@ public class UserQueryServiceImpl implements UserQueryService {
     return PageRequest.of(page, size, sort);
   }
 }
-
-

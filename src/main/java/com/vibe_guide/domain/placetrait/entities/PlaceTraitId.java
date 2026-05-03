@@ -14,3 +14,4 @@ public class PlaceTraitId implements Serializable {
   private UUID place;
 }
 
+

@@ -5,7 +5,6 @@ import com.vibe_guide.domain.favouriteplace.dtos.FavouritePlaceResponseDTO;
 import com.vibe_guide.domain.favouriteplace.services.FavouritePlaceService;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +24,7 @@ public class FavouritePlaceController {
   private final FavouritePlaceService favouritePlaceService;
 
   @GetMapping("/{userId}")
-  public ResponseEntity<List<FavouritePlaceResponseDTO>> getAllByUserId(@PathVariable UUID userId) {
+  public ResponseEntity<List<FavouritePlaceResponseDTO>> getAllByUserId(@PathVariable String userId) {
     List<FavouritePlaceResponseDTO> response = favouritePlaceService.getAllByUserId(userId);
     return ResponseEntity.ok(response);
   }

@@ -1,6 +1,4 @@
 package com.vibe_guide.domain.placeadmin.dtos;
 
-import java.util.UUID;
-
-public record PlaceAdminRequestDTO(UUID userId) {}
+public record PlaceAdminRequestDTO(String userId) {}
 
