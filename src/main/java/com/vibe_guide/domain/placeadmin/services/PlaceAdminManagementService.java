@@ -6,6 +6,6 @@ import java.util.UUID;
 public interface PlaceAdminManagementService {
   String insert(UUID placeId, PlaceAdminRequestDTO placeAdminRequestDTO);
 
-  String delete(UUID placeId, UUID userId);
+  String delete(UUID placeId, String userId);
 }
 

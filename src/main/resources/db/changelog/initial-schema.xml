@@ -161,16 +161,13 @@
             </not>
         </preConditions>
         <createTable tableName="user_table">
-            <column name="id" type="UUID">
+            <column name="id" type="VARCHAR(255)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="username" type="VARCHAR(100) NOT NULL"/>
             <column name="name" type="VARCHAR(100) NOT NULL"/>
             <column name="email" type="VARCHAR(100) NOT NULL"/>
             <column name="role" type="VARCHAR(100) NOT NULL"/>
-            <column name="password" type="VARCHAR(100) NOT NULL"/>
-            <column name="created_at" type="TIMESTAMP NOT NULL"/>
-            <column name="updated_at" type="TIMESTAMP"/>
         </createTable>
     </changeSet>
 
@@ -190,7 +187,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="user_id" type="UUID">
+            <column name="user_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
@@ -239,7 +236,7 @@
         </preConditions>
 
         <createTable tableName="visited_place">
-            <column name="user_id" type="UUID">
+            <column name="user_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="place_id" type="UUID">
@@ -302,7 +299,7 @@
         </preConditions>
 
         <createTable tableName="wishlist_place">
-            <column name="user_id" type="UUID">
+            <column name="user_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
@@ -371,7 +368,7 @@
         </preConditions>
 
         <createTable tableName="favourite_place">
-            <column name="user_id" type="UUID">
+            <column name="user_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="place_id" type="UUID">
@@ -432,7 +429,7 @@
             <column name="date_modified" type="DATETIME"/>
             <column name="rating" type="DECIMAL(3, 1) NOT NULL"/>
             <column name="description" type="VARCHAR(255) NOT NULL"/>
-            <column name="user_id" type="UUID NOT NULL"/>
+            <column name="user_id" type="VARCHAR(255) NOT NULL"/>
             <column name="place_id" type="UUID NOT NULL"/>
         </createTable>
 
@@ -461,7 +458,7 @@
         </preConditions>
         <createTable tableName="place_admin">
             <column name="place_id" type="UUID NOT NULL"/>
-            <column name="user_id" type="UUID NOT NULL"/>
+            <column name="user_id" type="VARCHAR(255) NOT NULL"/>
             <column name="date_created" type="TIMESTAMP NOT NULL"/>
         </createTable>
 

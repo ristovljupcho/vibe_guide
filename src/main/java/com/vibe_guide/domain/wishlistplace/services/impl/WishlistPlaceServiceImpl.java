@@ -28,7 +28,7 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
   private final PlaceRepository placeRepository;
 
   @Override
-  public List<WishlistPlaceResponseDTO> getAllByUserId(UUID userId) {
+  public List<WishlistPlaceResponseDTO> getAllByUserId(String userId) {
 
     if (userRepository.findById(userId).isEmpty()) {
       throw new UserNotFoundException(userId);
@@ -40,7 +40,7 @@ public class WishlistPlaceServiceImpl implements WishlistPlaceService {
   @Override
   @Transactional
   public String toggle(WishlistPlaceToggleRequestDTO dto) {
-    UUID userId = dto.userId();
+    String userId = dto.userId();
     UUID placeId = dto.placeId();
 
     User user =

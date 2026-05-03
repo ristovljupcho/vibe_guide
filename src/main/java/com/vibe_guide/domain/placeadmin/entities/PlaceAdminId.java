@@ -13,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class PlaceAdminId implements Serializable {
-  private UUID userId;
+  private String userId;
   private UUID placeId;
 
   @Override

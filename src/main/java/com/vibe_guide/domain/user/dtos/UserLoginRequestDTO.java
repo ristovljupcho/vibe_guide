@@ -1,7 +1,0 @@
-package com.vibe_guide.domain.user.dtos;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
-public record UserLoginRequestDTO(@NotBlank String username, @NotNull String password) {}
-

@@ -163,8 +163,6 @@
             <column name="name" value="Ana Petrova"/>
             <column name="email" value="ana.petrova@vibeguide.test"/>
             <column name="role" value="USER"/>
-            <column name="password" value="hashed_password_ana"/>
-            <column name="created_at" value="2026-03-01 09:00:00"/>
         </insert>
         <insert tableName="user_table">
             <column name="id" value="33333333-3333-3333-3333-333333333002"/>
@@ -172,8 +170,6 @@
             <column name="name" value="Marko Iliev"/>
             <column name="email" value="marko.iliev@vibeguide.test"/>
             <column name="role" value="USER"/>
-            <column name="password" value="hashed_password_marko"/>
-            <column name="created_at" value="2026-03-01 09:05:00"/>
         </insert>
         <insert tableName="user_table">
             <column name="id" value="33333333-3333-3333-3333-333333333003"/>
@@ -181,8 +177,6 @@
             <column name="name" value="Elena Kostova"/>
             <column name="email" value="elena.kostova@vibeguide.test"/>
             <column name="role" value="USER"/>
-            <column name="password" value="hashed_password_elena"/>
-            <column name="created_at" value="2026-03-01 09:10:00"/>
         </insert>
         <insert tableName="user_table">
             <column name="id" value="33333333-3333-3333-3333-333333333004"/>
@@ -190,8 +184,6 @@
             <column name="name" value="Viktor Manager"/>
             <column name="email" value="viktor.manager@vibeguide.test"/>
             <column name="role" value="ADMIN"/>
-            <column name="password" value="hashed_password_owner"/>
-            <column name="created_at" value="2026-03-01 09:15:00"/>
         </insert>
     </changeSet>
 

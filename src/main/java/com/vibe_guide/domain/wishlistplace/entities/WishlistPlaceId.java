@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WishlistPlaceId implements Serializable {
-  private UUID userId;
+  private String userId;
   private UUID placeId;
 
   @Override

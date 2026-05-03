@@ -30,7 +30,7 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
   private final PlaceRepository placeRepository;
   private final FavouritePlaceMapper favouritePlaceMapper;
 
-  public List<FavouritePlaceResponseDTO> getAllByUserId(UUID userId) {
+  public List<FavouritePlaceResponseDTO> getAllByUserId(String userId) {
     if (userRepository.findById(userId).isEmpty()) {
       throw new UserNotFoundException(userId);
     }
@@ -41,7 +41,7 @@ public class FavouritePlaceServiceImpl implements FavouritePlaceService {
   @Override
   @Transactional
   public String toggle(FavouritePlaceToggleRequestDTO dto) {
-    UUID userId = dto.userId();
+    String userId = dto.userId();
     UUID placeId = dto.placeId();
     User user =
         userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));

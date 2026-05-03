@@ -29,7 +29,7 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
   private final PlaceRepository placeRepository;
 
   @Override
-  public List<VisitedPlaceResponseDTO> getAllByUserId(UUID userId) {
+  public List<VisitedPlaceResponseDTO> getAllByUserId(String userId) {
     if (userRepository.findById(userId).isEmpty()) {
       throw new UserNotFoundException(userId);
     }
@@ -40,7 +40,7 @@ public class VisitedPlaceServiceImpl implements VisitedPlaceService {
   @Override
   @Transactional
   public String toggle(VisitedPlaceToggleRequestDTO dto) {
-    UUID userId = dto.userId();
+    String userId = dto.userId();
     UUID placeId = dto.placeId();
 
     Place place =

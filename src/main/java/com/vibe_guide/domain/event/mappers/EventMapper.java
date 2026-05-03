@@ -6,11 +6,13 @@ import com.vibe_guide.domain.eventgallery.entities.EventGallery;
 import com.vibe_guide.domain.place.entities.Place;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EventMapper {
   public EventResponseDTO toEventResponseDTO(Event event) {
+    UUID id = event.getId();
     String name = event.getName();
     Place place = event.getPlace();
     String placeName = place.getName();
@@ -27,7 +29,7 @@ public class EventMapper {
       imageUrl = eventGallery.getPhoto();
     }
 
-    return new EventResponseDTO(name, placeName, description, startDate, endDate, imageUrl);
+    return new EventResponseDTO(id, name, placeName, description, startDate, endDate, imageUrl);
   }
 }
 
